@@ -28,7 +28,6 @@ System.register(["react", "../../external/babel.min.js"], function (exports_1, c
                     return _super.call(this, props) || this;
                 }
                 SensuNavBar.prototype.render = function () {
-                    debugger;
                     return (react_1.default.createElement(Button, { variant: "raised", color: "primary" }, "navbar placeholder"));
                 };
                 SensuNavBar.defaultProps = {
