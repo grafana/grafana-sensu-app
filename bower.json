@@ -1,0 +1,25 @@
+{
+  "name": "grafana-sensu-app",
+  "description": "Sensu App for Grafana",
+  "main": "index.js",
+  "authors": [
+    "Brian Gann <bkgann@gmail.com>"
+  ],
+  "license": "Apache-2.0",
+  "keywords": [
+    "sensu grafana"
+  ],
+  "homepage": "https://github.com/briangann/grafana-sensu-app",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.1.10",
+    "font-awesome": "^5.1.0"
+  }
+}

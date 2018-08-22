@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+      "jsx": "react",
+      "moduleResolution": "node",
+      "outDir": "dist",
+      "target": "es5",
+      "rootDir": "src",
+      "module": "system",
+      "declaration": false,
+      "allowSyntheticDefaultImports": true,
+      "allowJs": true,
+      "sourceMap": true,
+      "sourceRoot": "src",
+      "inlineSources": true,
+      "noEmitOnError": false,
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "noImplicitReturns": true,
+      "noImplicitThis": false,
+      "noImplicitUseStrict":false,
+      "noImplicitAny": false,
+      "noUnusedLocals": false
+    },
+    "include": [
+      "src/**/*.ts",
+      "src/**/*.tsx",
+      "node_modules/grafana-sdk-mocks/app/headers/common.d.ts",
+      "node_modules/@types/grafana/index.d.ts"
+    ],
+    "exclude": [
+      "node_modules", "bower_components", "external", "node_modules/grafana-sdk-mocks/**"
+    ]
+}
