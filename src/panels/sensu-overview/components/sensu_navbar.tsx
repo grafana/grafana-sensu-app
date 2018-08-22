@@ -29,7 +29,6 @@ export class SensuNavBar extends React.PureComponent<SensuNavBarProps> {
   };
 
   render() {
-    debugger;
     //if (MUI) {
     //  let button = MUI[Button]; // .Button;
     //}

@@ -1,6 +1,5 @@
 import React from "react";
 import { getBGColor } from "./utils";
-//import * as MultiStatPanel from "../types";
 
 const DEFAULT_COLOR = "rgb(31, 120, 193)";
 const BACKGROUND_OPACITY = 0.1;
