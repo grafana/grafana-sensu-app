@@ -1,0 +1,260 @@
+{
+  "__inputs": [],
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "briangann-datatable-panel",
+      "name": "Datatable Panel",
+      "version": "0.0.2"
+    },
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "4.4.1"
+    }
+  ],
+  "annotations": {
+    "list": []
+  },
+  "editMode": false,
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "hideControls": false,
+  "id": null,
+  "links": [],
+  "rows": [
+    {
+      "collapse": false,
+      "height": "250px",
+      "panels": [
+        {
+          "columnAliases": [
+            {
+              "alias": "Time",
+              "name": "timestamp"
+            },
+            {
+              "alias": "Output",
+              "name": "check.output"
+            },
+            {
+              "alias": "Device",
+              "name": "client.name"
+            }
+          ],
+          "columnWidthHints": [
+            {
+              "name": "timestamp",
+              "width": "10%"
+            }
+          ],
+          "columns": [
+            {
+              "text": "timestamp",
+              "value": "timestamp"
+            },
+            {
+              "text": "client.name",
+              "value": "client.name"
+            },
+            {
+              "text": "client.address",
+              "value": "client.address"
+            },
+            {
+              "text": "check.output",
+              "value": "check.output"
+            },
+            {
+              "text": "check.status",
+              "value": "check.status"
+            }
+          ],
+          "compactRowsEnabled": true,
+          "datatablePagingType": "simple_numbers",
+          "datatableTheme": "basic_theme",
+          "fontSize": "100%",
+          "hoverEnabled": true,
+          "id": 1,
+          "infoEnabled": true,
+          "lengthChangeEnabled": true,
+          "links": [],
+          "notsort": {
+            "col": 0,
+            "desc": true
+          },
+          "orderColumnEnabled": true,
+          "pagingTypes": [
+            {
+              "text": "Page number buttons only",
+              "value": "numbers"
+            },
+            {
+              "text": "'Previous' and 'Next' buttons only",
+              "value": "simple"
+            },
+            {
+              "text": "'Previous' and 'Next' buttons, plus page numbers",
+              "value": "simple_numbers"
+            },
+            {
+              "text": "'First', 'Previous', 'Next' and 'Last' buttons",
+              "value": "full"
+            },
+            {
+              "text": "'First', 'Previous', 'Next' and 'Last' buttons, plus page numbers",
+              "value": "full_numbers"
+            },
+            {
+              "text": "'First' and 'Last' buttons, plus page numbers",
+              "value": "first_last_numbers"
+            }
+          ],
+          "panelHeight": 250,
+          "rowNumbersEnabled": false,
+          "rowsPerPage": 5,
+          "scroll": false,
+          "scrollHeight": "default",
+          "searchEnabled": true,
+          "showCellBorders": false,
+          "showHeader": true,
+          "showRowBorders": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "sortByColumns": [
+            {
+              "columnData": "timestamp",
+              "sortMethod": "desc"
+            },
+            {
+              "columnData": "check.status",
+              "sortMethod": "desc"
+            }
+          ],
+          "sortByColumnsData": [
+            [
+              0,
+              "desc"
+            ],
+            [
+              4,
+              "desc"
+            ]
+          ],
+          "span": 12,
+          "stripedRowsEnabled": true,
+          "styles": [
+            {
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "timestamp",
+              "type": "date"
+            },
+            {
+              "colorMode": "row",
+              "colors": [
+                "rgba(50, 172, 45, 0.97)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(245, 54, 54, 0.9)"
+              ],
+              "decimals": 2,
+              "pattern": "check.status",
+              "thresholds": [
+                "1",
+                "2"
+              ],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "aggregateMode": "list",
+              "clientQueryMode": "list",
+              "dimensions": [],
+              "hideSilencedEvents": true,
+              "refId": "A",
+              "sourceType": "events_json"
+            }
+          ],
+          "themeOptions": {
+            "dark": "./css/datatable-dark.css",
+            "light": "./css/datatable-light.css"
+          },
+          "themes": [
+            {
+              "disabled": false,
+              "text": "Basic",
+              "value": "basic_theme"
+            },
+            {
+              "disabled": true,
+              "text": "Bootstrap",
+              "value": "bootstrap_theme"
+            },
+            {
+              "disabled": true,
+              "text": "Foundation",
+              "value": "foundation_theme"
+            },
+            {
+              "disabled": true,
+              "text": "ThemeRoller",
+              "value": "themeroller_theme"
+            }
+          ],
+          "title": "Sensu Events",
+          "transform": "json",
+          "type": "briangann-datatable-panel"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "",
+  "title": "Sensu Events",
+  "version": 25
+}
