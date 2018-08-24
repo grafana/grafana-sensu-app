@@ -99,7 +99,6 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     const sensuOverviewElem = elem.find(".grafana-sensu-app-overview-panel");
 
     function render() {
-      debugger;
       if (!ctrl.data) {
         return;
       }

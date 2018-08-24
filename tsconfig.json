@@ -7,6 +7,7 @@
       "rootDir": "src",
       "module": "system",
       "declaration": false,
+      "diagnostics": true,
       "allowSyntheticDefaultImports": true,
       "allowJs": true,
       "sourceMap": true,
@@ -28,6 +29,6 @@
       "node_modules/@types/grafana/index.d.ts"
     ],
     "exclude": [
-      "node_modules", "bower_components", "external", "node_modules/grafana-sdk-mocks/**"
+      "node_modules", "bower_components", "panel/external", "external", "node_modules/grafana-sdk-mocks/**"
     ]
 }

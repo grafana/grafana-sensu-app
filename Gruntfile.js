@@ -121,7 +121,6 @@ module.exports = function (grunt) {
     'tslint',
     'ts:build',
     'sass',
-    'run:tests',
     "copy:main",
     "copy:externals",
     "copy:pluginDef"
