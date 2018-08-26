@@ -1,0 +1,71 @@
+{
+  "_from": "@material-ui/icons",
+  "_id": "@material-ui/icons@2.0.3",
+  "_inBundle": false,
+  "_integrity": "sha512-wgKUB4vgCzdKseV3MHdsR7lZMyNYKykrghKX4GHuMmlZrrWMh26jO1E6xyjuCpJ/E8DX+m+YGURbBYN9CxZ+rw==",
+  "_location": "/@material-ui/icons",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@material-ui/icons",
+    "name": "@material-ui/icons",
+    "escapedName": "@material-ui%2ficons",
+    "scope": "@material-ui",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/@material-ui/icons/-/icons-2.0.3.tgz",
+  "_shasum": "d3da9d6e31b1adfbc48efe33c7cb75b32b784096",
+  "_spec": "@material-ui/icons",
+  "_where": "/Users/bgann/Documents/grafana-sensu-app",
+  "author": {
+    "name": "Material-UI Team"
+  },
+  "bugs": {
+    "url": "https://github.com/mui-org/material-ui/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@babel/runtime": "7.0.0-rc.1",
+    "recompose": "^0.28.0"
+  },
+  "deprecated": false,
+  "description": "Material Design Svg Icons converted to Material-UI React components.",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "homepage": "https://github.com/mui-org/material-ui/tree/master/packages/material-ui-icons",
+  "keywords": [
+    "react",
+    "react-component",
+    "material design",
+    "material-ui",
+    "icons"
+  ],
+  "license": "MIT",
+  "main": "./index.js",
+  "module": "./index.es.js",
+  "name": "@material-ui/icons",
+  "peerDependencies": {
+    "@material-ui/core": "^1.0.0",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0"
+  },
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mui-org/material-ui.git"
+  },
+  "sideEffects": false,
+  "typings": "./index.d.ts",
+  "version": "2.0.3"
+}

@@ -1,5 +1,4 @@
 System.register(["react", "./utils"], function (exports_1, context_1) {
-    "use strict";
     var __extends = (this && this.__extends) || (function () {
         var extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -11,6 +10,7 @@ System.register(["react", "./utils"], function (exports_1, context_1) {
         };
     })();
     var react_1, utils_1, DEFAULT_COLOR, BACKGROUND_OPACITY, LABEL_SIZE_COEF, SensuMenu;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [

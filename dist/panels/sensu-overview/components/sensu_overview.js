@@ -1,5 +1,4 @@
 System.register(["react", "./sensu_navbar"], function (exports_1, context_1) {
-    "use strict";
     var __assign = (this && this.__assign) || Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
             s = arguments[i];
@@ -9,6 +8,7 @@ System.register(["react", "./sensu_navbar"], function (exports_1, context_1) {
         return t;
     };
     var react_1, sensu_navbar_1, DEFAULT_COLOR, BACKGROUND_OPACITY, LABEL_SIZE_COEF;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     function SensuOverview(props) {
         var options = props.options;

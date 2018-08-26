@@ -1,6 +1,6 @@
 System.register(["./components/config/config", "app/plugins/sdk"], function (exports_1, context_1) {
-    "use strict";
     var config_1, sdk_1;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [

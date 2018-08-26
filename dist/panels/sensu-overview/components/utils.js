@@ -1,6 +1,6 @@
 System.register([], function (exports_1, context_1) {
-    "use strict";
     var FONT_SIZE_FACTOR;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     function getBGColor(color, alpha) {
         if (alpha === void 0) { alpha = 0.3; }

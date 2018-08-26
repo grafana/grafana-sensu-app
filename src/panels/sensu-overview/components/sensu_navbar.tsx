@@ -6,6 +6,8 @@ import "../../external/babel.min.js";
 import * as MUI from "../../external/material-ui.development.js";
 // https://github.com/mui-org/material-ui/blob/master/examples/cdn/index.html
 import "../../external/material-icons.css!";
+import { SensuCard } from "./sensu_card";
+
 export interface SensuNavBarProps {
   width: number;
   height: number;
@@ -48,6 +50,7 @@ export class SensuNavBar extends React.PureComponent<SensuNavBarProps> {
   // <MUI.Button variant="contained">Button</MUI.Button>
   // </MUI.Badge>
   render() {
+
     return (
     <div style={styles.root}>
      <MUI.AppBar position="static">
@@ -72,15 +75,9 @@ export class SensuNavBar extends React.PureComponent<SensuNavBarProps> {
           </MUI.IconButton>
         </MUI.Toolbar>
       </MUI.AppBar>
+      <SensuCard color="red"/>
+        <SensuCard color="yellow" />
     </div>
-    );
-  }
-  notrender() {
-    return(
-      <MUI.Button variant="raised" color="secondary">
-        <MUI.Icon className="fa fa-plus-circle" color="primary" />
-        Test with font-awesome icon
-          </MUI.Button>
     );
   }
 }

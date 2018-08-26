@@ -1,6 +1,6 @@
 System.register(["lodash"], function (exports_1, context_1) {
-    "use strict";
     var lodash_1;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     function GetDecimalsForValue(value, panelDecimals) {
         if (lodash_1.default.isNumber(panelDecimals)) {

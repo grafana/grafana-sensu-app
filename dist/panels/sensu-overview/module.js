@@ -1,5 +1,4 @@
 System.register(["lodash", "react", "react-dom", "./defaults", "app/plugins/sdk", "./components/sensu_overview"], function (exports_1, context_1) {
-    "use strict";
     var __extends = (this && this.__extends) || (function () {
         var extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -11,6 +10,7 @@ System.register(["lodash", "react", "react-dom", "./defaults", "app/plugins/sdk"
         };
     })();
     var lodash_1, react_1, react_dom_1, defaults_1, sdk_1, sensu_overview_1, SensuOverviewCtrl;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [
@@ -100,7 +100,6 @@ System.register(["lodash", "react", "react-dom", "./defaults", "app/plugins/sdk"
                 SensuOverviewCtrl.prototype.link = function (scope, elem, attrs, ctrl) {
                     var sensuOverviewElem = elem.find(".grafana-sensu-app-overview-panel");
                     function render() {
-                        debugger;
                         if (!ctrl.data) {
                             return;
                         }

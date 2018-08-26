@@ -1,6 +1,6 @@
 System.register(["angular", "lodash", "app/core/utils/kbn", "./client_functions", "./event_functions", "./aggregate_functions", "./result_functions", "./clienthistory_functions", "./client_health_functions"], function (exports_1, context_1) {
-    "use strict";
     var angular_1, lodash_1, kbn_1, client_functions_1, event_functions_1, aggregate_functions_1, result_functions_1, clienthistory_functions_1, client_health_functions_1, SensuDatasource;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [

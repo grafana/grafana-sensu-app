@@ -1,6 +1,6 @@
 System.register(["./datasource", "./query_ctrl"], function (exports_1, context_1) {
-    "use strict";
     var datasource_1, query_ctrl_1, SensuConfigCtrl, SensuQueryOptionsCtrl;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [

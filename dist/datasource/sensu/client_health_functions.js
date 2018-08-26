@@ -1,6 +1,6 @@
 System.register(["./common"], function (exports_1, context_1) {
-    "use strict";
     var common_1;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     function getClientHealthURIs(clientNames) {
         var uris = [];

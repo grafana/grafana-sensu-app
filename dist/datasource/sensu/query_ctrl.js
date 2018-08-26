@@ -1,5 +1,4 @@
 System.register(["app/plugins/sdk", "./css/query-editor.css!"], function (exports_1, context_1) {
-    "use strict";
     var __extends = (this && this.__extends) || (function () {
         var extendStatics = Object.setPrototypeOf ||
             ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -11,6 +10,7 @@ System.register(["app/plugins/sdk", "./css/query-editor.css!"], function (export
         };
     })();
     var sdk_1, SensuDatasourceQueryCtrl;
+    "use strict";
     var __moduleName = context_1 && context_1.id;
     return {
         setters: [
