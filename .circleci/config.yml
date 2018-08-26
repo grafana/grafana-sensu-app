@@ -21,7 +21,7 @@ jobs:
           command: 'sudo npm install -g grunt'
       - run:
           name: Install sass
-          command: 'sudo npm install -g sass'
+          command: 'sudo npm rebuild -g node-sass --force'
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths:
