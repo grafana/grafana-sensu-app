@@ -125,6 +125,9 @@ module.exports = function (grunt) {
     "copy:externals",
     "copy:pluginDef"
   ]);
+  grunt.registerTask('test', [
+    'run:tests'
+  ]);
   grunt.registerTask('bower', [
     "copy:bower"
   ]);
