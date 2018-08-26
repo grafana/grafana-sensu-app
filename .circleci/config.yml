@@ -19,12 +19,15 @@ jobs:
       - run:
           name: Install grunt
           command: 'sudo npm install -g grunt'
+      - run: node -p process.versions
+      - run: node -p process.platform
       - run:
           name: Install sass
           command: 'sudo npm install  -g sass'
       - run:
           name: Rebuild sass
           command: 'sudo npm rebuild -g sass --force'
+      - run: node -p "require('node-sass').info"
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths:
