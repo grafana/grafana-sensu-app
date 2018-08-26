@@ -16,6 +16,9 @@ jobs:
           keys:
             - dependencies-{{ checksum "package.json" }}
       - run: npm install
+      - run:
+          name: Install grunt
+          command: 'sudo npm install -g grunt'
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths:
