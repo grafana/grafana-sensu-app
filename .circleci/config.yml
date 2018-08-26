@@ -27,8 +27,8 @@ jobs:
       - run:
           name: Rebuild sass
           command: 'sudo npm rebuild sass --force'
-      - run: mkdir -p /home/circleci/grafana-sensu-app/node_modules/node-sass/linux-x64-51
-      - run: wget https://github.com/sass/node-sass/releases/download/v3.13.1/linux-x64-51_binding.node -O /home/circleci/grafana-sensu-app/node_modules/node-sass/linux-x64-51/binding.node
+      - run: mkdir -p /home/circleci/grafana-sensu-app/node_modules/node-sass/linux-x64-64
+      - run: wget https://github.com/sass/node-sass/releases/download/v3.13.1/linux-x64-51_binding.node -O /home/circleci/grafana-sensu-app/node_modules/node-sass/linux-x64-64/binding.node
       - run: node -p "require('node-sass').info"
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
