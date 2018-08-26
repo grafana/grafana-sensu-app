@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: ~/grafana-sensu-app
   docker:
-    - image: circleci/node:10.9.0-stretch
+    - image: circleci/node:10.9.0-jessie
 
 version: 2
 jobs:
@@ -21,7 +21,10 @@ jobs:
           command: 'sudo npm install -g grunt'
       - run:
           name: Install sass
-          command: 'sudo npm rebuild -g node-sass --force'
+          command: 'sudo npm install  -g sass'
+      - run:
+          name: Rebuild sass
+          command: 'sudo npm rebuild -g sass --force'
       - save_cache:
           key: dependencies-{{ checksum "package.json" }}
           paths:
