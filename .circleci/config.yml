@@ -45,8 +45,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install grunt
+          name: Install grunt globally
           command: 'sudo npm install -g grunt'
+      - run:
+          name: Install grunt locally
+          command: 'npm install grunt'
       - run:
           name: Test
           command: grunt test
