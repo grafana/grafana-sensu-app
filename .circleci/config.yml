@@ -1,0 +1,50 @@
+defaults: &defaults
+  working_directory: /tmp
+  docker:
+    - image: circleci/node:7.10
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+      - run: bower install
+      - run: npm install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: Build app
+          command: |
+            grunt
+      - persist_to_workspace:
+          root: .
+          paths: 
+            - dist
+            - node_modules
+            - bower_components
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /tmp/workspace
+
+      - run: |
+          grunt test
+
+workflows:
+  version: 2
+
+  build-test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
