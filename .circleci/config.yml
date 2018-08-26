@@ -1,7 +1,7 @@
 defaults: &defaults
   working_directory: ~/grafana-sensu-app
   docker:
-    - image: circleci/node:10.9.0
+    - image: circleci/node:10.9.0-stretch
 
 version: 2
 jobs:
