@@ -36,10 +36,10 @@ jobs:
           key: v2-dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
-      #- run:
-      #    name: Run grunt
-      #    command: |
-      #      grunt
+      - run:
+          name: Run grunt
+          command: |
+            grunt
   grunttest:
     <<: *defaults
     steps:
@@ -60,6 +60,6 @@ workflows:
   build-test:
     jobs:
       - build
-      - grunttest:
-          requires:
-            - build
+      #- grunttest:
+      #    requires:
+      #      - build
