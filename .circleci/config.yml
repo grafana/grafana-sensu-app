@@ -29,13 +29,12 @@ jobs:
             - dist
             - node_modules
             - bower_components
-  test:
+  grunttest:
     <<: *defaults
     steps:
       - attach_workspace:
           # Must be absolute path or relative path from working_directory
           at: /tmp/workspace
-
       - run: |
           grunt test
 
@@ -45,6 +44,6 @@ workflows:
   build-test:
     jobs:
       - build
-      - test:
+      - grunttest:
           requires:
             - build
