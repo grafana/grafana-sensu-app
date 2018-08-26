@@ -16,6 +16,7 @@ jobs:
           keys:
             - v2-dependencies-{{ checksum "package.json" }}
       - run: npm install
+      - run: npm audit fix
       - run:
           name: Install grunt
           command: 'sudo npm install -g grunt'
@@ -35,21 +36,23 @@ jobs:
           key: v2-dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
-      - run:
-          name: Run grunt
-          command: |
-            grunt
+      #- run:
+      #    name: Run grunt
+      #    command: |
+      #      grunt
   grunttest:
     <<: *defaults
     steps:
       - checkout
+      - run:
+          name: Install grunt
+          command: 'sudo npm install -g grunt'
       - run:
           name: Test
           command: grunt test
 
 workflows:
   version: 2
-
   build-test:
     jobs:
       - build
