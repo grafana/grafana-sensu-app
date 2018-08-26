@@ -44,6 +44,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - run: npm install
       - run:
           name: Install grunt globally
           command: 'sudo npm install -g grunt'
