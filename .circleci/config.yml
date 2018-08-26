@@ -11,7 +11,7 @@ jobs:
       - checkout
       - run:
           name: Update npm
-          command: 'sudo npm install -g npm@6.4.0'
+          command: 'sudo npm cache clean && npm install -g npm@6.4.0'
       - restore_cache:
           keys:
             - dependencies-{{ checksum "package.json" }}
