@@ -47,20 +47,16 @@ System.register(["react", "../../external/babel.min.js", "../../external/materia
                 root: {
                     flexGrow: 1
                 },
-                card: {
-                    minWidth: 275
-                },
-                bullet: {
-                    display: "inline-block",
-                    margin: "0 2px",
-                    transform: "scale(0.8)"
-                },
                 title: {
                     marginBottom: 16,
-                    fontSize: 14
+                    fontSize: 22,
                 },
-                pos: {
-                    marginBottom: 12
+                primaryText: {
+                    "text-align": "center",
+                },
+                secondaryText: {
+                    marginBottom: 12,
+                    "text-align": "center",
                 }
             };
             SensuCard = (function (_super) {
@@ -69,34 +65,29 @@ System.register(["react", "../../external/babel.min.js", "../../external/materia
                     return _super.call(this, props) || this;
                 }
                 SensuCard.prototype.render = function () {
-                    var _a = this.props, width = _a.width, height = _a.height, color = _a.color;
-                    var bull = react_1.default.createElement("span", { style: cardStyles.bullet }, "\u2022");
+                    var _a = this.props, width = _a.width, height = _a.height, color = _a.color, bgColor = _a.bgColor, titleText = _a.titleText, primaryText = _a.primaryText, secondaryText = _a.secondaryText;
                     var containerStyle = {};
+                    if (bgColor) {
+                        containerStyle.background = bgColor;
+                    }
                     if (color) {
-                        containerStyle.background = color;
+                        containerStyle.color = color;
                     }
                     return (react_1.default.createElement("div", { style: cardStyles.root },
                         react_1.default.createElement(MUI.Card, { style: containerStyle },
                             react_1.default.createElement(MUI.CardContent, null,
-                                react_1.default.createElement(MUI.Typography, { style: cardStyles.title, color: "textSecondary" }, "Word of the Day"),
-                                react_1.default.createElement(MUI.Typography, { variant: "headline", component: "h2" },
-                                    "be",
-                                    bull,
-                                    "nev",
-                                    bull,
-                                    "o",
-                                    bull,
-                                    "lent"),
-                                react_1.default.createElement(MUI.Typography, { style: cardStyles.pos, color: "textSecondary" }, "adjective"),
-                                react_1.default.createElement(MUI.Typography, { component: "p" },
-                                    "well meaning and kindly.",
-                                    react_1.default.createElement("br", null),
-                                    "a benevolent smile")),
+                                react_1.default.createElement(MUI.Typography, { style: cardStyles.title, variant: "headline", component: "p", color: "inherit" }, titleText),
+                                react_1.default.createElement(MUI.Typography, { style: cardStyles.primaryText, variant: "headline", component: "p", color: "inherit" }, primaryText),
+                                react_1.default.createElement(MUI.Typography, { style: cardStyles.secondaryText, variant: "headline", component: "p", color: "inherit" }, secondaryText)),
                             react_1.default.createElement(MUI.CardActions, null,
-                                react_1.default.createElement(MUI.Button, { size: "small" }, "Learn More")))));
+                                react_1.default.createElement(MUI.Button, { size: "small", color: "primary" }, "Detail")))));
                 };
                 SensuCard.defaultProps = {
-                    color: "green",
+                    bgColor: "inherit",
+                    color: "white",
+                    titleText: "",
+                    primaryText: "",
+                    secondaryText: "",
                 };
                 return SensuCard;
             }(react_1.default.PureComponent));

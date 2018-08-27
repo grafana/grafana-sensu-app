@@ -10,6 +10,10 @@ export interface SensuCardProps {
   width: number;
   height: number;
   color: string;
+  bgColor: string;
+  titleText: string;
+  primaryText: string;
+  secondaryText: string;
 }
 
 const styles = {
@@ -34,20 +38,16 @@ const cardStyles = {
   root: {
     flexGrow: 1
   },
-  card: {
-    minWidth: 275
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)"
-  },
   title: {
     marginBottom: 16,
-    fontSize: 14
+    fontSize: 22,
   },
-  pos: {
-    marginBottom: 12
+  primaryText: {
+    "text-align": "center",
+  },
+  secondaryText: {
+    marginBottom: 12,
+    "text-align": "center",
   }
 };
 
@@ -58,42 +58,39 @@ export class SensuCard extends React.PureComponent<SensuCardProps> {
   }
 
   static defaultProps: Partial<SensuCardProps> = {
-    color: "green",
+    bgColor: "inherit",
+    color: "white",
+    titleText: "",
+    primaryText: "",
+    secondaryText: "",
   };
 
   render() {
-    const { width, height, color } = this.props;
+    const { width, height, color, bgColor, titleText, primaryText, secondaryText } = this.props;
 
-    const bull = <span style={cardStyles.bullet}>•</span>;
     let containerStyle: React.CSSProperties = {};
+    if (bgColor) {
+      containerStyle.background = bgColor;
+    }
     if (color) {
-      containerStyle.background = color;
+      containerStyle.color = color;
     }
     return (
     <div style={cardStyles.root}>
         <MUI.Card style={containerStyle}>
           <MUI.CardContent>
-            <MUI.Typography style={cardStyles.title} color="textSecondary">
-              Word of the Day
-        </MUI.Typography>
-            <MUI.Typography variant="headline" component="h2">
-              be
-          {bull}
-              nev
-          {bull}o{bull}
-              lent
-        </MUI.Typography>
-            <MUI.Typography style={cardStyles.pos} color="textSecondary">
-              adjective
-        </MUI.Typography>
-            <MUI.Typography component="p">
-              well meaning and kindly.
-          <br />
-              {"a benevolent smile"}
+            <MUI.Typography style={cardStyles.title} variant="headline" component="p" color="inherit">
+              {titleText}
+            </MUI.Typography>
+            <MUI.Typography style={cardStyles.primaryText} variant="headline" component="p" color="inherit">
+              {primaryText}
+            </MUI.Typography>
+            <MUI.Typography style={cardStyles.secondaryText} variant="headline" component="p" color="inherit">
+              {secondaryText}
             </MUI.Typography>
           </MUI.CardContent>
           <MUI.CardActions>
-            <MUI.Button size="small">Learn More</MUI.Button>
+            <MUI.Button size="small" color="primary">Detail</MUI.Button>
           </MUI.CardActions>
         </MUI.Card>
     </div>

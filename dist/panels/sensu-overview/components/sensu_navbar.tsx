@@ -32,6 +32,24 @@ const styles2 = {
   }
 };
 
+const gridListStyle = {
+  root: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    overflow: "hidden",
+    backgroundColor: "inherit",
+    height: "auto"
+  },
+  gridList: {
+    width: 500,
+    height: 450,
+  },
+  icon: {
+    color: "rgba(255, 255, 255, 0.54)",
+  }
+};
+
 export class SensuNavBar extends React.PureComponent<SensuNavBarProps> {
   props: any;
   constructor(props) {
@@ -50,7 +68,41 @@ export class SensuNavBar extends React.PureComponent<SensuNavBarProps> {
   // <MUI.Button variant="contained">Button</MUI.Button>
   // </MUI.Badge>
   render() {
-
+    const tileData = [
+      {
+        bgColor: "inherit",
+        color: "red",
+        text: "placeholder",
+        title: "Critical Events",
+        icon: "error",
+        active: 3,
+        silenced: 2,
+        total: 5,
+        iconColor: "secondary"
+      },
+      {
+        bgColor: "inherit",
+        color: "yellow",
+        text: "placeholder",
+        title: "Warning Events",
+        icon: "warning",
+        active: 8,
+        silenced: 1,
+        total: 9,
+        iconColor: "inherit"
+      },
+      {
+        bgColor: "inherit",
+        color: "grey",
+        text: "placeholder",
+        title: "Unknown Events",
+        icon: "motorcycle",
+        active: 30,
+        silenced: 2,
+        total: 32,
+        iconColor: "primary"
+      }
+  ];
     return (
     <div style={styles.root}>
      <MUI.AppBar position="static">
@@ -75,8 +127,22 @@ export class SensuNavBar extends React.PureComponent<SensuNavBarProps> {
           </MUI.IconButton>
         </MUI.Toolbar>
       </MUI.AppBar>
-      <SensuCard color="red"/>
-        <SensuCard color="yellow" />
+
+      <MUI.Grid container style={gridListStyle.root} spacing={16}>
+        <MUI.Grid item xs={12}>
+          <MUI.Grid container justify="center">
+            {tileData.map(tile => (
+              <MUI.Grid key={tile.text} item>
+                <SensuCard
+                  color={tile.color}
+                  titleText={tile.title}
+                  primaryText={`Active: ${tile.active}`}
+                  secondaryText={`Silenced: ${tile.silenced}`}/>
+              </MUI.Grid>
+            ))}
+          </MUI.Grid>
+        </MUI.Grid>
+      </MUI.Grid>
     </div>
     );
   }
