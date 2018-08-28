@@ -21,7 +21,7 @@
     "@types/angular": "^1.6.50",
     "@types/classnames": "^2.2.6",
     "@types/d3": "^5.0.0",
-    "@types/grafana": "https://git@github.com/CorpGlory/types-grafana.git",
+    "@types/grafana": "https://git@github.com/briangann/types-grafana.git",
     "@types/jest": "^22.2.3",
     "@types/lodash": "^4.14.116",
     "@types/node": "^10.9.2",
