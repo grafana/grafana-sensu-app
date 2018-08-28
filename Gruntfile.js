@@ -1,3 +1,5 @@
+const webpackConfig = require('./webpack.config');
+
 module.exports = function (grunt) {
 
   require('load-grunt-tasks')(grunt);
@@ -8,6 +10,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks("grunt-ts");
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-run');
+  grunt.loadNpmTasks('grunt-webpack');
 
   grunt.initConfig({
 
@@ -112,12 +115,30 @@ module.exports = function (grunt) {
       options: {
         debounceDelay: 250,
       },
+    },
+
+    webpack: {
+      options: {
+        stats: !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
+      },
+      prod: webpackConfig,
+      dev: webpackConfig,
+      notdev: Object.assign({ watch: true }, webpackConfig)
     }
 
   });
 
-
+  // webpack integrated
   grunt.registerTask('default', [
+    'tslint',
+    'webpack:prod',
+    'sass',
+    "copy:main",
+    "copy:externals",
+    "copy:pluginDef"
+  ]);
+
+  grunt.registerTask('defaultold', [
     'tslint',
     'ts:build',
     'sass',

@@ -5,7 +5,7 @@ import ReactDOM from "react-dom";
 import "../../external/babel.min.js";
 import * as MUI from "../../external/material-ui.development.js";
 // https://github.com/mui-org/material-ui/blob/master/examples/cdn/index.html
-import "../../external/material-icons.css!";
+//import "../../external/material-icons.css!";
 import { SensuCard } from "./sensu_card";
 
 export interface SensuNavBarProps {

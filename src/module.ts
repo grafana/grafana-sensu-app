@@ -2,7 +2,7 @@
 ///<reference path="../node_modules/@types/d3/index.d.ts" />
 
 import {SensuConfigCtrl} from "./components/config/config";
-import {loadPluginCss} from "app/plugins/sdk";
+import {loadPluginCss} from "grafana/app/plugins/sdk";
 
 loadPluginCss({
   dark: "plugins/grafana-sensu-app/css/sensu-app.dark.css",

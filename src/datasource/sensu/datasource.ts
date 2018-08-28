@@ -1,8 +1,8 @@
 
 import angular from "angular";
 import _ from "lodash";
-import * as dateMath from "app/core/utils/datemath";
-import kbn from "app/core/utils/kbn";
+//import * as dateMath from "grafana/app/core/utils/datemath";
+import { interval_to_ms, secondsToHms } from "grafana/app/core/utils/kbn";
 import {
   convertClientsToJSON,
   convertClientHistoryToDataPoints,
@@ -59,6 +59,7 @@ export class SensuDatasource {
     this.backendSrv = backendSrv;
     this.templateSrv = templateSrv;
     this.uiSegmentSrv = uiSegmentSrv;
+    this.minimumInterval = 60000; // milliseconds
     //this.clientQueryTags = [];
   }
 
@@ -656,7 +657,8 @@ export class SensuDatasource {
   }
 
   query(options) {
-    var queries = [];
+    var queries : any[] = [];
+    //var queries = [];
     var thisRef = this;
     var singleTarget = null;
     options.targets.forEach(function(target) {
@@ -668,9 +670,11 @@ export class SensuDatasource {
     });
     var interval = options.interval;
     //console.log("options interval = " + interval);
-    if (kbn.interval_to_ms(interval) < this.minimumInterval) {
+    //let yy = kbn.secondsToHms(this.minimumInterval / 1000);
+    let zz = interval_to_ms(interval);
+    if (interval_to_ms(interval) < this.minimumInterval) {
       // console.log("Detected interval smaller than allowed: " + interval);
-      interval = kbn.secondsToHms(this.minimumInterval / 1000);
+      interval = secondsToHms(this.minimumInterval / 1000);
       // console.log("New Interval: " + interval);
     }
     //console.log("interval after min check = " + interval);
@@ -753,25 +757,43 @@ export class SensuDatasource {
     var thisRef = this;
     // for each query, we get a list of sensu uris' to hit
     // to retrieve the data
+    var index = 0;
+    while (index < pendingQueries.length) {
+      let aTarget = pendingQueries[index];
+      var uriList = this.getQueryURIByType(aTarget);
+      for (var i = 0; i < uriList.length; i++) {
+        dataCalls.push(thisRef.singleDataQuery(aTarget, uriList[i]));
+      }
+      index++;
+    }
+    /*
     angular.forEach(pendingQueries, function(aTarget) {
       var uriList = thisRef.getQueryURIByType(aTarget);
       for (var i = 0; i < uriList.length; i++) {
         dataCalls.push(thisRef.singleDataQuery(aTarget, uriList[i]));
       }
     });
+    */
     this.q.all(dataCalls)
       .then(
         function(results) {
           var response = {
             data: []
           };
+          let i = 0;
           // merge all of the results into one response
+          while (i < results.length) {
+            response.data.push(results[i]);
+            i++;
+          }
+          /*
           angular.forEach(results, function(result) {
             response.data.push(result);
             //angular.forEach(result.data, function(dataSet) {
             //  response.data.push(dataSet);
             //});
           });
+          */
           // multiDone needs to return all of the parsed results inside somevar.data[]
           deferred.resolve(thisRef.multiDone(response));
         },

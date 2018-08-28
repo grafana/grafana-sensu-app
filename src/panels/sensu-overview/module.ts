@@ -1,12 +1,16 @@
 import _ from "lodash";
-import kbn from "app/core/utils/kbn";
 import React from "react";
 import ReactDOM from "react-dom";
 import defaults from "./defaults";
-import { MetricsPanelCtrl } from "app/plugins/sdk";
+import { MetricsPanelCtrl } from "grafana/app/plugins/sdk";
 import { SensuOverview } from "./components/sensu_overview";
 import * as Series from "./types/series";
 
+import {loadPluginCss} from "grafana/app/plugins/sdk";
+
+//loadPluginCss({
+//  icons: "../external/material-icons.css"
+//});
 
 class SensuOverviewCtrl extends MetricsPanelCtrl {
   static templateUrl = "panels/sensu-overview/partials/template.html";

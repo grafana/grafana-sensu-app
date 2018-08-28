@@ -1,8 +1,7 @@
 
 import angular from "angular";
 import _ from "lodash";
-import { QueryCtrl } from "app/plugins/sdk";
-import "./css/query-editor.css!";
+import { QueryCtrl } from "grafana/app/plugins/sdk";
 
 export class SensuDatasourceQueryCtrl extends QueryCtrl {
   static templateUrl = "datasource/sensu/partials/query.editor.html";
