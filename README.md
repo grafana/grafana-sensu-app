@@ -1,4 +1,7 @@
 # Grafana App for Sensu
+[![CircleCI](https://circleci.com/gh/grafana/grafana-sensu-app.svg?style=svg)](https://circleci.com/gh/grafana/grafana-sensu-app)
+[![David Dependancy Status](https://david-dm.org/grafana/grafana-sensu-app.svg)](https://david-dm.org/grafana/grafana-sensu-app)
+[![David Dev Dependency Status](https://david-dm.org/grafana/grafana-sensu-app/dev-status.svg)](https://david-dm.org/grafana/grafana-sensu-app/?type=dev)
 
 ### Requirements
 
