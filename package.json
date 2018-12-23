@@ -44,7 +44,6 @@
     "lodash-webpack-plugin": "0.11.5",
     "ng-annotate-webpack-plugin": "0.3.0",
     "node-sass": "4.11.0",
-    "plugin-typescript": "8.0.0",
     "react": "16.7.0",
     "react-dom": "16.7.0",
     "rxjs": "6.3.3",
