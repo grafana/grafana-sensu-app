@@ -48,8 +48,7 @@ jobs:
           name: Release
           command: |
             yarn install
-            sudo npm install -g jest
-            yarn test
+            sudo apt-get install jq
 
 workflows:
   version: 2
