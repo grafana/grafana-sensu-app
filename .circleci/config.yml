@@ -66,4 +66,4 @@ workflows:
             - test
       - release:
           requires:
-            - aapprove-release
+            - approve-release
