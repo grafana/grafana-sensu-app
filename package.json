@@ -26,6 +26,7 @@
     "@types/grafana": "https://git@github.com/briangann/types-grafana.git",
     "@types/jest": "23.3.10",
     "@types/lodash": "4.14.119",
+    "@types/lodash-es": "^4.17.1",
     "@types/node": "10.12.18",
     "ajv": "6.6.2",
     "angular": "1.7.5",
@@ -37,7 +38,7 @@
     "csstype": "2.5.8",
     "d3": "5.7.0",
     "grafana-sdk-mocks": "github:grafana/grafana-sdk-mocks",
-    "jest": "23.6.0",
+    "jest": "^23.6.0",
     "jquery": "^3.3.1",
     "lodash": "4.17.11",
     "lodash-webpack-plugin": "0.11.5",
@@ -63,6 +64,7 @@
     "@babel/core": "^7.2.2",
     "@material-ui/core": "3.7.1",
     "font-awesome": "4.7.0",
+    "lodash-es": "^4.17.11",
     "material-design-icons": "3.0.1"
   },
   "homepage": "https://grafana.com/"

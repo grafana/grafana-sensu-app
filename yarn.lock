@@ -430,7 +430,14 @@
     csstype "^2.0.0"
     indefinite-observable "^1.0.1"
 
-"@types/lodash@4.14.119":
+"@types/lodash-es@^4.17.1":
+  version "4.17.1"
+  resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.17.1.tgz#56745e5411558362aeca31def918f88f725dd29d"
+  integrity sha512-3EDZjphPfdjnsWvY11ufYImFMPyQJwIH1eFYRgWQsjOctce06fmNgVf5sfvXBRiaS1o0X50bAln1lfWs8ZO3BA==
+  dependencies:
+    "@types/lodash" "*"
+
+"@types/lodash@*", "@types/lodash@4.14.119":
   version "4.14.119"
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.119.tgz#be847e5f4bc3e35e46d041c394ead8b603ad8b39"
   integrity sha512-Z3TNyBL8Vd/M9D9Ms2S3LmFq2sSMzahodD6rCS9V2N44HUMINb75jNkSuwAx7eo2ufqTdfOdtGQpNbieUjPQmw==
@@ -4230,7 +4237,7 @@ jest-worker@^23.2.0:
   dependencies:
     merge-stream "^1.0.1"
 
-jest@23.6.0:
+jest@^23.6.0:
   version "23.6.0"
   resolved "https://registry.yarnpkg.com/jest/-/jest-23.6.0.tgz#ad5835e923ebf6e19e7a1d7529a432edfee7813d"
   integrity sha512-lWzcd+HSiqeuxyhG+EnZds6iO3Y3ZEnMrfZq/OTGvF/C+Z4fPMCdhWTGSAiO2Oym9rbEXfwddHhh6jqrTF3+Lw==
@@ -4511,6 +4518,11 @@ locate-path@^3.0.0:
   dependencies:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
+
+lodash-es@^4.17.11:
+  version "4.17.11"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.11.tgz#145ab4a7ac5c5e52a3531fb4f310255a152b4be0"
+  integrity sha512-DHb1ub+rMjjrxqlB3H56/6MXtm1lSksDp2rA2cNWjG8mlDUYFhUj3Di2Zn5IwSU87xLv8tNIQ7sSwE/YOX/D/Q==
 
 lodash-webpack-plugin@0.11.5:
   version "0.11.5"
