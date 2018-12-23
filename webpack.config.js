@@ -7,6 +7,9 @@ const webpackAngularExternals = require('webpack-angular-externals');
 
 
 module.exports = {
+  performance: {
+    hints: process.env.NODE_ENV === 'production' ? "warning" : false
+  },
   mode: 'development',
   watch: false,
   watchOptions: {
