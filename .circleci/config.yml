@@ -9,57 +9,29 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - run:
-          name: Update npm
-          command: 'sudo npm install -g npm@6.4.0'
       - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "package.json" }}
-      - run: npm install
-      - run: npm audit fix
-      - run:
-          name: Install grunt
-          command: 'sudo npm install -g grunt'
-      #- run: node -p process.versions
-      #- run: node -p process.platform
-      #- run:
-      #    name: Install sass
-      #    command: 'sudo npm install sass'
-      #- run:
-      #    name: Rebuild sass
-      #    command: 'sudo npm rebuild sass --force'
-      #- run: ls -l /home/circleci/grafana-sensu-app/node_modules/node-sass/vendor/li*
-      #- run: mkdir -p /home/circleci/grafana-sensu-app/node_modules/node-sass/vendor/linux-x64-51
-      #- run: wget https://github.com/sass/node-sass/releases/download/v3.13.1/linux-x64-51_binding.node -O /home/circleci/grafana-sensu-app/node_modules/node-sass/vendor/linux-x64-51/binding.node
+      - run: yarn
       - run: node -p "require('node-sass').info"
       - save_cache:
           key: v2-dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
       - run:
-          name: Run grunt
-          command: |
-            grunt
-  grunttest:
+          name: build
+          command: yarn build
+  test:
     <<: *defaults
     steps:
       - checkout
-      - run: npm install
-      - run:
-          name: Install grunt globally
-          command: 'sudo npm install -g grunt'
-      - run:
-          name: Install grunt locally
-          command: 'npm install grunt'
-      - run:
-          name: Test
-          command: grunt test
+      - run: yarn test
 
 workflows:
   version: 2
   build-test:
     jobs:
       - build
-      #- grunttest:
-      #    requires:
-      #      - build
+      - test:
+          requires:
+            - build
