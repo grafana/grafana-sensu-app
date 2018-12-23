@@ -17,7 +17,6 @@ jobs:
           command: |
             yarn
             #sudo yarn add global jest
-            sudo npm install -g jest
             node -p "require('node-sass').info"
             yarn build
       - save_cache:
