@@ -37,6 +37,19 @@ jobs:
             yarn install
             sudo npm install -g jest
             yarn test
+  release:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Release
+          command: |
+            yarn install
+            sudo npm install -g jest
+            yarn test
 
 workflows:
   version: 2
@@ -46,3 +59,11 @@ workflows:
       - test:
           requires:
             - build
+      - approve-release:
+          type: approval
+          requires:
+            - build
+            - test
+      - release:
+          requires:
+            - aapprove-release
