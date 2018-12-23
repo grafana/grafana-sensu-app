@@ -12,21 +12,29 @@ jobs:
       - restore_cache:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-      - run: yarn
-      - run: node -p "require('node-sass').info"
+      - run:
+          name: Build
+          command: |
+            yarn
+            #sudo yarn add global jest
+            sudo npm install -g jest
+            node -p "require('node-sass').info"
+            yarn build
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-      - run:
-          name: build
-          command: yarn build
   test:
     <<: *defaults
     steps:
       - checkout
-      - run: yarn test
+      - run:
+          name: Test
+          command: |
+            yarn install
+            sudo npm install -g jest
+            yarn test
 
 workflows:
   version: 2
