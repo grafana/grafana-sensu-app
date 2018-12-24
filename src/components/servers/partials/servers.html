@@ -7,7 +7,7 @@
 </div>
 
 <div ng-if="!ctrl.pageReady">
-	...loading
+	loading servers....
 </div>
 
 <div ng-if="ctrl.pageReady">
@@ -33,7 +33,7 @@
 			<tr class="dashlist-item" ng-repeat="server in ctrl.servers">
         <td style="font-size: 1.3rem; padding: 0">
           <a style="display: block; padding-left: 15px; height: 100%;" href="#" ng-click="ctrl.serverInfo(server)">
-            {{server.name}} Overview
+            {{server.name}}
           </a>
         </td>
         <td class="text-right">

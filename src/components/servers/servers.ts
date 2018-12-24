@@ -27,7 +27,10 @@ export class SensuServersCtrl {
     var self = this;
     return this.backendSrv.get("/api/datasources")
     .then((result) => {
-      self.servers = _.filter(result, {"type": "grafana-sensu-datasource"});
+      self.servers = result.filter((o: { type: Object; }) => {
+        return o.type === "grafana-sensu-datasource";
+      });
+      console.log("servers..." + JSON.stringify(self.servers));
     });
   }
 

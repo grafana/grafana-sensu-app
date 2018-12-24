@@ -819,8 +819,6 @@ export class SensuDatasource {
    */
   testDatasource() {
     console.log("testing sensu datasource");
-    debugger; // eslint-disable-line
-    console.log("post debugger line");
     return this.backendSrv.datasourceRequest({
       url: this.url + "/info",
       headers: {

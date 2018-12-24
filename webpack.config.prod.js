@@ -7,7 +7,7 @@ conf.mode = 'production';
 conf.watch = false;
 
 conf.plugins.push(new ngAnnotatePlugin());
-// NOTE: uglify will remove debugger statements
+// NOTE: uglify will remove/disable debugger statements
 conf.plugins.push(
   new UglifyJSPlugin({
   sourceMap: true,
