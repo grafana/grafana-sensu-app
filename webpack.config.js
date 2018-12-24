@@ -2,19 +2,24 @@ const path = require('path');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 //var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const webpackAngularExternals = require('webpack-angular-externals');
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPluginLight = new ExtractTextPlugin('./css/light.css');
+const ExtractTextPluginDark = new ExtractTextPlugin('./css/dark.css');
 
 module.exports = {
   performance: {
     hints: process.env.NODE_ENV === 'production' ? "warning" : false
   },
+  // devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   mode: 'development',
-  watch: false,
+  watch: true,
   watchOptions: {
     poll: 1000,
-    ignored: ['src/**/*.js', 'node_modules', 'bower_components']
+    ignored: ['src/**/*.js', 'node_modules']
   },
   node: {
     fs: 'empty'
@@ -22,11 +27,13 @@ module.exports = {
   context: path.join(__dirname, 'src'),
   entry: {
     'module': './module.ts',
+    'components/config/config' : path.resolve(__dirname, 'src/components/config/config.ts'),
+    'components/servers/servers' : path.resolve(__dirname, 'src/components/servers/servers.ts'),
     'datasource/sensu/module' : path.resolve(__dirname, 'src/datasource/sensu/module.ts'),
     'panels/common/utils' : path.resolve(__dirname, 'src/panels/common/utils.ts'),
     'panels/sensu-overview/module' : path.resolve(__dirname, 'src/panels/sensu-overview/module.ts'),
   },
-  devtool: 'source-map',
+  //devtool: 'source-map',
   output: {
     filename: '[name].js',
     path: path.join(__dirname, 'dist'),
@@ -65,11 +72,15 @@ module.exports = {
       { from: 'img/*', to: '.' },
       { from: 'dashboards/*', to: '.' },
       { from: 'components/config/*.html', to: '.' },
+      { from: 'components/servers/partials/*', to: '.' },
       { from: 'panels/sensu-overview/*.json', to: '.' },
       { from: 'panels/sensu-overview/partials/*', to: '.' },
       { from: 'datasource/sensu/*.json', to: '.' },
+      { from: 'datasource/sensu/css/*', to: '.' },
+      { from: 'datasource/sensu/img/*', to: '.' },
       { from: 'datasource/sensu/partials/*', to: '.' },
     ]),
+    new webpack.HotModuleReplacementPlugin()
   ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],
@@ -77,19 +88,18 @@ module.exports = {
   },
   module: {
     rules: [
+      { test: /\.tsx?$/,
+          loaders: [
+            "ts-loader"
+          ],
+          exclude: [/(node_modules)/],
+      },
       {
-        test: /\.tsx?$/,
-        loaders: [
-          {
-            loader: 'babel-loader',
-        'options': {
-          //'plugins': ['lodash'],
-          'presets': [['env', { 'modules': false, 'targets': { 'node': 6 } }]]
-        }
-          },
-          'ts-loader'
-        ],
-        exclude: [/(node_modules)/],
+        test: /\.html$/,
+        exclude: [/node_modules/],
+        use: {
+          loader: 'html-loader'
+        },
       },
       {
         test: /\.css$/,
@@ -105,6 +115,22 @@ module.exports = {
             }
           },
         ]
+      },
+      {
+        test: /\.light\.scss$/,
+        exclude: [/node_modules/],
+        use: ExtractTextPluginLight.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        }),
+      },
+      {
+        test: /\.dark\.scss$/,
+        exclude: [/node_modules/],
+        use: ExtractTextPluginDark.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader']
+        }),
       }
     ]
   }

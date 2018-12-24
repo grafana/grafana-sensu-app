@@ -14,7 +14,7 @@
       "type": "datasource",
       "id": "grafana-sensu-datasource",
       "name": "Sensu",
-      "version": "0.0.1"
+      "version": "1.0.2"
     },
     {
       "type": "grafana",

@@ -49,6 +49,7 @@ export class SensuDatasource {
   uiSegmentSrv: any;
   minimumInterval: any;
 
+  /** @ngInject */
   constructor(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv) {
     this.type = instanceSettings.type;
     this.url = instanceSettings.url;
@@ -817,6 +818,9 @@ export class SensuDatasource {
    * @return {[type]} [description]
    */
   testDatasource() {
+    console.log("testing sensu datasource");
+    debugger; // eslint-disable-line
+    console.log("post debugger line");
     return this.backendSrv.datasourceRequest({
       url: this.url + "/info",
       headers: {

@@ -25,11 +25,18 @@
     "screenshots": [
       {"name": "Panels", "path": "img/sensu-panels.png"}
     ],
-    "version": "1.0.1",
-    "updated": "2018-08-20"
+    "version": "1.0.2",
+    "updated": "2018-12-23"
   },
 
   "includes": [
+    { "type": "page", "name": "Sensu Servers", "component": "SensuServersCtrl", "role": "Viewer", "addToNav": true, "defaultNav": true},
+    {
+      "type": "dashboard",
+      "name": "Sensu Metrics",
+      "path": "dashboards/Sensu-Metrics.json",
+      "addToNav": false
+    },
     {
       "type": "datasource",
       "name": "Sensu"

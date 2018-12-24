@@ -2,6 +2,7 @@
 ///<reference path="../node_modules/@types/d3/index.d.ts" />
 
 import {SensuConfigCtrl} from "./components/config/config";
+import {SensuServersCtrl} from "./components/servers/servers";
 import {loadPluginCss} from "grafana/app/plugins/sdk";
 
 loadPluginCss({
@@ -11,4 +12,5 @@ loadPluginCss({
 
 export {
   SensuConfigCtrl as ConfigCtrl,
+  SensuServersCtrl
 };
