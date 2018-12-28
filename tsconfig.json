@@ -25,10 +25,8 @@
       "typeRoots": [ "node_modules/@types/" ],
       "baseUrl": ".",
       "paths": {
-        "lodash/*": [
-          "node_modules/@types/lodash-es/*",
-        ],
-      },
+        "lodash/*": ["node_modules/@types/lodash-es/*" ]
+      }
     },
     "include": [
       "src/**/*.ts",
