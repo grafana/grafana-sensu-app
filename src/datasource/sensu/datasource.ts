@@ -1,6 +1,6 @@
 
-import angular from "angular";
 import _ from "lodash";
+
 //import * as dateMath from "grafana/app/core/utils/datemath";
 import { interval_to_ms, secondsToHms } from "grafana/app/core/utils/kbn";
 import {
@@ -218,6 +218,9 @@ export class SensuDatasource {
    * @return {[type]}        [description]
    */
   mapToClientNameAndVersion(result) {
+    if (result.data.length === 0) {
+      return {};
+    }
     return _.map(result.data, function(d) {
       var x = {
         text: "",

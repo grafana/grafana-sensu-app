@@ -1,4 +1,4 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import { getBGColor } from "./utils";
 
 const DEFAULT_COLOR = "rgb(31, 120, 193)";
@@ -17,7 +17,7 @@ export interface SensuMenuProps {
   labelFontSize?: number;
 }
 
-export class SensuMenu extends React.PureComponent<SensuMenuProps> {
+export class SensuMenu extends PureComponent<SensuMenuProps> {
   props: any;
 
   constructor(props) {

@@ -4,9 +4,8 @@
       "moduleResolution": "node",
       "outDir": "dist",
       "target": "es5",
-      "lib": ["es2015", "es2016", "esnext", "DOM"],
-      "rootDir": "src",
-      "module": "amd",
+      "lib": ["es6", "dom"],
+      "module": "esnext",
       "declaration": false,
       "diagnostics": true,
       "allowSyntheticDefaultImports": true,
@@ -22,20 +21,6 @@
       "noImplicitUseStrict":false,
       "noImplicitAny": false,
       "noUnusedLocals": false,
-      "typeRoots": [ "node_modules/@types/" ],
-      "baseUrl": ".",
-      "paths": {
-        "lodash/*": ["node_modules/@types/lodash-es/*" ]
-      }
-    },
-    "include": [
-      "src/**/*.ts",
-      "src/**/*.tsx",
-      "node_modules/grafana-sdk-mocks/app/headers/common.d.ts",
-      "node_modules/@types/grafana/index.d.ts",
-      "node_modules/@types/lodash/index.d.ts"
-    ],
-    "exclude": [
-      "node_modules", "bower_components", "panel/external", "external", "node_modules/grafana-sdk-mocks/**"
-    ]
+      "baseUrl": "./src"
+    }
 }

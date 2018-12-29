@@ -1,4 +1,5 @@
-import React from "react";
+//import React from "react";
+import React, {PureComponent} from "react";
 import ReactDOM from "react-dom";
 
 // this allows @material-ui/core to be used
@@ -50,7 +51,7 @@ const gridListStyle = {
   }
 };
 
-export class SensuNavBar extends React.PureComponent<SensuNavBarProps> {
+export class SensuNavBar extends PureComponent<SensuNavBarProps> {
   props: any;
   constructor(props) {
     super(props);

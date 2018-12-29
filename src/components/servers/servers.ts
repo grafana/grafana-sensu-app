@@ -1,5 +1,4 @@
 
-import _ from "lodash";
 import appEvents from "grafana/app/core/app_events";
 
 export class SensuServersCtrl {

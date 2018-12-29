@@ -1,5 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
+
+import {PureComponent} from "react";
+//import { getBGColor } from "./utils";
+import * as React from "react";
 
 // this allows @material-ui/core to be used
 import "../../external/babel.min.js";
@@ -51,7 +53,7 @@ const cardStyles = {
   }
 };
 
-export class SensuCard extends React.PureComponent<SensuCardProps> {
+export class SensuCard extends PureComponent<SensuCardProps> {
   props: any;
   constructor(props) {
     super(props);

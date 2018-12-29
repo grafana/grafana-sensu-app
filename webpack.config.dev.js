@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */
+
 const baseWebpackConfig = require('./webpack.config');
 const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');

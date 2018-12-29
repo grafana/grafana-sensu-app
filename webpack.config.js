@@ -1,19 +1,20 @@
+/*jshint esversion: 6 */
+
 const path = require('path');
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-//var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 const webpackAngularExternals = require('webpack-angular-externals');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ExtractTextPluginLight = new ExtractTextPlugin('./css/light.css');
 const ExtractTextPluginDark = new ExtractTextPlugin('./css/dark.css');
 
+
 module.exports = {
   performance: {
     hints: process.env.NODE_ENV === 'production' ? "warning" : false
   },
-  // devtool: 'inline-source-map',
   devtool: "inline-source-map",
   mode: 'development',
   watch: true,
@@ -24,16 +25,15 @@ module.exports = {
   node: {
     fs: 'empty'
   },
+  target: 'node',
   context: path.join(__dirname, 'src'),
   entry: {
     'module': './module.ts',
     'components/config/config' : path.resolve(__dirname, 'src/components/config/config.ts'),
     'components/servers/servers' : path.resolve(__dirname, 'src/components/servers/servers.ts'),
     'datasource/sensu/module' : path.resolve(__dirname, 'src/datasource/sensu/module.ts'),
-    'panels/common/utils' : path.resolve(__dirname, 'src/panels/common/utils.ts'),
-    'panels/sensu-overview/module' : path.resolve(__dirname, 'src/panels/sensu-overview/module.ts'),
+    'panels/sensu-overview/module' : path.resolve(__dirname, 'src/panels/sensu-overview/module.tsx'),
   },
-  //devtool: 'source-map',
   output: {
     filename: '[name].js',
     path: path.join(__dirname, 'dist'),
@@ -41,14 +41,7 @@ module.exports = {
   },
   externals: [
    { 'angular': 'angular' },
-    //webpackAngularExternals(),
-   {
-    lodash : {
-      commonjs: 'lodash',
-      amd: 'lodash',
-      root: '_' // indicates global variable
-    },
-   },
+    'lodash',
     'react',
     'react-dom',
     'app/core/utils/kbn',
@@ -62,7 +55,7 @@ module.exports = {
   ],
   plugins: [
     new CleanWebpackPlugin('dist', { allowExternal: true }),
-    //new LodashModuleReplacementPlugin,
+    new LodashModuleReplacementPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new CopyWebpackPlugin([
       { from: 'plugin.json', to: '.' },
@@ -134,4 +127,4 @@ module.exports = {
       }
     ]
   }
-}
+};

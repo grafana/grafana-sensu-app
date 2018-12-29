@@ -1,6 +1,4 @@
 
-import angular from "angular";
-import _ from "lodash";
 import { QueryCtrl } from "grafana/app/plugins/sdk";
 
 export class SensuDatasourceQueryCtrl extends QueryCtrl {
@@ -16,6 +14,7 @@ export class SensuDatasourceQueryCtrl extends QueryCtrl {
   clientQueryModes: any;
   eventMetricModes: any;
 
+  /** @ngInject */
   constructor($scope, $injector, templateSrv, uiSegmentSrv) {
     super($scope, $injector);
     this.scope = $scope;
