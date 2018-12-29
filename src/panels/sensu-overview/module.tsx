@@ -9,9 +9,10 @@ import * as Series from "./ptypes/series";
 
 import {loadPluginCss} from "grafana/app/plugins/sdk";
 
-//loadPluginCss({
-//  icons: "../external/material-icons.css"
-//});
+loadPluginCss({
+  dark : "plugins/grafana-sensu-app/panels/external/material-icons.css",
+  light : "plugins/grafana-sensu-app/panels/external/material-icons.css"
+});
 
 
 class SensuOverviewCtrl extends MetricsPanelCtrl {
@@ -27,8 +28,6 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
   constructor($scope, $injector, templateSrv) {
     super($scope, $injector);
     console.log("defaults before " + JSON.stringify(this.panel.maxDataPoints));
-//_.defaults(this.panel, defaults.panelDefaults);
-debugger;
     _.defaults(this.panel, defaults.panelDefaults);
     this.templateSrv = templateSrv;
     console.log("defaults after " + JSON.stringify(this.panel.maxDataPoints));

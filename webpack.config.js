@@ -66,6 +66,7 @@ module.exports = {
       { from: 'dashboards/*', to: '.' },
       { from: 'components/config/*.html', to: '.' },
       { from: 'components/servers/partials/*', to: '.' },
+      { from: 'panels/external/*', to: '.' },
       { from: 'panels/sensu-overview/*.json', to: '.' },
       { from: 'panels/sensu-overview/partials/*', to: '.' },
       { from: 'datasource/sensu/*.json', to: '.' },

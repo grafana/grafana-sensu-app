@@ -3,7 +3,7 @@ import React, {PureComponent} from "react";
 import ReactDOM from "react-dom";
 
 // this allows @material-ui/core to be used
-import "../../external/babel.min.js";
+//import "../../external/babel.min.js";
 import * as MUI from "../../external/material-ui.development.js";
 // https://github.com/mui-org/material-ui/blob/master/examples/cdn/index.html
 //import "../../external/material-icons.css!";
