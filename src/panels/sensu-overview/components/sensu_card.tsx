@@ -4,8 +4,14 @@ import {PureComponent} from "react";
 import * as React from "react";
 
 // this allows @material-ui/core to be used
-import "../../external/babel.min.js";
-import * as MUI from "../../external/material-ui.development.js";
+//import "../../external/babel.min.js";
+//import * as MUI from "../../external/material-ui.development.js";
+//import * as MUI from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import CardActions from "@material-ui/core/CardActions";
+import Button from "@material-ui/core/Button";
 // https://github.com/mui-org/material-ui/blob/master/examples/cdn/index.html
 //import "../../external/material-icons.css!";
 export interface SensuCardProps {
@@ -45,7 +51,8 @@ const cardStyles = {
     fontSize: 22,
   },
   primaryText: {
-    "text-align": "center",
+    marginBottom : 12,
+    "text-align" : "center",
   },
   secondaryText: {
     marginBottom: 12,
@@ -79,22 +86,22 @@ export class SensuCard extends PureComponent<SensuCardProps> {
     }
     return (
     <div style={cardStyles.root}>
-        <MUI.Card style={containerStyle}>
-          <MUI.CardContent>
-            <MUI.Typography style={cardStyles.title} variant="headline" component="p" color="inherit">
+        <Card style={containerStyle}>
+          <CardContent>
+            <Typography style={cardStyles.title} variant="headline" component="p" color="inherit">
               {titleText}
-            </MUI.Typography>
-            <MUI.Typography style={cardStyles.primaryText} variant="headline" component="p" color="inherit">
+            </Typography>
+            <Typography style={cardStyles.primaryText} variant="headline" component="p" color="inherit">
               {primaryText}
-            </MUI.Typography>
-            <MUI.Typography style={cardStyles.secondaryText} variant="headline" component="p" color="inherit">
+            </Typography>
+            <Typography style={cardStyles.secondaryText} variant="headline" component="p" color="inherit">
               {secondaryText}
-            </MUI.Typography>
-          </MUI.CardContent>
-          <MUI.CardActions>
-            <MUI.Button size="small" color="primary">Detail</MUI.Button>
-          </MUI.CardActions>
-        </MUI.Card>
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small" color="primary">Detail</Button>
+          </CardActions>
+        </Card>
     </div>
     );
   }

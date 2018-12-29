@@ -4,7 +4,16 @@ import ReactDOM from "react-dom";
 
 // this allows @material-ui/core to be used
 //import "../../external/babel.min.js";
-import * as MUI from "../../external/material-ui.development.js";
+// this works by itself import * as MUI from "../../external/material-ui.development.js";
+//import * as MUI from "@material-ui/core";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
+import Grid from "@material-ui/core/Grid";
+import Icon from "@material-ui/core/Icon";
+//import { AppBar, Toolbar, Typography, IconButton, Badge, Grid, Icon } from "@material-ui/core";
 // https://github.com/mui-org/material-ui/blob/master/examples/cdn/index.html
 //import "../../external/material-icons.css!";
 import { SensuCard } from "./sensu_card";
@@ -28,15 +37,12 @@ const styles = {
   }
 };
 const styles2 = {
-  margin: {
-    margin: 6,
-  }
+  margin: "6"
 };
 
 const gridListStyle = {
   root: {
     display: "flex",
-    flexWrap: "wrap",
     justifyContent: "space-around",
     overflow: "hidden",
     backgroundColor: "inherit",
@@ -106,44 +112,44 @@ export class SensuNavBar extends PureComponent<SensuNavBarProps> {
   ];
     return (
     <div style={styles.root}>
-     <MUI.AppBar position="static">
-        <MUI.Toolbar>
-           <MUI.Typography style={styles.flex} variant="title" color="inherit">
+     <AppBar position="static">
+        <Toolbar>
+           <Typography style={styles.flex} variant="title" color="inherit">
               Sensu
-          </MUI.Typography>
-          <MUI.IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
-            <MUI.Badge color="primary" badgeContent={6} className={styles2.margin}>
-                <MUI.Icon color="inherit">star</MUI.Icon>
-            </MUI.Badge>
-          </MUI.IconButton>
-          <MUI.IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
-            <MUI.Badge color="primary" badgeContent={2} className={styles2.margin}>
-              < MUI.Icon color="inherit">volume_off</MUI.Icon>
-            </MUI.Badge >
-          </MUI.IconButton>
-          <MUI.IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
-            <MUI.Badge color="primary" badgeContent={2} className={styles2.margin}>
-                  <MUI.Icon color="inherit">access_alarm</MUI.Icon>
-            </MUI.Badge>
-          </MUI.IconButton>
-        </MUI.Toolbar>
-      </MUI.AppBar>
+          </Typography>
+          <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
+            <Badge color="primary" badgeContent={6} className={styles2.margin}>
+                <Icon color="inherit">star</Icon>
+            </Badge>
+          </IconButton>
+          <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
+            <Badge color="primary" badgeContent={2} className={styles2.margin}>
+              <Icon color="inherit">volume_off</Icon>
+            </Badge >
+          </IconButton>
+          <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
+            <Badge color="primary" badgeContent={2} className={styles2.margin}>
+                  <Icon color="inherit">access_alarm</Icon>
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
 
-      <MUI.Grid container style={gridListStyle.root} spacing={16}>
-        <MUI.Grid item xs={12}>
-          <MUI.Grid container justify="center">
+      <Grid container style={gridListStyle.root} spacing={16}>
+        <Grid item xs={12}>
+          <Grid container justify="center">
             {tileData.map(tile => (
-              <MUI.Grid key={tile.text} item>
+              <Grid key={tile.text} item>
                 <SensuCard
                   color={tile.color}
                   titleText={tile.title}
                   primaryText={`Active: ${tile.active}`}
                   secondaryText={`Silenced: ${tile.silenced}`}/>
-              </MUI.Grid>
+              </Grid>
             ))}
-          </MUI.Grid>
-        </MUI.Grid>
-      </MUI.Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     </div>
     );
   }

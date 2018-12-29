@@ -9,6 +9,7 @@ const webpackAngularExternals = require('webpack-angular-externals');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ExtractTextPluginLight = new ExtractTextPlugin('./css/light.css');
 const ExtractTextPluginDark = new ExtractTextPlugin('./css/dark.css');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 
 module.exports = {
