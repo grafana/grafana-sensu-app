@@ -1,7 +1,7 @@
 /**
  * Tests for utils
  */
-import {GetDecimalsForValue} from "../src/panels/common/utils";
+import {GetDecimalsForValue} from "./utils";
 
 describe("Utils GetDecimalsForValue", () => {
   describe("With two decimals", () => {

@@ -1,22 +1,20 @@
 
 module.exports = {
+    "testEnvironment": "node",
+    "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest",
       "^.+\\.(j|t)sx?$": "ts-jest",
       "^.+\\.js$": "./node_modules/babel-jest"
     },
-    "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!lodash-es/.*)"
-    ],
     "testRegex": "(\\.|/)(spec|jest)\\.(jsx?|tsx?)$",
     "roots": [
       "tests",
       "src"
-    ],  
+    ],
     "moduleDirectories": [
       "node_modules",
-      "bower_components",
-      "src",
+      "src"
     ],
     "moduleFileExtensions": [
       "ts",

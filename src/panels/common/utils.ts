@@ -1,6 +1,6 @@
-import isNumber from "lodash/isNumber";
+import _ from "lodash";
 function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaledDecimals; } {
-  if (isNumber(panelDecimals)) {
+  if (_.isNumber(panelDecimals)) {
     return {decimals: panelDecimals, scaledDecimals: null};
   }
 
