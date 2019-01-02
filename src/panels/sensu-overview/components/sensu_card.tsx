@@ -1,19 +1,19 @@
 
 import {PureComponent} from "react";
-//import { getBGColor } from "./utils";
+import { getBGColor } from "./utils";
 import * as React from "react";
 
-// this allows @material-ui/core to be used
-//import "../../external/babel.min.js";
-//import * as MUI from "../../external/material-ui.development.js";
-//import * as MUI from "@material-ui/core";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCoffee} from "@fortawesome/free-solid-svg-icons/faCoffee";
+
+
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-// https://github.com/mui-org/material-ui/blob/master/examples/cdn/index.html
-//import "../../external/material-icons.css!";
+import Icon from "@material-ui/core/Icon";
+
 export interface SensuCardProps {
   width: number;
   height: number;
@@ -91,6 +91,8 @@ export class SensuCard extends PureComponent<SensuCardProps> {
             <Typography style={cardStyles.title} variant="headline" component="p" color="inherit">
               {titleText}
             </Typography>
+            <FontAwesomeIcon icon={faCoffee} />
+            <Icon color="inherit">warning</Icon>
             <Typography style={cardStyles.primaryText} variant="headline" component="p" color="inherit">
               {primaryText}
             </Typography>

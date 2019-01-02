@@ -1,11 +1,10 @@
 import _ from "lodash";
 import * as React from "react";
-//import ReactDOM from "react-dom";
 import * as ReactDOM from "react-dom";
 import {defaults} from "./defaults";
-import { MetricsPanelCtrl } from "grafana/app/plugins/sdk";
-import SensuOverview from "./components/sensu_overview";
-import * as Series from "./ptypes/series";
+import {MetricsPanelCtrl} from "grafana/app/plugins/sdk";
+import {SensuOverview} from "./components/sensu_overview";
+import * as Series from "./panel_types/series";
 
 import {loadPluginCss} from "grafana/app/plugins/sdk";
 
@@ -131,12 +130,7 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
 
     this.events.on("render", function () {
       let container = document.getElementById(ctrl.containerId);
-      //console.log("container = " + container);
-      //try {
       ReactDOM.unmountComponentAtNode(container);
-      //} catch (err) {
-      //  console.log("ignoring: " + err.message);
-      //}
       render();
       ctrl.renderingCompleted();
     });
@@ -146,15 +140,11 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
       container.style.height = container.parentNode.clientHeight;
       // this creates the chart inside the container
       let chartContainer = document.getElementById(ctrl.containerId);
-      let whatever = (
-      <div>BAH</div>
-      );
-const sensuOverviewProps = {
-  stats: ctrl.data,
-  options: ctrl.panel,
-  size: scope.size
-};
-//const meh = new SensuOverview(sensuOverviewProps);
+      const sensuOverviewProps = {
+        stats: ctrl.data,
+        options: ctrl.panel,
+        size: scope.size
+      };
       const sensuOverviewReactElem = React.createElement(SensuOverview, container);
       ReactDOM.render(
         sensuOverviewReactElem,
