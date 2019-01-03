@@ -12,6 +12,9 @@ module.exports = {
       "tests",
       "src"
     ],
+    "moduleNameMapper": {
+      "grafana/app/core/utils/kbn": "<rootDir>/tests/__mocks__/app/core/utils/kbn.ts",
+    },
     "moduleDirectories": [
       "node_modules",
       "src"

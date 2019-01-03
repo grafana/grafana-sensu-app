@@ -1,8 +1,9 @@
+///<reference path="../../../node_modules/@types/grafana/app/core/utils/kbn.d.ts" />
 
 import _ from "lodash";
 
-//import * as dateMath from "grafana/app/core/utils/datemath";
 import { interval_to_ms, secondsToHms } from "grafana/app/core/utils/kbn";
+import {testDatasource as testGenericDatasource} from "./api/core";
 import {
   convertClientsToJSON,
   convertClientHistoryToDataPoints,
@@ -821,27 +822,6 @@ export class SensuDatasource {
    * @return {[type]} [description]
    */
   testDatasource() {
-    console.log("testing sensu datasource");
-    return this.backendSrv.datasourceRequest({
-      url: this.url + "/info",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": this.basicAuth
-      },
-      method: "GET",
-    }).then(response => {
-      if (response.status === 200) {
-        return {
-          status: "success",
-          message: "Data source is working",
-          title: "Success"
-        };
-      }
-      return {
-        status: "error",
-        message: "Data source is not working",
-        title: "Error"
-      };
-    });
+    return testGenericDatasource(this.backendSrv, this.url, this.basicAuth, "core")
   }
 }
