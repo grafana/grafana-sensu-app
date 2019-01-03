@@ -76,5 +76,11 @@ describe('SensuDataSource', () => {
           expect(result.status).toBe('error');
         });
       });
+      describe('and call to sensu-go api succeeds', function() {
+        it.skip('should be a real test someday', () => {});
+      });
+      describe('and call to sensu-go api fails', function() {
+        it.skip('should be a real test someday', () => {});
+      });
     });
 });
