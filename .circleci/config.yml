@@ -24,6 +24,8 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
+      - store_artifacts:
+          path: dist
   test:
     <<: *defaults
     steps:
@@ -37,6 +39,8 @@ jobs:
             yarn install
             sudo npm install -g jest
             yarn test
+      - store_artifacts:
+          path: coverage
   release:
     <<: *defaults
     steps:
