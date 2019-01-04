@@ -1,8 +1,8 @@
 
 import { QueryCtrl } from "grafana/app/plugins/sdk";
 
-export class SensuDatasourceQueryCtrl extends QueryCtrl {
-  static templateUrl = "datasource/sensu/partials/query.editor.html";
+export class SensuCoreDatasourceQueryCtrl extends QueryCtrl {
+  static templateUrl = "datasource/sensu-core/partials/query.editor.html";
 
   scope: any;
   uiSegmentSrv: any;

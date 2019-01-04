@@ -1,39 +1,8 @@
 /**
  *
  */
-import { getResponseForTarget } from "./common";
-
- function getEventsURIs(checkNames, clientNames) {
-   // https://sensuapp.org/docs/0.28/api/events-api.html
-   var uris = [];
-   var dimensionURI = "/events";
-   var aClientName = null;
-   var aCheckName = null;
-   var anAggregateName = null;
-   if (clientNames.length) {
-     for (let i = 0; i < clientNames.length; i++) {
-       aClientName = clientNames[i];
-       dimensionURI = "/events/" + aClientName;
-       uris.push(dimensionURI);
-     }
-   }
-   if ((checkNames.length) && (clientNames.length)) {
-     for (let i = 0; i < clientNames.length; i++) {
-       aClientName = clientNames[i];
-       for (let j = 0; j < checkNames.length; j++) {
-         aCheckName = checkNames[i];
-         dimensionURI = "/events/" + aClientName + "/" + aCheckName;
-         uris.push(dimensionURI);
-       }
-     }
-   }
-   if (uris.length === 0) {
-     uris.push(dimensionURI);
-   }
-   return uris;
- }
-
-
+import { getResponseForTarget } from "./utils";
+import { includeEventTarget } from "./event_filters";
 /**
  * [convertEventsToDataPoints description]
  * @param  {[type]} response [description]
@@ -281,37 +250,6 @@ function convertEventsToEventMetricsJSON(aTarget, responses) {
 }
 
 /**
- * No fields means it is a match
- * @param  {[type]}  target [description]
- * @return {Boolean}        [description]
- */
-function includeEventTarget(target, anEvent) {
-  if (target.filters === undefined) {
-    return true;
-  }
-  if (target.filters.length === 0) {
-    return true;
-  }
-  for (var i = 0; i < target.filters.length; i++) {
-    var aFilter = target.filters[i];
-    switch (aFilter.filterType) {
-      case "field":
-        // filterFieldName
-        // filterFieldValue
-        if (anEvent.client.hasOwnProperty(aFilter.filterFieldName)) {
-          // matched field, check value
-          var aVal = anEvent.client[aFilter.filterFieldName];
-          if (aVal === aFilter.filterFieldValueReplaced) {
-            return true;
-          }
-        }
-        break;
-    }
-  }
-  return false;
-}
-
-/**
  * [convertEventsToEventMetrics description]
  * @param  {[type]} aTarget   [description]
  * @param  {[type]} responses [description]
@@ -506,7 +444,5 @@ export {
   convertEventsToJSON,
   convertEventsToDataPoints,
   convertEventsToEventMetrics,
-  convertEventsToEventMetricsJSON,
-  getEventsURIs,
-  includeEventTarget
+  convertEventsToEventMetricsJSON
 };

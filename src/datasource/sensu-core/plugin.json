@@ -1,13 +1,13 @@
 {
   "type": "datasource",
-  "name": "Sensu",
-  "id": "grafana-sensu-datasource",
+  "name": "Sensu Core",
+  "id": "grafana-sensucore-datasource",
 
   "metrics": true,
   "annotations": true,
 
   "info": {
-    "description": "Grafana datasource plugin Sensu",
+    "description": "Grafana datasource plugin for Sensu Core",
     "author": {
       "name": "Brian Gann",
       "url": "https://github.com/grafana/grafana-sensu-app"
@@ -32,7 +32,7 @@
       "path": "screenshots/options.png"
     }],
     "version": "1.0.2",
-    "updated": "2018-12-23"
+    "updated": "2019-01-07"
   },
   "dependencies": {
     "grafanaVersion": "5.0+",

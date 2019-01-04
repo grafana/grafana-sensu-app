@@ -3,43 +3,17 @@
 import _ from "lodash";
 
 import { interval_to_ms, secondsToHms } from "grafana/app/core/utils/kbn";
-import {testDatasource as testGenericDatasource} from "./api/core";
-import {
-  convertClientsToJSON,
-  convertClientHistoryToDataPoints,
-  convertClientsToDataPoints,
-  convertClientSummaryMetricsToJSON,
-  getClientsURIs
-} from "./client_functions";
-import {
-  convertEventsToJSON,
-  convertEventsToDataPoints,
-  convertEventsToEventMetrics,
-  convertEventsToEventMetricsJSON,
-  getEventsURIs
-} from "./event_functions";
-import {
-  getAggregateURIs,
-  convertAggregatesToDataPoints,
-  convertAggregatesToJSON
-} from "./aggregate_functions";
-import {
-  getResultURIs,
-  convertResultsToTable,
-  convertResultsToDataPoints,
-  convertResultsToJSON
-} from "./result_functions";
-import {
-  getClientHistoryURIs
-} from "./clienthistory_functions";
-import {
-  getClientHealthURIs,
-  convertClientHealthToJSON,
-  convertClientHealthMetricsToJSON
-} from "./client_health_functions";
 
-export class SensuDatasource {
-  type: any;
+import { getAggregateURIs } from './api/aggregate_requests';
+import { convertAggregatesToDataPoints, convertAggregatesToJSON } from './api/aggregate_converters';
+import { getClientsURIs, getClientHealthURIs, getClientHistoryURIs } from './api/client_requests';
+import { convertClientsToDataPoints, convertClientsToJSON, convertClientHealthToJSON, convertClientHistoryToDataPoints } from './api/client_converters';
+import { getEventsURIs } from './api/event_requests';
+import { convertEventsToDataPoints, convertEventsToJSON, convertEventsToEventMetrics, convertEventsToEventMetricsJSON } from './api/event_converters';
+import { getResultURIs } from './api/result_requests';
+import { convertResultsToJSON, convertResultsToTable } from './api/result_converters';
+
+export class SensuCoreDatasource {
   url: string;
   name: string;
   basicAuth: string;
@@ -51,8 +25,7 @@ export class SensuDatasource {
   minimumInterval: any;
 
   /** @ngInject */
-  constructor(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv) {
-    this.type = instanceSettings.type;
+  constructor(instanceSettings: any, $q: any, backendSrv: any, templateSrv: any, uiSegmentSrv: any) {
     this.url = instanceSettings.url;
     this.name = instanceSettings.name;
     this.basicAuth = instanceSettings.basicAuth;
@@ -62,19 +35,13 @@ export class SensuDatasource {
     this.templateSrv = templateSrv;
     this.uiSegmentSrv = uiSegmentSrv;
     this.minimumInterval = 60000; // milliseconds
-    //this.clientQueryTags = [];
   }
 
   // Required for templating
   // gets the clients from Sensu API
   // https://sensuapp.org/docs/0.26/api/clients-api.html
 
-  /**
-   * [metricFindQuery description]
-   * @param  {[type]} options [description]
-   * @return {[type]}         [description]
-   */
-  metricFindQuery(options) {
+  metricFindQuery(options: any) {
     //console.log("metricFindQuery entered: " + options);
     var isClientTags = false;
     var isClientTagValue = false;
@@ -111,7 +78,7 @@ export class SensuDatasource {
         "Content-Type": "application/json",
         "Authorization": this.basicAuth
       }
-    }).then(function(response) {
+    }).then(function(response: any) {
       //thisRef.clientQueryTags = _this.generateClientQueryTags(response);
       if (isClientTags) {
         return thisRef.generateClientQueryTags(response);
@@ -123,7 +90,8 @@ export class SensuDatasource {
     });
   }
 
-  generateClientQueryTags(response) {
+
+  generateClientQueryTags(response: any) {
     var clientQueryTags = [];
     var allTags = [];
     var excludedTags = [
@@ -165,7 +133,7 @@ export class SensuDatasource {
     return clientQueryTags;
   }
 
-  getClientQueryTagValue(response, tag) {
+  getClientQueryTagValue(response: any, tag: string) {
     var tagSplit = tag.split("=");
     var tagToMatch = tagSplit[0];
     var tagValueToMatch = tagSplit[1];
@@ -218,7 +186,7 @@ export class SensuDatasource {
    * @param  {[type]} result [description]
    * @return {[type]}        [description]
    */
-  mapToClientNameAndVersion(result) {
+  mapToClientNameAndVersion(result: any) {
     if (result.data.length === 0) {
       return {};
     }
@@ -242,7 +210,7 @@ export class SensuDatasource {
    * @param  {[type]} dimensions [description]
    * @return {[type]}            [description]
    */
-  getClientNames(dimensions) {
+  getClientNames(dimensions: any) {
     var values = [];
     for (var i = 0; i < dimensions.length; i++) {
       if (dimensions[i].dimensionType === "clientName") {
@@ -272,10 +240,10 @@ export class SensuDatasource {
 
   /**
    * [getCheckNames description]
-   * @param  {[type]} dimensions [description]
+   * @param  {[any]} dimensions [description]
    * @return {[type]}            [description]
    */
-  getCheckNames(dimensions) {
+  getCheckNames(dimensions: any) {
     var values = [];
     for (var i = 0; i < dimensions.length; i++) {
       if (dimensions[i].dimensionType === "checkName") {
@@ -444,7 +412,7 @@ export class SensuDatasource {
   }
 
   processConversions(sourceType, aTarget, responses) {
-    var result = { data: []};
+    var result = { data: [] };
     switch (sourceType) {
       case "aggregates":
         result = convertAggregatesToDataPoints(aTarget, responses);
@@ -662,7 +630,7 @@ export class SensuDatasource {
   }
 
   query(options) {
-    var queries : any[] = [];
+    var queries: any[] = [];
     //var queries = [];
     var thisRef = this;
     var singleTarget = null;
@@ -732,7 +700,7 @@ export class SensuDatasource {
         // this used to parse per response, instead this is returning the target and response to be later
         // used by multiDone
         // OLD: deferred.resolve(_this.parseQueryResult(singleTarget, response));
-        deferred.resolve({ target: singleTarget, response: response});
+        deferred.resolve({ target: singleTarget, response: response });
       }, function(response) {
         console.error("Unable to load data. Response: %o", response.data ? response.data.message : response);
         var error = new Error("Unable to load data");
@@ -817,11 +785,27 @@ export class SensuDatasource {
   //    'Access-Control-Allow-Origin': "http://localhost:3000"
   //
 
-  /**
-   * [testDatasource description]
-   * @return {[type]} [description]
-   */
   testDatasource() {
-    return testGenericDatasource(this.backendSrv, this.url, this.basicAuth, "core")
+    return this.backendSrv.datasourceRequest({
+      url: this.url + "/info",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": this.basicAuth
+      },
+      method: "GET",
+    }).then((response: { status: number; }) => {
+      if (response.status === 200) {
+        return {
+          status: "success",
+          message: "Data source is working",
+          title: "Success"
+        };
+      }
+      return {
+        status: "error",
+        message: "Data source is not working",
+        title: "Error"
+      };
+    });
   }
 }

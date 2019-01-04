@@ -1,13 +1,13 @@
-///<reference path="../../node_modules/@types/grafana/app/core/services/backend_srv.d.ts" />
+///<reference path="../../../../node_modules/@types/grafana/app/core/services/backend_srv.d.ts" />
 import _ from 'lodash';
 
-import {SensuDatasource} from "../../src/datasource/sensu/datasource";
+import {SensuCoreDatasource} from "../datasource";
 
 function TemplateSrvStub(this: any) {
   this.variables = [];
   this.templateSettings = { interpolate: /\[\[([\s\S]+?)\]\]/g };
   this.data = {};
-  this.replace = function(text) {
+  this.replace = function(text: any) {
     return _.template(text, this.templateSettings)(this.data);
   };
   this.init = () => {};
@@ -23,13 +23,13 @@ function TemplateSrvStub(this: any) {
   this.highlightVariablesAsHtml = str => {
     return str;
   };
-  this.setGrafanaVariable = function(name, value) {
+  this.setGrafanaVariable = function(name: any, value: any) {
     this.data[name] = value;
   };
 }
 
 describe('SensuDataSource', () => {
-  describe('when performing testDataSource', () => {
+  describe('when performing testDataSource()', () => {
     const instanceSettings = {
       jsonData: {
         defaultProject: 'testproject',
@@ -40,8 +40,6 @@ describe('SensuDataSource', () => {
     const $q = {};
     describe('and call to sensu-core api succeeds', () => {
         let result: any;
-        let uri = "http://localhost:4567";
-        let auth = "good";
         let ds: any;
 
         beforeEach(async () => {
@@ -50,7 +48,7 @@ describe('SensuDataSource', () => {
               return Promise.resolve({ status: 200 });
             },
           };
-          ds = new SensuDatasource(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv);
+          ds = new SensuCoreDatasource(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv);
           result = await ds.testDatasource();
         });
         it('should return successfully', () => {
@@ -59,8 +57,6 @@ describe('SensuDataSource', () => {
       });
       describe('and call to sensu-core api fails', () => {
         let result: any;
-        let uri = "http://localhost:4567";
-        let auth = "bad";
         let ds: any;
 
         beforeEach(async () => {
@@ -69,18 +65,21 @@ describe('SensuDataSource', () => {
               return Promise.resolve({ status: 501 });
             },
           };
-          ds = new SensuDatasource(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv);
+          ds = new SensuCoreDatasource(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv);
           result = await ds.testDatasource();
         });
         it('should return error', () => {
           expect(result.status).toBe('error');
         });
       });
-      describe('and call to sensu-go api succeeds', function() {
+    });
+    describe('when performing metricFindQuery()', () => {
+      describe('and call to sensu-api api succeeds', function() {
         it.skip('should be a real test someday', () => {});
       });
-      describe('and call to sensu-go api fails', function() {
+      describe('and call to sensu-api api fails', function() {
         it.skip('should be a real test someday', () => {});
       });
     });
+
 });
