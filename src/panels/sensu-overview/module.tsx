@@ -21,7 +21,7 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
   data: Series.SeriesStat[];
   fontSizes: any[];
   templateSrv: any;
-  containerId : string;
+  containerId: string;
 
   /** @ngInject */
   constructor($scope, $injector, templateSrv) {
@@ -40,12 +40,12 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
   onInitEditMode() {
     this.fontSizes = ["20%", "30%", "50%", "70%", "80%", "100%", "110%", "120%", "150%", "170%", "200%"];
     // determine the path to this plugin
-    var partialsPath = "public/plugins/" + this.panel.type + "/partials";
+    const partialsPath = "public/plugins/" + this.panel.type + "/partials";
     this.addEditorTab("Options", partialsPath + "/options.html", 2);
     //this.unitFormats = kbn.getUnitFormats();
   }
 
-  onDataReceived(dataList) {
+  onDataReceived(dataList: any) {
     if (dataList.length > 0 && dataList[0].type === "table") {
       this.dataType = "table";
       if (dataList[0].rows && !dataList[0].rows.length) {
@@ -62,7 +62,7 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     this.render();
   }
 
-  onDataError(err) {
+  onDataError(err: any) {
     this.onDataReceived([]);
   }
 
@@ -109,18 +109,17 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
   }
 
 
-  link(scope, elem, attrs, ctrl) {
+  link(scope: any, elem: any, attrs: any, ctrl: any) {
     if (!scope) {
       return;
     }
     if (!attrs) {
       return;
     }
-    var panelByClass = elem.find(".grafana-sensu-app-overview-panel");
+    const panelByClass = elem.find(".grafana-sensu-app-overview-panel");
     panelByClass.append("<div style=\"width: 100%; height: 100%;\" id=\"" + ctrl.containerId + "\"></div>");
-    var container = panelByClass[0].childNodes[0];
+    const container = panelByClass[0].childNodes[0];
 
-    //const sensuOverviewElem = elem.find(".grafana-sensu-app-overview-panel");
     const sensuOverviewReactElem = React.createElement(SensuOverview);
     const sensuOverviewProps = {
       stats: ctrl.data,
@@ -128,81 +127,39 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
       size: scope.size
     };
 
-    this.events.on("render", function () {
-      let container = document.getElementById(ctrl.containerId);
+    // bind render event
+    this.events.on("render", () => {
+      const container = document.getElementById(ctrl.containerId);
       ReactDOM.unmountComponentAtNode(container);
       render();
       ctrl.renderingCompleted();
     });
 
+    /**
+     * render
+     */
     function render() {
       container.style.width = container.parentNode.clientWidth;
       container.style.height = container.parentNode.clientHeight;
-      // this creates the chart inside the container
-      let chartContainer = document.getElementById(ctrl.containerId);
+      // scope.size = { w: width, h: height };
       const sensuOverviewProps = {
         stats: ctrl.data,
         options: ctrl.panel,
         size: scope.size
       };
-      const sensuOverviewReactElem = React.createElement(SensuOverview, container);
+      const sensuOverviewReactElem = React.createElement(SensuOverview, sensuOverviewProps);
       ReactDOM.render(
         sensuOverviewReactElem,
         document.getElementById(ctrl.containerId)
       );
     }
 
-/*
-    function notrender() {
-      if (!ctrl.data) {
-        return;
-      }
-
-      const width = sensuOverviewElem.width();
-      const height = sensuOverviewElem.height();
-      scope.size = { w: width, h: height };
-      ctrl.setValuePrefixAndPostfix(ctrl.data);
-      console.log("calling render");
-//      renderSensuOverviewComponent();
-debugger;
-//      const sensuOverviewReactElem = React.createElement(SensuOverview, sensuOverviewProps);
-//const sensuOverviewReactElem = React.createElement(SensuOverview);
-//if (typeof sensuOverviewReactElem !== "undefined") {
-  console.log("made something...");
-  //const dropContentElem = document.createElement("div");
-      ReactDOM.render(sensuOverviewReactElem, sensuOverviewElem);
-
-//  ReactDOM.render(sensuOverviewReactElem, sensuOverviewElem[0]);
-  console.log("tried to render it");
-//}
-console.log("called render");
-    }
-*/
-/*
-    function renderSensuOverviewComponent() {
-      const sensuOverviewProps = {
-        stats: ctrl.data,
-        options: ctrl.panel,
-        size: scope.size,
-      };
-      debugger;
-      //const sensuOverviewReactElem = React.createElement(SensuOverview, sensuOverviewProps);
-      const sensuOverviewReactElem = React.createElement(SensuOverview);
-      ReactDOM.render(sensuOverviewReactElem, sensuOverviewElem[0]);
-    }
-*/
     /*
-    this.events.on("render", function() {
-      render();
-      ctrl.renderingCompleted();
-    });
-    */
-    // cleanup when scope is destroyed
-    /*
+     * cleanup when scope is destroyed
+     */
     scope.$on("$destroy", () => {
-      ReactDOM.unmountComponentAtNode(sensuOverviewElem[0]);
+      ReactDOM.unmountComponentAtNode(container[0]);
     });
-    */
   }
 }
 
