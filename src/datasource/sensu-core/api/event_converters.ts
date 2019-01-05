@@ -163,7 +163,6 @@ function convertEventsToJSON(aTarget, responses) {
  */
 function convertEventsToEventMetricsJSON(aTarget, responses) {
   var response = getResponseForTarget(aTarget, responses);
-
   // timestamp is taken from first item in response
   var timestamp = 0;
   try {

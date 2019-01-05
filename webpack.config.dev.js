@@ -2,21 +2,13 @@
 
 const baseWebpackConfig = require('./webpack.config');
 const ngAnnotatePlugin = require('ng-annotate-webpack-plugin');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 
 var conf = baseWebpackConfig;
 conf.mode = 'development';
-//conf.devtool = 'inline-source-map';
 conf.devtool = "inline-source-map";
 
-//conf.watch = false;
-
 conf.plugins.push(new ngAnnotatePlugin());
-/*
-conf.plugins.push(
-  new UglifyJSPlugin({
-  sourceMap: true,
-  })
-);
-*/
+conf.plugins.push(new webpack.HotModuleReplacementPlugin());
+
 module.exports = conf;

@@ -12,7 +12,7 @@ export class SensuServersCtrl {
 
   /** @ngInject */
   constructor($scope, $injector, private backendSrv, private contextSrv, private $location) {
-    var self = this;
+    const self = this;
     this.isOrgEditor = contextSrv.hasRole("Editor") || contextSrv.hasRole("Admin");
     document.title = "Grafana Sensu App";
     this.servers = {};
@@ -22,12 +22,12 @@ export class SensuServersCtrl {
     });
   }
 
-  getSensuServers() {
-    var self = this;
+  async getSensuServers() {
+    const self = this;
     return this.backendSrv.get("/api/datasources")
-    .then((result) => {
-      self.servers = result.filter((o: { type: Object; }) => {
-        return o.type === "grafana-sensu-datasource";
+    .then((result: any) => {
+      self.servers = result.filter((o: { type: {}; }) => {
+        return o.type === "grafana-sensucore-datasource";
       });
       console.log("servers..." + JSON.stringify(self.servers));
     });

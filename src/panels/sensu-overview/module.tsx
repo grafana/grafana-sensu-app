@@ -5,7 +5,7 @@ import {defaults} from "./defaults";
 import {MetricsPanelCtrl} from "grafana/app/plugins/sdk";
 import {SensuOverview} from "./components/sensu_overview";
 import * as Series from "./panel_types/series";
-
+import {OverviewDatasource} from "./overview_datasource";
 import {loadPluginCss} from "grafana/app/plugins/sdk";
 
 loadPluginCss({
@@ -13,30 +13,170 @@ loadPluginCss({
   light : "plugins/grafana-sensu-app/panels/external/material-icons.css"
 });
 
-
 class SensuOverviewCtrl extends MetricsPanelCtrl {
   static templateUrl = "panels/sensu-overview/partials/template.html";
   dataType = "timeseries";
   series: any[];
   data: Series.SeriesStat[];
+  eventData: any;
   fontSizes: any[];
   templateSrv: any;
   containerId: string;
+  backendSrv: any;
+  servers: any;
+  panelReady = false;
+  datasourceSrv: any;
+  overviewDatasource: OverviewDatasource;
+  sensuDS: any;
+  cluster: any;
+  alertSrv: any;
 
   /** @ngInject */
-  constructor($scope, $injector, templateSrv) {
+  constructor($scope, $injector, backendSrv, datasourceSrv, alertSrv, templateSrv) {
     super($scope, $injector);
-    console.log("defaults before " + JSON.stringify(this.panel.maxDataPoints));
     _.defaults(this.panel, defaults.panelDefaults);
     this.templateSrv = templateSrv;
-    console.log("defaults after " + JSON.stringify(this.panel.maxDataPoints));
+    this.backendSrv = backendSrv;
+    this.datasourceSrv = datasourceSrv;
+    this.alertSrv = alertSrv;
+    this.overviewDatasource = new OverviewDatasource(datasourceSrv);
     this.containerId = "container_react_" + this.panel.id;
     this.events.on("data-received", this.onDataReceived.bind(this));
     this.events.on("data-error", this.onDataError.bind(this));
     this.events.on("data-snapshot-load", this.onDataReceived.bind(this));
     this.events.on("init-edit-mode", this.onInitEditMode.bind(this));
+    this.cluster = {};
+    this.sensuDS = {};
+    this.loadSensuServers();
   }
 
+  loadDatasource(id) {
+    return this.backendSrv.get('/api/datasources')
+      .then(result => {
+        //console.log("datasources all: " + JSON.stringify(result));
+        return _.filter(result, {"type": "grafana-sensucore-datasource"})[0];
+        //return _.filter(result, {"type": "grafana-sensucore-datasource", "name": id})[0];
+      })
+      .then( (ds) => {
+        //console.log("ds: " + JSON.stringify(ds));
+        if (ds == null) {
+          this.alertSrv.set("Failed to connect", "Could not connect to the specified sensu server.", 'error');
+          throw new Error("Failed to connect to " + id);
+        }
+        this.cluster = ds;
+        return this.datasourceSrv.get(ds.name);
+      }).then(sensuDS => {
+        this.sensuDS = sensuDS;
+        //console.log("ds: " + JSON.stringify(this.sensuDS));
+        return sensuDS;
+      });
+  }
+
+  /*
+  async loadSensuServers() {
+    const serverId = 2;
+    await this.loadDatasource(serverId);
+    const sensuStats = await this.overviewDatasource.getSensuStats(serverId, this.sensuDS);
+    debugger;
+    this.eventData = this.convertStatsToPanelStats(sensuStats);
+    //console.log("converted to eventData:" + JSON.stringify(this.eventData));
+    if (this.eventData) {
+      this.panelReady = true;
+    }
+  }
+  */
+
+  loadSensuServers() {
+      const serverId = 2;
+      this.loadDatasource(serverId).then(() => {
+        return this.overviewDatasource.getSensuStats(serverId, this.sensuDS);
+      }).then(sensuStats => {
+        this.eventData = this.convertStatsToPanelStats(sensuStats);
+        console.log("converted to eventData:" + JSON.stringify(this.eventData));
+        if (this.eventData) {
+          this.panelReady = true;
+          // have to call render() once the data loads
+          this.render();
+        }
+      });
+  }
+
+  /*
+  need to convert the event data into the form needed by the react panel
+  sensustats:{"sensuStats":{"data":[
+    {
+      "target":"allEvents","timestamp":1546633115000,"type":"docs",
+      "datapoints":[
+        {
+          "target":"allEvents","timestamp":1546633115000,
+          "numEvents":19,
+          "numSilenced":1,
+          "numClientsSilenced":9,
+          "numChecksSilenced":10,
+          "numWarningEvents":4,
+          "numWarningEventsSilenced":1,
+          "numCriticalEvents":14,
+          "numCriticalEventsSilenced":0,
+          "numUnknownEvents":1,
+          "numUnknownEventsSilenced":0
+        }
+      ],"rawTarget":"allEvents"}]}}
+  */
+  convertStatsToPanelStats(result) {
+    const converted = [];
+    const stats = result.data[0].datapoints[0];
+    console.log("convertStatsToPanelStats.stats:" + JSON.stringify(stats));
+    converted.push({
+      bgColor: "inherit",
+      color: "red",
+      text: "placeholder",
+      title: "Critical Events",
+      icon: "error",
+      active: stats.numCriticalEvents,
+      silenced: stats.numCriticalEventsSilenced,
+      total: (stats.numCriticalEvents + stats.numCriticalEventsSilenced),
+      iconColor: "secondary"
+    });
+    converted.push({
+      bgColor: "inherit",
+      color: "yellow",
+      text: "placeholder",
+      title: "Warning Events",
+      icon: "warning",
+      active: stats.numWarningEvents,
+      silenced: stats.numWarningEventsSilenced,
+      total: (stats.numWarningEvents + stats.numWarningEventsSilenced),
+      iconColor: "inherit"
+    });
+    converted.push({
+      bgColor: "inherit",
+      color: "grey",
+      text: "placeholder",
+      title: "Unknown Events",
+      icon: "motorcycle",
+      active: stats.numUnknownEvents,
+      silenced: stats.numUnknownEventsSilenced,
+      total: (stats.numUnknownEvents + stats.numUnknownEventsSilenced),
+      iconColor: "primary"
+    });
+    return converted;
+  }
+
+  /*
+  async OLDloadSensuServers() {
+    await this.backendSrv.get("/api/datasources")
+      .then(async (result: any) => {
+        this.servers = result.filter((o: { type: {}; }) => {
+          return o.type === "grafana-sensucore-datasource";
+        });
+        console.log("servers..." + JSON.stringify(this.servers));
+        this.eventData = await this.OLDgetSensuServerEvents(this.servers[0]);
+        console.log("eventdata fake..." + JSON.stringify(this.eventData));
+        this.panelReady = true;
+      });
+  }
+
+*/
   onInitEditMode() {
     this.fontSizes = ["20%", "30%", "50%", "70%", "80%", "100%", "110%", "120%", "150%", "170%", "200%"];
     // determine the path to this plugin
@@ -45,7 +185,7 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     //this.unitFormats = kbn.getUnitFormats();
   }
 
-  onDataReceived(dataList: any) {
+  async onDataReceived(dataList: any) {
     if (dataList.length > 0 && dataList[0].type === "table") {
       this.dataType = "table";
       if (dataList[0].rows && !dataList[0].rows.length) {
@@ -59,6 +199,9 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
       // this.setValues();
       this.data = [];
     }
+    //debugger;
+    //this.eventData = await this.getSensuServerEvents(this.cluster);
+
     this.render();
   }
 
@@ -120,13 +263,6 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     panelByClass.append("<div style=\"width: 100%; height: 100%;\" id=\"" + ctrl.containerId + "\"></div>");
     const container = panelByClass[0].childNodes[0];
 
-    const sensuOverviewReactElem = React.createElement(SensuOverview);
-    const sensuOverviewProps = {
-      stats: ctrl.data,
-      options: ctrl.panel,
-      size: scope.size
-    };
-
     // bind render event
     this.events.on("render", () => {
       const container = document.getElementById(ctrl.containerId);
@@ -139,11 +275,11 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
      * render
      */
     function render() {
-      container.style.width = container.parentNode.clientWidth;
-      container.style.height = container.parentNode.clientHeight;
+      //container.style.width = container.parentNode.clientWidth;
+      //container.style.height = container.parentNode.clientHeight;
       // scope.size = { w: width, h: height };
       const sensuOverviewProps = {
-        stats: ctrl.data,
+        stats: ctrl.eventData,
         options: ctrl.panel,
         size: scope.size
       };

@@ -7,6 +7,7 @@ import * as SensuOverviewPanel from "../types";
 //import { SensuMenu } from "./sensu_menu";
 import {SensuNavBar} from "./sensu_navbar";
 import {SensuCard} from "./sensu_card";
+import { AlertTabCtrl } from 'grafana/app/features/alerting/alert_tab_ctrl';
 
 const DEFAULT_COLOR = "rgb(31, 120, 193)";
 const BACKGROUND_OPACITY = 0.1;
@@ -49,52 +50,17 @@ export class SensuOverview extends PureComponent <SensuOverviewProps> {
   }
 
   render() {
-    const tileData = [
-      {
-        bgColor: "inherit",
-        color: "red",
-        text: "placeholder",
-        title: "Critical Events",
-        icon: "error",
-        active: 3,
-        silenced: 2,
-        total: 5,
-        iconColor: "secondary"
-      },
-      {
-        bgColor: "inherit",
-        color: "yellow",
-        text: "placeholder",
-        title: "Warning Events",
-        icon: "warning",
-        active: 8,
-        silenced: 1,
-        total: 9,
-        iconColor: "inherit"
-      },
-      {
-        bgColor: "inherit",
-        color: "grey",
-        text: "placeholder",
-        title: "Unknown Events",
-        icon: "motorcycle",
-        active: 31,
-        silenced: 2,
-        total: 32,
-        iconColor: "primary"
-      }
-    ];
-
     return (
       <div>
         <SensuNavBar {...this.props} />
         <Grid container style={gridListStyle.root} spacing={16}>
           <Grid item xs={12}>
             <Grid container justify="center">
-              {tileData.map(tile => (
+              {this.props.stats.map(tile => (
                 <Grid key={tile.text} item>
                   <SensuCard
                     color={tile.color}
+                    icon={tile.icon}
                     titleText={tile.title}
                     primaryText={`Active: ${tile.active}`}
                     secondaryText={`Silenced: ${tile.silenced}`} />

@@ -1,6 +1,6 @@
 function getResponseForTarget(aTarget, responses) {
   // find a response that matches the target
-  var response = {
+  const response = {
     data: []
   };
   for (let i = 0; i < responses.data.length; i++) {

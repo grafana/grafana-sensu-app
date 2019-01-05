@@ -56,8 +56,8 @@ module.exports = {
   ],
   plugins: [
     new CleanWebpackPlugin('dist', { allowExternal: true }),
-    new LodashModuleReplacementPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin(),
+    new LodashModuleReplacementPlugin(),
     new CopyWebpackPlugin([
       { from: 'plugin.json', to: '.' },
       { from: '../README.md', to: '.' },
@@ -75,8 +75,7 @@ module.exports = {
       { from: 'datasource/sensu-core/css/*', to: '.' },
       { from: 'datasource/sensu-core/img/*', to: '.' },
       { from: 'datasource/sensu-core/partials/*', to: '.' },
-    ]),
-    new webpack.HotModuleReplacementPlugin()
+    ])
   ],
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules'],

@@ -22,6 +22,7 @@ export interface SensuCardProps {
   titleText: string;
   primaryText: string;
   secondaryText: string;
+  icon: string;
 }
 
 const styles = {
@@ -72,18 +73,19 @@ export class SensuCard extends PureComponent<SensuCardProps> {
     titleText: "",
     primaryText: "",
     secondaryText: "",
+    icon: "error"
   };
 
   render() {
-    const { width, height, color, bgColor, titleText, primaryText, secondaryText } = this.props;
-
-    let containerStyle: React.CSSProperties = {};
+    const { width, height, color, bgColor, titleText, primaryText, secondaryText, icon } = this.props;
+    const containerStyle: React.CSSProperties = {};
     if (bgColor) {
       containerStyle.background = bgColor;
     }
     if (color) {
       containerStyle.color = color;
     }
+    // <FontAwesomeIcon icon={faCoffee} />
     return (
     <div style={cardStyles.root}>
         <Card style={containerStyle}>
@@ -91,8 +93,7 @@ export class SensuCard extends PureComponent<SensuCardProps> {
             <Typography style={cardStyles.title} variant="headline" component="p" color="inherit">
               {titleText}
             </Typography>
-            <FontAwesomeIcon icon={faCoffee} />
-            <Icon color="inherit">warning</Icon>
+            <Icon color="inherit">{icon}</Icon>
             <Typography style={cardStyles.primaryText} variant="headline" component="p" color="inherit">
               {primaryText}
             </Typography>

@@ -36,7 +36,7 @@
     "no-conditional-assignment": true,
     "no-console": [true, "debug", "info", "time", "timeEnd", "trace"],
     "no-construct": true,
-    "no-debugger": true,
+    "no-debugger": false,
     "no-empty": false,
     "no-eval": true,
     "no-inferrable-types": true,
