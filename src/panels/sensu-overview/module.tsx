@@ -132,7 +132,7 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
       text: "placeholder",
       title: "Critical Events",
       icon: "error",
-      active: stats.numCriticalEvents,
+      active: stats.numCriticalEvents - stats.numCriticalEventsSilenced,
       silenced: stats.numCriticalEventsSilenced,
       total: (stats.numCriticalEvents + stats.numCriticalEventsSilenced),
       iconColor: "secondary"
@@ -143,9 +143,9 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
       text: "placeholder",
       title: "Warning Events",
       icon: "warning",
-      active: stats.numWarningEvents,
+      active: stats.numWarningEvents - stats.numWarningEventsSilenced,
       silenced: stats.numWarningEventsSilenced,
-      total: (stats.numWarningEvents + stats.numWarningEventsSilenced),
+      total: stats.numWarningEvents + stats.numWarningEventsSilenced,
       iconColor: "inherit"
     });
     converted.push({
@@ -154,9 +154,9 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
       text: "placeholder",
       title: "Unknown Events",
       icon: "motorcycle",
-      active: stats.numUnknownEvents,
+      active: stats.numUnknownEvents - stats.numUnknownEventsSilenced,
       silenced: stats.numUnknownEventsSilenced,
-      total: (stats.numUnknownEvents + stats.numUnknownEventsSilenced),
+      total: stats.numUnknownEvents + stats.numUnknownEventsSilenced,
       iconColor: "primary"
     });
     return converted;
