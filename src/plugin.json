@@ -9,7 +9,7 @@
   "info": {
     "description": "Sensu App.",
     "author": {
-      "name": "Brian Gann",
+      "name": "Grafana Labs",
       "url": "https://github.com/grafana/grafana-sensu-app/"
     },
     "keywords": ["sensu"],
