@@ -58,18 +58,6 @@
        "name": "Datatable Panel",
        "id": "briangann-datatable-panel",
        "version": "^0.0.6"
-      },
-      {
-       "type": "panel",
-       "name": "Polystat",
-       "id": "grafana-polystat-panel",
-       "version": "^1.0.14"
-      },
-      {
-       "type": "panel",
-       "name": "Status Panel",
-       "id": "vonage-status-panel",
-       "version": "^1.0.9"
       }
     ]
   }
