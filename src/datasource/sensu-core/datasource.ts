@@ -780,6 +780,19 @@ export class SensuCoreDatasource {
     return deferred.promise;
   }
 
+  getServerInfo() {
+    return this.backendSrv.datasourceRequest({
+      url: this.url + "/info",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": this.basicAuth
+      },
+      method: "GET",
+    }).then((response) => {
+      return response.data;
+    });
+  }
+
   // Required
   // Used for testing datasource in datasource configuration pange
   //    'Access-Control-Allow-Origin': "http://localhost:3000"

@@ -31,6 +31,7 @@
 
   "includes": [
     { "type": "page", "name": "Sensu Servers", "component": "SensuServersCtrl", "role": "Viewer", "addToNav": true, "defaultNav": true},
+    { "type": "page", "name": "Sensu Server Info", "component": "SensuServerInfoCtrl", "role": "Viewer", "addToNav": false, "defaultNav": false},
     {
       "type": "dashboard",
       "name": "Sensu Metrics",
@@ -50,12 +51,30 @@
   "dependencies": {
     "grafanaVersion": "5.0+",
     "plugins": [
-       {
-         "type": "panel",
-	 "name": "Pie Chart",
-         "id": "grafana-piechart-panel",
-	 "version": "1.3.3"
-       }
-     ]
+      {
+        "type": "panel",
+	      "name": "Pie Chart",
+        "id": "grafana-piechart-panel",
+	      "version": "^1.3.4"
+      },
+      {
+       "type": "panel",
+       "name": "Datatable Panel",
+       "id": "briangann-datatable-panel",
+       "version": "^0.0.6"
+      },
+      {
+       "type": "panel",
+       "name": "Polystat",
+       "id": "grafana-polystat-panel",
+       "version": "^1.0.14"
+      },
+      {
+       "type": "panel",
+       "name": "Status Panel",
+       "id": "vonage-status-panel",
+       "version": "^1.0.9"
+      }
+    ]
   }
 }

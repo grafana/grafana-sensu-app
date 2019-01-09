@@ -7,12 +7,14 @@ import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import Icon from "@material-ui/core/Icon";
 //import { AppBar, Toolbar, Typography, IconButton, Badge, Grid, Icon } from "@material-ui/core";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface SensuNavBarProps {
   width: number;
   height: number;
   color: string;
+  serverName: string;
+  icon: string;
 }
 
 const styles = {
@@ -40,6 +42,8 @@ export class SensuNavBar extends PureComponent<SensuNavBarProps> {
 
   static defaultProps: Partial<SensuNavBarProps> = {
     color: "white",
+    serverName: "test",
+    icon: "ok",
   };
   // font-awesome
   //<MUI.Icon className="fa fa-plus-circle" color="primary" />
@@ -50,12 +54,14 @@ export class SensuNavBar extends PureComponent<SensuNavBarProps> {
   // <MUI.Button variant="contained">Button</MUI.Button>
   // </MUI.Badge>
   render() {
+    const { width, height, color, icon, serverName } = this.props;
+
     return (
     <div style={styles.root}>
      <AppBar position="static">
         <Toolbar>
            <Typography style={styles.flex} variant="title" color="inherit">
-              Sensu
+              Sensu Server: {serverName}
           </Typography>
           <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
             <Badge color="primary" badgeContent={6} className={styles2.margin}>

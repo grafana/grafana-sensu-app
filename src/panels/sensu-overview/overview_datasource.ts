@@ -42,6 +42,23 @@ class OverviewDatasource {
         return sensuStats;
       });
   }
+  getSensuClientHealthStats(id: number, sensuDS: any) {
+    const target = {
+      clientQueryMode: "count",
+      sourceType: "client_health_json", // this specifies what we want to receive back from the datasource
+      dimensions: []
+    };
+    let sensuStats: any;
+    const query = {
+      targets: [target]
+    };
+    return this.issueSensuQuery(sensuDS, query)
+      .then(result => {
+        const aTarget = result.data[0].target;
+        sensuStats = result;
+        return sensuStats;
+      });
+  }
 }
 
 export { OverviewDatasource };

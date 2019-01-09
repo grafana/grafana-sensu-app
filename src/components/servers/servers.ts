@@ -5,7 +5,7 @@ export class SensuServersCtrl {
   server: any;
   pageReady: boolean;
   datasources: [any];
-  servers: {};
+  servers: any;
   isOrgEditor: boolean;
 
   static templateUrl = "components/servers/partials/servers.html";
@@ -15,11 +15,9 @@ export class SensuServersCtrl {
     const self = this;
     this.isOrgEditor = contextSrv.hasRole("Editor") || contextSrv.hasRole("Admin");
     document.title = "Grafana Sensu App";
-    this.servers = {};
+    this.servers = [];
     this.pageReady = false;
-    this.getSensuServers().then(() => {
-      self.pageReady = true;
-    });
+    this.getSensuServers();
   }
 
   async getSensuServers() {
@@ -30,6 +28,7 @@ export class SensuServersCtrl {
         return o.type === "grafana-sensucore-datasource";
       });
       console.log("servers..." + JSON.stringify(self.servers));
+      self.pageReady = true;
     });
   }
 
@@ -51,7 +50,36 @@ export class SensuServersCtrl {
     });
   }
 
+  /*
+    1) POST new datasource
+        POST to http://localhost:3000/api/datasources
+        {
+          "name":"Sensu Core-2",
+          "type":"grafana-sensucore-datasource",
+          "access":"proxy",
+          "isDefault":false
+        }
+    2) Get the id of the created datasource (will be in response)
+        response.datasource.id
+    3) Send user to the datasource config page http://localhost:3000/datasources/edit/7
+        window.location.href = ds_editor_uri;
+        this.$location.url('/datasources/edit/7');
+
+   */
+  async addSensuServer() {
+    const payload = {
+      "name": "SensuAppCore-" + this.servers.length,
+      "type": "grafana-sensucore-datasource",
+      "access": "proxy",
+      "isDefault": false
+    };
+    const response = await this.backendSrv.post("/api/datasources", payload);
+    const instanceId = response.datasource.id;
+    this.$location.url('/plugins/grafana-sensu-app/page/sensu-servers');
+    window.location.href = '/datasources/edit/' + instanceId;
+  }
+
   serverInfo(server) {
-    this.$location.path("plugins/grafana-sensu-app/page/server-info").search({"server": server.id});
+    this.$location.path("plugins/grafana-sensu-app/page/sensu-server-info").search({"server": server.id});
   }
 }

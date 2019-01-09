@@ -1,13 +1,13 @@
 <div class="page-header">
 	<h1 >Sensu Servers</h1>
-	<a class="btn btn-success" href="plugins/grafana-sensu-app/page/server-config" ng-show="ctrl.isOrgEditor">
+	<a class="btn btn-success" href="#" ng-click="ctrl.addSensuServer()" ng-show="ctrl.isOrgEditor">
 		<i class="fa fa-plus"></i>
 		New Sensu Server
 	</a>
 </div>
 
 <div ng-if="!ctrl.pageReady">
-	loading servers....
+	loading servers...
 </div>
 
 <div ng-if="ctrl.pageReady">
@@ -15,7 +15,7 @@
 		<div style="text-align: center; padding-top: 90px; min-height: 220px; min-width: 400px;  margin: 0 auto;">
 			<i ng-class="icon" class="icon-gf icon-gf-endpoint no-endpoints"></i>
 			<p ng-if="ctrl.isOrgEditor">Looks like you don’t have any Sensu servers yet.<br>
-				<a class="highlight-word" href="plugins/grafana-sensu-app/page/server-config">Add a new Sensu server</a>
+				<a class="highlight-word" href="#" ng-click="ctrl.addSensuServer()">Add a new Sensu server</a>
 			</p>
 			<p ng-if="!ctrl.isOrgEditor">Your org does not have any servers configured. Contact your org admin.
 			</p>
@@ -37,11 +37,11 @@
           </a>
         </td>
         <td class="text-right">
-          <a style="margin-left: 15px; vertical-align: sub;" href="plugins/grafana-sensu-app/page/server-config?server={{server.id}}">
-            <i ng-class="icon" class="icon-gf icon-gf-settings" bs-tooltip="'Server Config'"></i> Server Config
+          <a style="margin-left: 15px; vertical-align: sub;" href="/datasources/edit/{{server.id}}">
+            <i ng-class="icon" class="icon-gf icon-gf-settings" bs-tooltip="'Sensu Server Config'"></i> Edit
           </a>
           &nbsp;&nbsp;
-          <a ng-click="ctrl.deleteServer(server)" class="btn btn-danger btn-mini">
+          <a ng-click="ctrl.deleteSensuServer(server)" class="btn btn-danger btn-mini">
             <i class="fa fa-remove"></i>
           </a>
         </td>

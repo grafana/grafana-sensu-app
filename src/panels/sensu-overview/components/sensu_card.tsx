@@ -2,9 +2,16 @@
 import {PureComponent} from "react";
 import { getBGColor } from "./utils";
 import * as React from "react";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCoffee} from "@fortawesome/free-solid-svg-icons/faCoffee";
+import {faFire} from "@fortawesome/free-solid-svg-icons/faFire";
+import {faFlag} from "@fortawesome/free-solid-svg-icons/faFlag";
+import {faIgloo} from "@fortawesome/free-solid-svg-icons/faIgloo";
+import {faThumbsUp} from "@fortawesome/free-solid-svg-icons/faThumbsUp";
+import {faBellSlash} from "@fortawesome/free-solid-svg-icons/faBellSlash";
+import {faQuestionCircle} from "@fortawesome/free-solid-svg-icons/faQuestionCircle";
+// @fortawesome/free-regular-svg-icons
 
 
 import Card from "@material-ui/core/Card";
@@ -22,7 +29,8 @@ export interface SensuCardProps {
   titleText: string;
   primaryText: string;
   secondaryText: string;
-  icon: string;
+  primary_icon: any;
+  secondary_icon: any;
 }
 
 const styles = {
@@ -35,11 +43,6 @@ const styles = {
   menuButton: {
     marginLeft: -12,
     marginRight: 20
-  }
-};
-const styles2 = {
-  margin: {
-    margin: 6,
   }
 };
 
@@ -65,6 +68,12 @@ export class SensuCard extends PureComponent<SensuCardProps> {
   props: any;
   constructor(props) {
     super(props);
+    library.add(faBellSlash);
+    library.add(faFire);
+    library.add(faFlag);
+    library.add(faIgloo);
+    library.add(faThumbsUp);
+    library.add(faQuestionCircle);
   }
 
   static defaultProps: Partial<SensuCardProps> = {
@@ -73,12 +82,14 @@ export class SensuCard extends PureComponent<SensuCardProps> {
     titleText: "",
     primaryText: "",
     secondaryText: "",
-    icon: "error"
+    primary_icon: "question-circle",
+    secondary_icon: "bell-slash"
   };
 
   render() {
-    const { width, height, color, bgColor, titleText, primaryText, secondaryText, icon } = this.props;
+    const { width, height, color, bgColor, titleText, primaryText, secondaryText, primary_icon, secondary_icon } = this.props;
     const containerStyle: React.CSSProperties = {};
+    //const altIcon = faFire;
     if (bgColor) {
       containerStyle.background = bgColor;
     }
@@ -86,6 +97,8 @@ export class SensuCard extends PureComponent<SensuCardProps> {
       containerStyle.color = color;
     }
     // <FontAwesomeIcon icon={faCoffee} />
+    // <FontAwesomeIcon icon={faFire}/>
+    // <Icon color="inherit">{icon}</Icon>
     return (
     <div style={cardStyles.root}>
         <Card style={containerStyle}>
@@ -93,12 +106,11 @@ export class SensuCard extends PureComponent<SensuCardProps> {
             <Typography style={cardStyles.title} variant="headline" component="p" color="inherit">
               {titleText}
             </Typography>
-            <Icon color="inherit">{icon}</Icon>
             <Typography style={cardStyles.primaryText} variant="headline" component="p" color="inherit">
-              {primaryText}
+              <FontAwesomeIcon icon={primary_icon}/> {primaryText}
             </Typography>
             <Typography style={cardStyles.secondaryText} variant="headline" component="p" color="inherit">
-              {secondaryText}
+            <FontAwesomeIcon icon={secondary_icon}/> {secondaryText}
             </Typography>
           </CardContent>
           <CardActions>

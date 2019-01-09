@@ -1,13 +1,14 @@
-import {PureComponent} from "react";
+import React, {PureComponent} from "react";
 import { getBGColor } from "./utils";
-import * as React from "react";
 import Grid from "@material-ui/core/Grid";
-
+//import Paper from "@material-ui/core/Paper";
 import * as SensuOverviewPanel from "../types";
 //import { SensuMenu } from "./sensu_menu";
 import {SensuNavBar} from "./sensu_navbar";
 import {SensuCard} from "./sensu_card";
-import { AlertTabCtrl } from 'grafana/app/features/alerting/alert_tab_ctrl';
+import {SensuEventList} from "./sensu_eventlist";
+//import { AlertTabCtrl } from 'grafana/app/features/alerting/alert_tab_ctrl';
+// import { ReactText } from "react";
 
 const DEFAULT_COLOR = "rgb(31, 120, 193)";
 const BACKGROUND_OPACITY = 0.1;
@@ -39,6 +40,13 @@ const gridListStyle = {
   }
 };
 
+
+//const verticalText = {
+//  'transform': 'rotate(90deg)',
+//  'transform-origin': 'left top 0'
+//};
+//               <span style={ugh}>EVENTS</span>
+
 // export class SensuOverview extends PureComponent { const options =
 // props.options; const getColor = "green"; <SensuMenu {...props}
 // getColor={getColor} />        <SensuNavBar {...this.props} />
@@ -53,14 +61,30 @@ export class SensuOverview extends PureComponent <SensuOverviewProps> {
     return (
       <div>
         <SensuNavBar {...this.props} />
-        <Grid container style={gridListStyle.root} spacing={16}>
-          <Grid item xs={12}>
+        <Grid container style={gridListStyle.root} spacing={24}>
+          <Grid item xs={6}>
             <Grid container justify="center">
               {this.props.stats.map(tile => (
                 <Grid key={tile.text} item>
                   <SensuCard
                     color={tile.color}
-                    icon={tile.icon}
+                    primary_icon={tile.primary_icon}
+                    secondary_icon={tile.secondary_icon}
+                    titleText={tile.title}
+                    primaryText={`Active: ${tile.active}`}
+                    secondaryText={`Silenced: ${tile.silenced}`} />
+                </Grid>
+              ))}
+            </Grid>
+          </Grid>
+          <Grid item xs={6}>
+            <Grid container justify="center">
+              {this.props.clientHealthStats.map(tile => (
+                <Grid key={tile.text} item>
+                  <SensuCard
+                    color={tile.color}
+                    primary_icon={tile.primary_icon}
+                    secondary_icon={tile.secondary_icon}
                     titleText={tile.title}
                     primaryText={`Active: ${tile.active}`}
                     secondaryText={`Silenced: ${tile.silenced}`} />
@@ -69,7 +93,7 @@ export class SensuOverview extends PureComponent <SensuOverviewProps> {
             </Grid>
           </Grid>
         </Grid>
-
+        <SensuEventList {...this.props} />
       </div>
     );
   }
