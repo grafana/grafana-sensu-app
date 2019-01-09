@@ -34,17 +34,17 @@
     { "type": "page", "name": "Sensu Server Info", "component": "SensuServerInfoCtrl", "role": "Viewer", "addToNav": false, "defaultNav": false},
     {
       "type": "dashboard",
-      "name": "Sensu Metrics",
-      "path": "dashboards/Sensu-Metrics.json",
-      "addToNav": false
+      "name": "Sensu Summary",
+      "path": "dashboards/sensu-summary.json",
+      "addToNav": true
     },
     {
       "type": "datasource",
-      "name": "Sensu"
+      "name": "Sensu Core"
     },
     {
       "type": "panel",
-      "name": "Sensu Overview Panel"
+      "name": "Sensu Overview"
     }
   ],
 
