@@ -1,3 +1,5 @@
+import angular from 'angular';
+
 import _ from "lodash";
 import * as React from "react";
 import * as ReactDOM from "react-dom";

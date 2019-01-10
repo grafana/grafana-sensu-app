@@ -1,11 +1,11 @@
 {
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Sensu App for Grafana",
   "main": "index.js",
   "scripts": {
-    "build": "node --max-old-space-size=8192 ./node_modules/.bin/webpack --config webpack.config.prod.js",
-    "dev": "NODE_ENV=development webpack --config webpack.config.dev.js --mode=development --hot ",
+    "build": "NODE_ENV=production webpack --config webpack.config.prod.js --mode=production",
+    "dev": "NODE_ENV=development webpack --config webpack.config.dev.js --mode=development --hot",
     "watch": "NODE_ENV=development webpack --config webpack.config.dev.js --hot --watch",
     "test": "jest --config jest.config.js"
   },

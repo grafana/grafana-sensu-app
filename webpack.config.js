@@ -57,7 +57,7 @@ module.exports = {
     libraryTarget: 'amd'
   },
   externals: [
-   { 'angular': 'angular' },
+    'angular',
     'lodash',
     'react',
     'react-dom',

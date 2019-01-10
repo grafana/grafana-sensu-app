@@ -1,4 +1,5 @@
 ///<reference path="../../../node_modules/@types/grafana/app/core/utils/kbn.d.ts" />
+import angular from 'angular';
 
 import _ from "lodash";
 
@@ -7,7 +8,8 @@ import { interval_to_ms, secondsToHms } from "grafana/app/core/utils/kbn";
 import { getAggregateURIs } from './api/aggregate_requests';
 import { convertAggregatesToDataPoints, convertAggregatesToJSON } from './api/aggregate_converters';
 import { getClientsURIs, getClientHealthURIs, getClientHistoryURIs } from './api/client_requests';
-import { convertClientsToDataPoints, convertClientsToJSON, convertClientHealthToJSON, convertClientHistoryToDataPoints } from './api/client_converters';
+import { convertClientsToDataPoints, convertClientsToJSON, convertClientHealthToJSON, convertClientHistoryToDataPoints }
+  from './api/client_converters';
 import { getEventsURIs } from './api/event_requests';
 import { convertEventsToDataPoints, convertEventsToJSON, convertEventsToEventMetrics, convertEventsToEventMetricsJSON } from './api/event_converters';
 import { getResultURIs } from './api/result_requests';
