@@ -27,7 +27,7 @@ Once the plugin is installed, the application will need to be enabled:
 
 Once enabled, you will see this:
 
-![App Enabled](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-enabled2.png)
+![App Enabled](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-enable2.png)
 
 A convenience icon is also added the side menu:
 
