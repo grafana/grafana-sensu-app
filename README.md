@@ -23,21 +23,21 @@ See the [Change Log](CHANGELOG.md) here.
 
 Once the plugin is installed, the application will need to be enabled:
 
-![App Enable](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-enabled.png)
+![App Enable](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-enabled.png)
 
 Once enabled, you will see this:
 
-![App Enabled](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-enabled2.png)
+![App Enabled](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-enabled2.png)
 
 A convenience icon is also added the side menu:
 
-![Side Menu](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-sidemenu.png)
+![Side Menu](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-sidemenu.png)
 
 ### Setup datasource
 
 The datasource needs to be configured to communicate with your Sensu API. Set the Url to your Sensu API, typically on port 4567.
 
-![Datasource Configuration](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-datasource-config.png)
+![Datasource Configuration](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-datasource-config.png)
 
 NOTE: You can pre-provision the datasource before enabling the app. Once the app is enabled, the datasource will become available.
 
@@ -74,7 +74,7 @@ datasources:
 ### Sensu API detail
 Once a datasource is created, you can see select the name of the instance, and see details about the API.
 
-![Server Info](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-server-info.png)
+![Server Info](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-server-info.png)
 
 ### Authentication
 
@@ -85,11 +85,11 @@ Basic Auth and Basic Auth over SSL have been tested.
 A dashboard is included to give you a quick view of your Sensu environment.
 
 
-![Summary Dashboard](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-summary.png)
+![Summary Dashboard](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-summary.png)
 
 NOTE: If the import fails while enabling, you can re-import it using the plugin configuration page:
 
-![Summary Dashboard Import](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-dashboard-import.png)
+![Summary Dashboard Import](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-dashboard-import.png)
 
 
 ## Using the datasource
@@ -235,9 +235,9 @@ Returns check results in Table format
 
 Some query options will include dimensions and/or filters depending on which is selected.
 
-![Dimensions](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-datasource-dimensions.png)
+![Dimensions](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-datasource-dimensions.png)
 
-![Filters](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-datasource-filters.png)
+![Filters](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-datasource-filters.png)
 
 
 #### Template Variables
@@ -250,12 +250,12 @@ Support exists for using the following as template variables in Grafana:
 
 Here is an example configuration adding `Client` as a template variable:
 
-![Template Config](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-templating-config.png)
+![Template Config](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-templating-config.png)
 
 Once added, you can reference the template variable as you would with any other Grafana datasource.
 Here is an example showing how to limit a table panel to show just the selected client:
 
-![Using "client" template variable](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-using-template-var.png)
+![Using "client" template variable](https://raw.githubusercontent.com/grafana/grafana-sensu-app/master/src/screenshots/sensu-app-using-template-var.png)
 
 
 ### References
