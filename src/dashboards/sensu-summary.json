@@ -23,7 +23,7 @@
       "type": "datasource",
       "id": "grafana-sensucore-datasource",
       "name": "Sensu Core",
-      "version": "1.0.2"
+      "version": "1.0.3"
     },
     {
       "type": "panel",

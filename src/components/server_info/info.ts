@@ -1,3 +1,4 @@
+import angular from 'angular';
 
 export class SensuServerInfoCtrl {
   server: any;

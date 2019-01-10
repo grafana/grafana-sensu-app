@@ -1,3 +1,4 @@
+import angular from 'angular';
 
 import appEvents from "grafana/app/core/app_events";
 

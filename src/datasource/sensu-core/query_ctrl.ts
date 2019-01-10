@@ -1,3 +1,4 @@
+import angular from 'angular';
 
 import { QueryCtrl } from "grafana/app/plugins/sdk";
 

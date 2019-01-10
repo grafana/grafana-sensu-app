@@ -1,3 +1,4 @@
+import angular from 'angular';
 
 export class SensuConfigCtrl {
   static templateUrl = "components/config/config.html";
