@@ -23,26 +23,58 @@ See the [Change Log](CHANGELOG.md) here.
 
 Once the plugin is installed, the application will need to be enabled:
 
-![Dimensions](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-enabled.png)
+![App Enable](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-enabled.png)
 
 Once enabled, you will see this:
 
-![Dimensions](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-enabled2.png)
+![App Enabled](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-enabled2.png)
 
 A convenience icon is also added the side menu:
 
-![Dimensions](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-sidemenu.png)
+![Side Menu](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-sidemenu.png)
 
 ### Setup datasource
 
 The datasource needs to be configured to communicate with your Sensu API. Set the Url to your Sensu API, typically on port 4567.
 
-![Dimensions](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-datasource-config.png)
+![Datasource Configuration](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-datasource-config.png)
+
+NOTE: You can pre-provision the datasource before enabling the app. Once the app is enabled, the datasource will become available.
+
+Create a file: in provisioning/datasources/sensu.yaml
+```yaml
+# config file version
+apiVersion: 1
+
+deleteDatasources:
+  - name: SENSU
+    orgId: 1
+
+datasources:
+- name: SENSU
+  type: grafana-sensucore-datasource
+  access: proxy
+  url: http://sensu:4567
+  basicAuth: true
+  basicAuthUser: sensu
+  basicAuthPassword: mypassword
+  withCredentials: false
+  isDefault: false
+  jsonData:
+     tlsAuth: false
+     tlsAuthWithCACert: false
+  secureJsonData:
+    tlsCACert: ""
+    tlsClientCert: ""
+    tlsClientKey: ""
+  version: 1
+  editable: true
+```
 
 ### Sensu API detail
 Once a datasource is created, you can see select the name of the instance, and see details about the API.
 
-![Dimensions](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-server-info.png)
+![Server Info](https://raw.githubusercontent.com/grafana/grafana-sensu-datasource/master/src/screenshots/sensu-app-server-info.png)
 
 ### Authentication
 
