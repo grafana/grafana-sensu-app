@@ -10,8 +10,8 @@
       "url": "https://grafana.com"
     },
     "logos": {
-      "small": "img/sensu-overview-panel.svg",
-      "large": "img/sensu-overview-panel.svg"
+      "small": "img/sensu-v2-logo-dark.svg",
+      "large": "img/sensu-v2-logo-dark.svg"
     },
     "version": "5.0.0"
   }

@@ -1,0 +1,70 @@
+<div class="page-header">
+	<h1>Sensu Server Info</h1>
+	<h3 style="float: right; margin-top: 0.5rem; font-style: italic;">Datasource Name: {{ctrl.server.name}}</h3>
+</div>
+<br>
+
+<div ng-if="!ctrl.pageReady">
+	loading info...
+</div>
+<div ng-if="ctrl.pageReady">
+  <!--
+<section class="card-section card-list-layout-list">
+	<h3 class="page-heading">
+		Servers {{ctrl.info.sensu.version}}
+  </h3>
+</section>
+-->
+<section class="card-section card-list-layout-grid">
+
+    <h3 class="page-heading">
+      Servers
+    </h3>
+    <ol class="card-list">
+      <li class="card-item-wrapper" ng-repeat="server in ctrl.info.servers">
+        <div class="card-item card-item--alert pointer">
+          <div class="card-item-body">
+            <div class="card-item-details">
+              <div class="card-item-name">
+                <span style="font-size: 80%">{{server.hostname}}</span>
+              </div>
+              <div class="card-item-sub-name">
+                <span style="font-size: 80%">{{server.address}}</span>
+              </div>
+              <div class="card-item-sub-name">
+                <span style="font-size: 80%">Version: {{server.sensu.version}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="card-item-wrapper">
+        <div class="card-item card-item--alert pointer">
+          <div class="card-item-body">
+            <div class="card-item-details">
+              <div class="card-item-name">
+                <span style="font-size: 80%">REDIS Connected: {{ctrl.info.redis.connected}}</span>
+              </div>
+            </div>
+          </div>
+        </div>            
+      </li>
+      <li class="card-item-wrapper">
+        <div class="card-item card-item--alert pointer">
+          <div class="card-item-body">
+            <div class="card-item-details">
+              <div class="card-item-name">
+                <span style="font-size: 80%">Transport: {{ctrl.info.transport.name}}</span>
+              </div>
+              <div class="card-item-sub-name">
+                <span style="font-size: 80%">Connected: {{ctrl.info.transport.connected}}</span>
+              </div>
+            </div>
+          </div>
+        </div>            
+      </li>
+    </ol>
+  </section>
+
+
+</div>

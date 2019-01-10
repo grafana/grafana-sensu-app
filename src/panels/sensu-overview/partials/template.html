@@ -1,2 +1,5 @@
 
-<div class="grafana-sensu-app-overview-panel"></div>
+<!-- wait for initialization to finish, then display the panel-->
+<div ng-show="ctrl.panelReady">
+    <div class="grafana-sensu-app-overview-panel"></div>
+</div>

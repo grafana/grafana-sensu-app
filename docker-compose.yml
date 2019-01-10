@@ -7,3 +7,4 @@ grafana:
     - ./provisioning:/etc/grafana/provisioning
   environment:
     - TERM=linux
+    - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-piechart-panel,briangann-datatable-panel,vonage-status-panel,grafana-polystat-panel

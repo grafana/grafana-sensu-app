@@ -1,4 +1,4 @@
-import * as Panel from "./types/panel";
+import * as Panel from "./panel_types/panel";
 
 export interface PanelOptions extends Panel.MetricPanelOptions {
 }

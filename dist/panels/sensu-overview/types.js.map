@@ -1,1 +1,0 @@
-{"version":3,"file":"types.js","sourceRoot":"src/","sources":["panels/sensu-overview/types.ts"],"names":[],"mappings":";;;;;;QASA,CAAC","sourcesContent":["import * as Panel from \"./types/panel\";\n\nexport interface PanelOptions extends Panel.MetricPanelOptions {\n}\n\nexport interface PanelSize {\n  w: number;\n  h: number;\n}\n"]}

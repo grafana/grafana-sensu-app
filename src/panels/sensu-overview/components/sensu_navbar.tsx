@@ -1,44 +1,87 @@
-//import "../../external/material-ui.development.js";
-//import * as MUI from "../../external/material-ui.production.min.js";
-import React from "react";
-import ReactDOM from "react-dom";
-import "../../external/babel.min.js";
-import * as MUI from "../../external/material-ui.production.min.js";
-//import Button from "../../external/@material-ui/core/Button/Button.js";
-//
-const { Button } = window["material-ui"];
+import React, {PureComponent} from "react";
 
-// https://github.com/mui-org/material-ui/blob/master/examples/cdn/index.html
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
+import Badge from "@material-ui/core/Badge";
+import Icon from "@material-ui/core/Icon";
+//import { AppBar, Toolbar, Typography, IconButton, Badge, Grid, Icon } from "@material-ui/core";
+//import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface SensuNavBarProps {
   width: number;
   height: number;
   color: string;
+  serverName: string;
+  icon: string;
 }
 
-export class SensuNavBar extends React.PureComponent<SensuNavBarProps> {
+const styles = {
+  root: {
+    flexGrow: 1
+  },
+  flex: {
+    flexGrow: 1
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20
+  }
+};
+const styles2 = {
+  margin: "6"
+};
+
+
+export class SensuNavBar extends PureComponent<SensuNavBarProps> {
   props: any;
-  //const {Button} = window["material-ui"];
   constructor(props) {
     super(props);
-    //this.button = window["material-ui"];
   }
 
   static defaultProps: Partial<SensuNavBarProps> = {
     color: "white",
+    serverName: "test",
+    icon: "ok",
   };
+  // font-awesome
+  //<MUI.Icon className="fa fa-plus-circle" color="primary" />
+  // material font
+  //<MUI.Icon color="inherit">star</MUI.Icon>
 
+  // <MUI.Badge color="primary" badgeContent={4} className={styles2.margin}>
+  // <MUI.Button variant="contained">Button</MUI.Button>
+  // </MUI.Badge>
   render() {
-    //if (MUI) {
-    //  let button = MUI[Button]; // .Button;
-    //}
-    //let z = window["material-ui"];
-    //let Button = z.Button;
-    // let Button = window["material-ui"].Button;
-    return(
-        <Button variant="raised" color="primary">
-          navbar placeholder
-        </Button>
+    const { width, height, color, icon, serverName } = this.props;
+
+    return (
+    <div style={styles.root}>
+     <AppBar position="static">
+        <Toolbar>
+           <Typography style={styles.flex} variant="title" color="inherit">
+              Sensu Server: {serverName}
+          </Typography>
+          <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
+            <Badge color="primary" badgeContent={6} className={styles2.margin}>
+                <Icon color="inherit">star</Icon>
+            </Badge>
+          </IconButton>
+          <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
+            <Badge color="primary" badgeContent={2} className={styles2.margin}>
+              <Icon color="inherit">volume_off</Icon>
+            </Badge >
+          </IconButton>
+          <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
+            <Badge color="primary" badgeContent={2} className={styles2.margin}>
+                  <Icon color="inherit">access_alarm</Icon>
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
+
+    </div>
     );
   }
 }

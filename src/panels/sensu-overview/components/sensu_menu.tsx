@@ -1,4 +1,4 @@
-import React from "react";
+import React, {PureComponent} from "react";
 import { getBGColor } from "./utils";
 
 const DEFAULT_COLOR = "rgb(31, 120, 193)";
@@ -17,7 +17,7 @@ export interface SensuMenuProps {
   labelFontSize?: number;
 }
 
-export class SensuMenu extends React.PureComponent<SensuMenuProps> {
+export class SensuMenu extends PureComponent<SensuMenuProps> {
   props: any;
 
   constructor(props) {
@@ -33,7 +33,7 @@ export class SensuMenu extends React.PureComponent<SensuMenuProps> {
     const valueColor = this.props.color;
     const bgColor = getBGColor(valueColor, BACKGROUND_OPACITY);
 
-    let containerStyle: React.CSSProperties = {};
+    const containerStyle: React.CSSProperties = {};
     containerStyle.height = height;
     containerStyle.width = width;
 
@@ -42,7 +42,7 @@ export class SensuMenu extends React.PureComponent<SensuMenuProps> {
     }
 
     const labelFontSize = Math.floor((this.props.labelFontSize || this.props.fontSize) * LABEL_SIZE_COEF);
-    let valueFontSize = this.props.fontSize;
+    const valueFontSize = this.props.fontSize;
     const labelStyle: React.CSSProperties = {
       fontSize: labelFontSize,
     };
@@ -50,13 +50,13 @@ export class SensuMenu extends React.PureComponent<SensuMenuProps> {
       lineHeight: labelFontSize + "px",
     };
 
-    let valueStyle: React.CSSProperties = {
+    const valueStyle: React.CSSProperties = {
       fontSize: valueFontSize + "px",
     };
     if (colorValue) {
       valueStyle.color = valueColor;
     }
-    let valueContainerStyle: React.CSSProperties = {
+    const valueContainerStyle: React.CSSProperties = {
       fontSize: valueFontSize + "px",
     };
     return (

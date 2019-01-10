@@ -1,33 +1,33 @@
 {
     "compilerOptions": {
-      "jsx": "react",
       "moduleResolution": "node",
       "outDir": "dist",
       "target": "es5",
-      "rootDir": "src",
-      "module": "system",
+      "lib": ["es6", "dom"],
+      "jsx": "react",
+      "module": "esnext",
       "declaration": false,
+      "diagnostics": true,
       "allowSyntheticDefaultImports": true,
-      "allowJs": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "importHelpers": true,
+      "noEmitHelpers": true,
+      "removeComments": true,
+      "allowJs": false,
       "sourceMap": true,
       "sourceRoot": "src",
       "inlineSources": true,
       "noEmitOnError": false,
-      "emitDecoratorMetadata": true,
+      "emitDecoratorMetadata": false,
       "experimentalDecorators": true,
       "noImplicitReturns": true,
-      "noImplicitThis": false,
+      "noImplicitThis": true,
       "noImplicitUseStrict":false,
       "noImplicitAny": false,
-      "noUnusedLocals": false
-    },
-    "include": [
-      "src/**/*.ts",
-      "src/**/*.tsx",
-      "node_modules/grafana-sdk-mocks/app/headers/common.d.ts",
-      "node_modules/@types/grafana/index.d.ts"
-    ],
-    "exclude": [
-      "node_modules", "bower_components", "external", "node_modules/grafana-sdk-mocks/**"
-    ]
+      "noUnusedLocals": false,
+      "pretty": true,
+      "typeRoots": ["node_modules/@types", "types"],
+      "baseUrl": "./src"
+    }
 }

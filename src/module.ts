@@ -1,8 +1,9 @@
 ///<reference path="../node_modules/grafana-sdk-mocks/app/headers/common.d.ts" />
-///<reference path="../node_modules/@types/d3/index.d.ts" />
 
 import {SensuConfigCtrl} from "./components/config/config";
-import {loadPluginCss} from "app/plugins/sdk";
+import {SensuServersCtrl} from "./components/servers/servers";
+import {SensuServerInfoCtrl} from "./components/server_info/info";
+import {loadPluginCss} from "grafana/app/plugins/sdk";
 
 loadPluginCss({
   dark: "plugins/grafana-sensu-app/css/sensu-app.dark.css",
@@ -11,4 +12,6 @@ loadPluginCss({
 
 export {
   SensuConfigCtrl as ConfigCtrl,
+  SensuServerInfoCtrl,
+  SensuServersCtrl
 };

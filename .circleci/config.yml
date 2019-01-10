@@ -1,0 +1,72 @@
+defaults: &defaults
+  working_directory: ~/grafana-sensu-app
+  docker:
+    - image: circleci/node:10.14.2-stretch
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Build
+          command: |
+            yarn
+            #sudo yarn add global jest
+            node -p "require('node-sass').info"
+            yarn build
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - store_artifacts:
+          path: dist
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Test
+          command: |
+            yarn install
+            sudo npm install -g jest
+            yarn test
+      - store_artifacts:
+          path: coverage
+  release:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Release
+          command: |
+            yarn install
+            sudo apt-get install jq
+
+workflows:
+  version: 2
+  build-test-release:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - approve-release:
+          type: approval
+          requires:
+            - build
+            - test
+      - release:
+          requires:
+            - approve-release
