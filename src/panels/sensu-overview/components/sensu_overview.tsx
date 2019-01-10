@@ -59,6 +59,12 @@ export class SensuOverview extends PureComponent <SensuOverviewProps> {
 
   render() {
     return (
+      <div>Coming Soon!</div>
+    );
+  }
+
+  wip_render() {
+    return (
       <div>
         <SensuNavBar {...this.props} />
         <Grid container style={gridListStyle.root} spacing={24}>
