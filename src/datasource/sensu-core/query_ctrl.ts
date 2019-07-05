@@ -536,8 +536,8 @@ export class SensuCoreDatasourceQueryCtrl extends QueryCtrl {
     if (!this.target.dimensions) {
       this.target.dimensions = [];
     }
-    var dimensionsForSourceType = this.dimensionTypes[this.target.sourceType];
-    var defaultDimensionType = dimensionsForSourceType[0].value;
+    const dimensionsForSourceType = this.dimensionTypes[this.target.sourceType];
+    const defaultDimensionType = dimensionsForSourceType[0].value;
     this.target.dimensions.push({
       name: null,
       value: null,
@@ -577,8 +577,8 @@ export class SensuCoreDatasourceQueryCtrl extends QueryCtrl {
     if (!this.target.filters) {
       this.target.filters = [];
     }
-    var filtersForSourceType = this.filterTypes[this.target.sourceType];
-    var defaultFilterType = filtersForSourceType[0].type;
+    const filtersForSourceType = this.filterTypes[this.target.sourceType];
+    const defaultFilterType = filtersForSourceType[0].type;
     this.target.filters.push({
       name: null,
       value: null,

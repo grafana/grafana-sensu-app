@@ -74,10 +74,10 @@ describe('SensuDataSource', () => {
       });
     });
     describe('when performing metricFindQuery()', () => {
-      describe('and call to sensu-api api succeeds', function() {
+      describe('and call to sensu-api api succeeds', () => {
         it.skip('should be a real test someday', () => {});
       });
-      describe('and call to sensu-api api fails', function() {
+      describe('and call to sensu-api api fails', () => {
         it.skip('should be a real test someday', () => {});
       });
     });

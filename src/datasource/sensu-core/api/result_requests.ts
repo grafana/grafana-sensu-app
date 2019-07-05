@@ -1,10 +1,10 @@
 
 function getResultURIs(checkNames, clientNames) {
-  var uris = [];
-  var dimensionURI = "/results";
-  var aClientName = null;
-  var aCheckName = null;
-  var anAggregateName = null;
+  const uris = [];
+  let dimensionURI = "/results";
+  let aClientName = null;
+  let aCheckName = null;
+  const anAggregateName = null;
   if (clientNames.length) {
     for (let i = 0; i < clientNames.length; i++) {
       aClientName = clientNames[i];

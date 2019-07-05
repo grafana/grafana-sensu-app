@@ -4,11 +4,11 @@ describe('Sensu Core API Utils', () => {
 
   describe('when calling getResponseForTarget()', () => {
 
-    describe('and target is found', function() {
+    describe('and target is found', () => {
       it.skip('TODO', () => {});
     });
 
-    describe('and target is not found', function() {
+    describe('and target is not found', () => {
       it.skip('TODO', () => {});
     });
   });

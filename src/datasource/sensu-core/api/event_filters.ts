@@ -14,15 +14,15 @@ function includeEventTarget(target, anEvent) {
   if (target.filters.length === 0) {
     return true;
   }
-  for (var i = 0; i < target.filters.length; i++) {
-    var aFilter = target.filters[i];
+  for (let i = 0; i < target.filters.length; i++) {
+    const aFilter = target.filters[i];
     switch (aFilter.filterType) {
       case "field":
         // filterFieldName
         // filterFieldValue
         if (anEvent.client.hasOwnProperty(aFilter.filterFieldName)) {
           // matched field, check value
-          var aVal = anEvent.client[aFilter.filterFieldName];
+          const aVal = anEvent.client[aFilter.filterFieldName];
           if (aVal === aFilter.filterFieldValueReplaced) {
             return true;
           }

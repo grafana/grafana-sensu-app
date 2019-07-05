@@ -2,22 +2,22 @@
 import { getResponseForTarget } from "./utils";
 
 function convertResultsToTable(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
+  const response = getResponseForTarget(aTarget, responses);
 
   // the result has no "datapoints", need to create it based on the check data
   // when we have a checkname and a clientName, the response is different, the
   // data is not an array, but contains the same information, recreate and push
   if (response.data.length === undefined) {
-    var singleData = response.data;
+    const singleData = response.data;
     response.data = [];
     response.data.push(singleData);
   }
   // this will be collapsed into table format, where the columns are predefined
   // and each row is a response formatted to the columns
-  var rowData = [];
-  for (var i = 0; i < response.data.length; i++) {
-    var rowInfo = response.data[i];
-    var aRow = [
+  const rowData = [];
+  for (let i = 0; i < response.data.length; i++) {
+    const rowInfo = response.data[i];
+    const aRow = [
       rowInfo.check.issued * 1000,
       rowInfo.client,
       rowInfo.check.name,
@@ -33,8 +33,8 @@ function convertResultsToTable(aTarget, responses) {
     rowData.push(aRow);
   }
   // collapse everything into data[0]
-  var anEvent = response.data[0];
-  var datapoints = [];
+  const anEvent = response.data[0];
+  const datapoints = [];
   datapoints[0] = [anEvent.check.status, (anEvent.check.issued * 1000)];
   anEvent.datapoints = datapoints;
   anEvent.type = "table";
@@ -77,13 +77,13 @@ Response come back as:
 }
  */
 function convertResultsToJSON(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
+  const response = getResponseForTarget(aTarget, responses);
 
-  for (var i = 0; i < response.data.length; i++) {
-    var anEvent = response.data[i];
-    var datapoints = [];
+  for (let i = 0; i < response.data.length; i++) {
+    const anEvent = response.data[i];
+    const datapoints = [];
     if (anEvent.check.issued !== undefined) {
-      var data = {
+      const data = {
         timestamp: (anEvent.check.issued * 1000),
         message: anEvent.check.name,
         client: anEvent.client,
@@ -114,21 +114,21 @@ function convertResultsToJSON(aTarget, responses) {
  * @return {[type]}        [description]
  */
 function convertResultsToDataPoints(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
+  const response = getResponseForTarget(aTarget, responses);
 
   // the result has no "datapoints", need to create it based on the check data
   // when we have a checkname and an clientName, the response is different, the
   // data is not an array, but contains the same information, recreate and push
   if (response.data.length === undefined) {
-    var singleData = response.data;
+    const singleData = response.data;
     response.data = [];
     response.data.push(singleData);
   }
-  for (var i = 0; i < response.data.length; i++) {
-    var anEvent = response.data[i];
+  for (let i = 0; i < response.data.length; i++) {
+    const anEvent = response.data[i];
     //var str = JSON.stringify(anEvent, null, 2);
     //console.log(str);
-    var datapoints = [];
+    const datapoints = [];
     if (anEvent.check.issued !== undefined) {
       datapoints[0] = [anEvent.check.status, (anEvent.check.issued * 1000)];
       // the duration is here...

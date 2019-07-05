@@ -4,9 +4,9 @@
 
 function getAggregateURIs(target, aggregateNames) {
   // https://sensuapp.org/docs/0.28/api/aggregates-api.html
-  var uris = [];
-  var dimensionURI = "/aggregates";
-  var anAggregateName = null;
+  const uris = [];
+  let dimensionURI = "/aggregates";
+  let anAggregateName = null;
   // name, name/clients, name/checks, name/results/severity
   if (aggregateNames.length) {
     for (let i = 0; i < aggregateNames.length; i++) {

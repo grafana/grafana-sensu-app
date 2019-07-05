@@ -103,13 +103,13 @@ export class SensuCard extends PureComponent<SensuCardProps> {
     <div style={cardStyles.root}>
         <Card style={containerStyle}>
           <CardContent>
-            <Typography style={cardStyles.title} variant="headline" component="p" color="inherit">
+            <Typography style={cardStyles.title} variant="h1" component="p" color="inherit">
               {titleText}
             </Typography>
-            <Typography style={cardStyles.primaryText} variant="headline" component="p" color="inherit">
+            <Typography style={cardStyles.primaryText} variant="body1" component="p" color="inherit">
               <FontAwesomeIcon icon={primary_icon}/> {primaryText}
             </Typography>
-            <Typography style={cardStyles.secondaryText} variant="headline" component="p" color="inherit">
+            <Typography style={cardStyles.secondaryText} variant="body2" component="p" color="inherit">
             <FontAwesomeIcon icon={secondary_icon}/> {secondaryText}
             </Typography>
           </CardContent>

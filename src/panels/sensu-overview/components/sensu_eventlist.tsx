@@ -10,13 +10,11 @@ const themeDark = createMuiTheme({
   palette: {
     type: 'dark', // Switching the dark mode on is a single property value change.
   },
-  typography: { useNextVariants: true },
 });
 const themeLight = createMuiTheme({
   palette: {
     type: 'light', // Switching the dark mode on is a single property value change.
   },
-  typography: { useNextVariants: true },
 });
 
 export class SensuEventList extends PureComponent <SensuEventListProps> {

@@ -58,9 +58,9 @@ export class SensuNavBar extends PureComponent<SensuNavBarProps> {
 
     return (
     <div style={styles.root}>
-     <AppBar position="static">
+      <AppBar position="static">
         <Toolbar>
-           <Typography style={styles.flex} variant="title" color="inherit">
+          <Typography style={styles.flex} variant="h1" color="inherit">
               Sensu Server: {serverName}
           </Typography>
           <IconButton style={styles.menuButton} color="inherit" aria-label="Menu">
@@ -85,4 +85,3 @@ export class SensuNavBar extends PureComponent<SensuNavBarProps> {
     );
   }
 }
-

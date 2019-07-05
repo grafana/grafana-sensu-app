@@ -4,12 +4,12 @@ function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaled
     return {decimals: panelDecimals, scaledDecimals: null};
   }
 
-  var delta = value / 2;
-  var dec = -Math.floor(Math.log(delta) / Math.LN10);
+  const delta = value / 2;
+  let dec = -Math.floor(Math.log(delta) / Math.LN10);
 
-  var magn = Math.pow(10, -dec),
-      norm = delta / magn, // norm is between 1.0 and 10.0
-      size;
+  const magn = Math.pow(10, -dec);
+  const norm = delta / magn; // norm is between 1.0 and 10.0
+  let size = 0;
 
   if (norm < 1.5) {
     size = 1;
@@ -31,7 +31,7 @@ function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaled
   // reduce starting decimals if not needed
   if (Math.floor(value) === value) { dec = 0; }
 
-  var result = {
+  const result = {
     decimals: 0,
     scaledDecimals: 0,
   };
@@ -40,7 +40,7 @@ function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaled
   return result;
 }
 
-/**
+/*
  *
  *
  * Find the largest font size (in pixels) that allows the string to fit in the given width.
@@ -51,10 +51,10 @@ function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaled
  * @param {width} the width in pixels the string must fit in
  * @param {minFontPx} the smallest acceptable font size in pixels
  * @param {maxFontPx} the largest acceptable font size in pixels
-**/
+*/
 function getTextSizeForWidth(text: string, font: any, width, minFontPx, maxFontPx) {
-    var s = font.replace("?", maxFontPx);
-    var w = getTextWidth(text, s);
+    let s = font.replace("?", maxFontPx);
+    let w = getTextWidth(text, s);
     if (w <= width) {
       return maxFontPx;
     }
@@ -82,10 +82,10 @@ function getTextSizeForWidth(text: string, font: any, width, minFontPx, maxFontP
  */
 function getTextWidth(text: string, font: string) {
   // re-use canvas object for better performance
-  var canvas = document.createElement("canvas");
-  var context = canvas.getContext("2d");
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
   context.font = font;
-  var metrics = context.measureText(text);
+  const metrics = context.measureText(text);
   return metrics.width;
 }
 

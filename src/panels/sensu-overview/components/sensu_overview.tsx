@@ -67,7 +67,7 @@ export class SensuOverview extends PureComponent <SensuOverviewProps> {
     return (
       <div>
         <SensuNavBar {...this.props} />
-        <Grid container style={gridListStyle.root} spacing={24}>
+        <Grid container style={gridListStyle.root} spacing={10}>
           <Grid item xs={6}>
             <Grid container justify="center">
               {this.props.stats.map(tile => (

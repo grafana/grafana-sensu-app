@@ -9,25 +9,25 @@ import { getResponseForTarget } from "./utils";
  * @return {[type]}        [description]
  */
 function convertAggregatesToDataPoints(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
+  const response = getResponseForTarget(aTarget, responses);
   // the result has no "datapoints", need to create it based on the check data
 
   // when we have a checkname and an clientName, the response is different, the
   // data is not an array, but contains the same information, recreate and push
   if (response.data.length === undefined) {
-    var singleData = response.data;
+    const singleData = response.data;
     response.data = [];
     response.data.push(singleData);
   }
   // storage for new data series constructed by aggregate responses
-  var newData = null;
-  for (var i = 0; i < response.data.length; i++) {
-    var anAggregate = response.data[i];
+  let newData = null;
+  for (let i = 0; i < response.data.length; i++) {
+    const anAggregate = response.data[i];
     // checks is defined when the aggregate mode is either "Clients" or "List"
     if (anAggregate.checks !== undefined) {
       // create a new block of datapoints for each aggregate result json entry
       //
-      var checkType = typeof(anAggregate.checks);
+      const checkType = typeof(anAggregate.checks);
       switch (checkType) {
         case "number":
           // checksType is a number, which is an aggregate list response
@@ -52,9 +52,9 @@ function convertAggregatesToDataPoints(aTarget, responses) {
     }
 
     // this is a simple aggregate response (no mode)
-    var datapoints = [];
+    const datapoints = [];
     // timestamp is the query now (just use now)
-    var timestamp = Math.floor(Date.now());
+    const timestamp = Math.floor(Date.now());
     datapoints[0] = [0, timestamp];
     anAggregate.datapoints = datapoints;
     // set the target to be the name of the aggregate
@@ -68,15 +68,15 @@ function convertAggregatesToDataPoints(aTarget, responses) {
 }
 
 function convertEventDataToAggregateModeResults(anEvent, dataSet) {
-  var timestamp = Math.floor(Date.now());
+  const timestamp = Math.floor(Date.now());
   if (dataSet === null) {
     // initialize empty array
     dataSet = [];
   }
   // iterate over the checks
-  for (var i = 0; i < anEvent.summary.length; i++) {
-    var aSummary = anEvent.summary[i];
-    var checkData = {
+  for (let i = 0; i < anEvent.summary.length; i++) {
+    const aSummary = anEvent.summary[i];
+    const checkData = {
       target: anEvent.check,
       clients: aSummary.clients,
       datapoints: [
@@ -95,15 +95,15 @@ function convertEventDataToAggregateModeResults(anEvent, dataSet) {
 //    name: checkName
 // }
 function convertEventDataToAggregateModeChecks(anEvent, dataSet) {
-  var timestamp = Math.floor(Date.now());
+  const timestamp = Math.floor(Date.now());
   if (dataSet === null) {
     // initialize empty array
     dataSet = [];
   }
   // iterate over the checks
-  for (var i = 0; i < anEvent.clients.length; i++) {
-    var clientName = anEvent.clients[i];
-    var checkData = {
+  for (let i = 0; i < anEvent.clients.length; i++) {
+    const clientName = anEvent.clients[i];
+    const checkData = {
       target: anEvent.name,
       datapoints: [
         [clientName, timestamp]
@@ -122,15 +122,15 @@ function convertEventDataToAggregateModeChecks(anEvent, dataSet) {
 //    name: clientName
 // }
 function convertEventDataToAggregateModeClient(anEvent, dataSet) {
-  var timestamp = Math.floor(Date.now());
+  const timestamp = Math.floor(Date.now());
   if (dataSet === null) {
     // initialize empty array
     dataSet = [];
   }
   // iterate over the checks
-  for (var i = 0; i < anEvent.checks.length; i++) {
-    var checkName = anEvent.checks[i];
-    var clientData = {
+  for (let i = 0; i < anEvent.checks.length; i++) {
+    const checkName = anEvent.checks[i];
+    const clientData = {
       target: anEvent.name,
       datapoints: [
         [checkName, timestamp]
@@ -158,8 +158,8 @@ function convertEventDataToAggregateModeList(anEvent, dataSet) {
     // initialize empty array
     dataSet = [];
   }
-  var timestamp = Math.floor(Date.now());
-  var item = {
+  const timestamp = Math.floor(Date.now());
+  let item = {
     target: "checks",
     datapoints: [
       [anEvent.checks, timestamp]
@@ -220,15 +220,15 @@ function convertEventDataToAggregateModeList(anEvent, dataSet) {
 }
 
 function convertToAggregateModeClientJSON(data, dataSet) {
-  var timestamp = Math.floor(Date.now());
+  const timestamp = Math.floor(Date.now());
   if (dataSet === null) {
     // initialize empty array
     dataSet = [];
   }
   // iterate over the checks
-  for (var i = 0; i < data.checks.length; i++) {
-    var checkName = data.checks[i];
-    var clientData = {
+  for (let i = 0; i < data.checks.length; i++) {
+    const checkName = data.checks[i];
+    const clientData = {
       target: data.name,
       datapoints: [
         [checkName, timestamp]
@@ -246,15 +246,15 @@ function convertToAggregateModeClientJSON(data, dataSet) {
  * @return {[type]}          [description]
  */
 function convertAggregatesToJSON(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
-  var aggregateName = "ALL";
+  const response = getResponseForTarget(aTarget, responses);
+  let aggregateName = "ALL";
   if (aTarget.dimensions.length > 0) {
     aggregateName = aTarget.dimensions[0].value;
   }
-  for (var i = 0; i < response.data.length; i++) {
-    var item = response.data[i];
-    var datapoints = [];
-    var data = {
+  for (let i = 0; i < response.data.length; i++) {
+    const item = response.data[i];
+    const datapoints = [];
+    const data = {
       client: item.name,
       checks: item.checks,
       aggregate_name: aggregateName,

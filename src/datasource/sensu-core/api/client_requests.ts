@@ -3,12 +3,12 @@
  */
 
 function getClientsURIs(checkNames, clientNames) {
-  var uris = [];
-  var dimensionURI = "/clients";
+  const uris = [];
+  let dimensionURI = "/clients";
   // look for clientName in dimensions
   if (clientNames.length) {
     for (let i = 0; i < clientNames.length; i++) {
-      var aClientName = clientNames[i];
+      const aClientName = clientNames[i];
       dimensionURI = "/clients/" + aClientName;
       uris.push(dimensionURI);
     }
@@ -28,14 +28,14 @@ function getClientsURIs(checkNames, clientNames) {
  * @return {[type]}             [description]
  */
 function getClientHealthURIs(clientNames) {
-  var uris = [];
+  const uris = [];
   // look for clientName in dimensions
   if (clientNames.length) {
     for (let i = 0; i < clientNames.length; i++) {
-      var aClientName = clientNames[i];
-      var resultsURI = "/results/" + aClientName;
+      const aClientName = clientNames[i];
+      const resultsURI = "/results/" + aClientName;
       uris.push(resultsURI);
-      var eventsURI = "/events/" + aClientName;
+      const eventsURI = "/events/" + aClientName;
       uris.push(eventsURI);
     }
   }
@@ -52,12 +52,12 @@ function getClientHealthURIs(clientNames) {
  * @return {[type]}             [description]
  */
 function getClientHistoryURIs(clientNames) {
-  var uris = [];
-  var dimensionURI = "/clients";
+  const uris = [];
+  let dimensionURI = "/clients";
   // look for clientName in dimensions
   if (clientNames.length) {
     for (let i = 0; i < clientNames.length; i++) {
-      let aClientName = clientNames[i];
+      const aClientName = clientNames[i];
       dimensionURI = "/clients/" + aClientName + "/history";
       uris.push(dimensionURI);
     }

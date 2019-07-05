@@ -9,7 +9,7 @@ import { includeEventTarget } from "./event_filters";
  * @return {[type]}        [description]
  */
 function convertEventsToDataPoints(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
+  const response = getResponseForTarget(aTarget, responses);
 
   // convert history to datapoints
 
@@ -18,15 +18,15 @@ function convertEventsToDataPoints(aTarget, responses) {
   // when we have a checkname and an clientName, the response is different, the
   // data is not an array, but contains the same information, recreate and push
   if (response.data.length === undefined) {
-    var singleData = response.data;
+    const singleData = response.data;
     response.data = [];
     response.data.push(singleData);
   }
-  var filteredData = [];
-  for (var i = 0; i < response.data.length; i++) {
-    var anEvent = response.data[i];
-    var datapoints = [];
-    var startingTimestamp = 0;
+  const filteredData = [];
+  for (let i = 0; i < response.data.length; i++) {
+    const anEvent = response.data[i];
+    const datapoints = [];
+    let startingTimestamp = 0;
     // an event with client param has a timestamp at the toplevel
     if (anEvent.timestamp !== undefined) {
       startingTimestamp = anEvent.timestamp - (60 * anEvent.check.history.length);
@@ -35,7 +35,7 @@ function convertEventsToDataPoints(aTarget, responses) {
       startingTimestamp = anEvent.last_execution - (60 * anEvent.history.length);
     }
     // time needs to be in MS, we get EPOCH from Sensu
-    for (var y = 0; y < anEvent.check.history.length; y++) {
+    for (let y = 0; y < anEvent.check.history.length; y++) {
       datapoints[y] = [anEvent.check.history[y], (startingTimestamp + (60 * y)) * 1000];
     }
     anEvent.datapoints = datapoints;
@@ -58,32 +58,32 @@ function convertEventsToDataPoints(aTarget, responses) {
       }
     }
   }
-  var newResponse = { data: filteredData };
+  const newResponse = { data: filteredData };
 
   return newResponse;
 }
 
 
 function convertEventsToJSON(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
+  const response = getResponseForTarget(aTarget, responses);
   // do not allow modification of response
   //var newResponse = {};
 
-  var filteredData = [];
-  for (var i = 0; i < response.data.length; i++) {
-    var anEvent = response.data[i];
-    var datapoints = [];
+  const filteredData = [];
+  for (let i = 0; i < response.data.length; i++) {
+    const anEvent = response.data[i];
+    const datapoints = [];
     //console.log(JSON.stringify(anEvent));
     if ((anEvent.check.issued !== undefined) && includeEventTarget(aTarget, anEvent)) {
-      var clientShortname = anEvent.client.name;
+      let clientShortname = anEvent.client.name;
       // try to split on dot notation, take the first item
-      var parts = anEvent.client.name.split(".");
+      const parts = anEvent.client.name.split(".");
       if (parts.length > 0) {
         clientShortname = parts[0];
       }
       anEvent.client.client_short_name = clientShortname;
       // now create text-based version of status
-      var statusText = "UNKNOWN";
+      let statusText = "UNKNOWN";
       if ((anEvent.check !== undefined) && (anEvent.check.status !== undefined)) {
         switch (anEvent.check.status) {
           case 0:
@@ -104,7 +104,7 @@ function convertEventsToJSON(aTarget, responses) {
         }
       }
       anEvent.check.status_text = statusText;
-      var data = {
+      const data = {
         timestamp: (anEvent.check.issued * 1000),
         check_name: anEvent.check.name,
         client: anEvent.client,
@@ -137,7 +137,7 @@ function convertEventsToJSON(aTarget, responses) {
       }
     }
   }
-  var newResponse = { data: filteredData };
+  const newResponse = { data: filteredData };
 
   //var str = JSON.stringify(newResponse, null, 2);
   //console.log(str);
@@ -162,15 +162,15 @@ function convertEventsToJSON(aTarget, responses) {
  * @return {[type]}          [description]
  */
 function convertEventsToEventMetricsJSON(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
+  const response = getResponseForTarget(aTarget, responses);
   // timestamp is taken from first item in response
-  var timestamp = 0;
+  let timestamp = 0;
   try {
     timestamp = response.data[0].check.issued * 1000;
   } catch (err) {
     // do nothing
   }
-  var eventMetrics = {
+  const eventMetrics = {
     target: "allEvents",
     timestamp: timestamp,
     numEvents: 0,
@@ -184,10 +184,10 @@ function convertEventsToEventMetricsJSON(aTarget, responses) {
     numUnknownEvents: 0,
     numUnknownEventsSilenced: 0
   };
-  var clientNames = [];
-  var checkNames = [];
-  for (var i = 0; i < response.data.length; i++) {
-    var anEvent = response.data[i];
+  const clientNames = [];
+  const checkNames = [];
+  for (let i = 0; i < response.data.length; i++) {
+    const anEvent = response.data[i];
     if (anEvent.check.issued !== undefined) {
       if ((anEvent.check !== undefined) && (anEvent.check.status !== undefined) && includeEventTarget(aTarget, anEvent)) {
         eventMetrics.numEvents += 1;
@@ -256,16 +256,16 @@ function convertEventsToEventMetricsJSON(aTarget, responses) {
  */
 function convertEventsToEventMetrics(aTarget, responses) {
   // find a response that matches the target
-  var response = getResponseForTarget(aTarget, responses);
-  var newResponse = { data: []};
+  const response = getResponseForTarget(aTarget, responses);
+  const newResponse = { data: []};
   // timestamp is taken from first item in response
-  var timestamp = 0;
+  let timestamp = 0;
   try {
     timestamp = response.data[0].check.issued * 1000;
   } catch (err) {
     // do nothing
   }
-  var eventMetrics = {
+  const eventMetrics = {
     target: "allEvents",
     timestamp: timestamp,
     numEvents: 0.0,
@@ -279,10 +279,10 @@ function convertEventsToEventMetrics(aTarget, responses) {
     numUnknownEvents: 0.0,
     numUnknownEventsSilenced: 0.0
   };
-  var clientNames = [];
-  var checkNames = [];
-  for (var i = 0; i < response.data.length; i++) {
-    var anEvent = response.data[i];
+  const clientNames = [];
+  const checkNames = [];
+  for (let i = 0; i < response.data.length; i++) {
+    const anEvent = response.data[i];
     if (anEvent.check.issued !== undefined) {
       if ((anEvent.check !== undefined) && (anEvent.check.status !== undefined) && includeEventTarget(aTarget, anEvent)) {
         eventMetrics.numEvents += 1.0;
@@ -329,7 +329,7 @@ function convertEventsToEventMetrics(aTarget, responses) {
     }
   }
 
-  var targetName = null;
+  let targetName = null;
   if (aTarget.name !== undefined) {
     targetName = aTarget.name;
   }
