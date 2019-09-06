@@ -1,10 +1,6 @@
-import {
-  convertResultsToTable,
-  convertResultsToDataPoints,
-  convertResultsToJSON} from "../result_converters";
+import { convertResultsToTable, convertResultsToDataPoints, convertResultsToJSON } from '../result_converters';
 
 describe('Sensu Core Result Converters', () => {
-
   describe('when calling convertResultsToTable()', () => {
     it.skip('TODO', () => {});
   });

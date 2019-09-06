@@ -1,16 +1,16 @@
-import React, {PureComponent} from "react";
-import { getBGColor } from "./utils";
-import Grid from "@material-ui/core/Grid";
+import React, { PureComponent } from 'react';
+import { getBGColor } from './utils';
+import Grid from '@material-ui/core/Grid';
 //import Paper from "@material-ui/core/Paper";
-import * as SensuOverviewPanel from "../types";
+import * as SensuOverviewPanel from '../types';
 //import { SensuMenu } from "./sensu_menu";
-import {SensuNavBar} from "./sensu_navbar";
-import {SensuCard} from "./sensu_card";
-import {SensuEventList} from "./sensu_eventlist";
+import { SensuNavBar } from './sensu_navbar';
+import { SensuCard } from './sensu_card';
+import { SensuEventList } from './sensu_eventlist';
 //import { AlertTabCtrl } from 'grafana/app/features/alerting/alert_tab_ctrl';
 // import { ReactText } from "react";
 
-const DEFAULT_COLOR = "rgb(31, 120, 193)";
+const DEFAULT_COLOR = 'rgb(31, 120, 193)';
 const BACKGROUND_OPACITY = 0.1;
 const LABEL_SIZE_COEF = 0.7;
 
@@ -25,21 +25,20 @@ export interface SensuOverviewProps {
 
 const gridListStyle = {
   root: {
-    display: "flex",
-    justifyContent: "space-around",
-    overflow: "hidden",
-    backgroundColor: "inherit",
-    height: "auto"
+    display: 'flex',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: 'inherit',
+    height: 'auto',
   },
   gridList: {
     width: 500,
-    height: 450
+    height: 450,
   },
   icon: {
-    color: "rgba(255, 255, 255, 0.54)"
-  }
+    color: 'rgba(255, 255, 255, 0.54)',
+  },
 };
-
 
 //const verticalText = {
 //  'transform': 'rotate(90deg)',
@@ -51,23 +50,21 @@ const gridListStyle = {
 // props.options; const getColor = "green"; <SensuMenu {...props}
 // getColor={getColor} />        <SensuNavBar {...this.props} />
 
-export class SensuOverview extends PureComponent <SensuOverviewProps> {
+export class SensuOverview extends PureComponent<SensuOverviewProps> {
   props: any;
   constructor(props: Readonly<SensuOverviewProps>) {
     super(props);
   }
 
   render() {
-    return (
-      <div>Coming Soon!</div>
-    );
+    return <div>Coming Soon!</div>;
   }
 
   wip_render() {
     return (
       <div>
         <SensuNavBar {...this.props} />
-        <Grid container style={gridListStyle.root} spacing={24}>
+        <Grid container style={gridListStyle.root} spacing={10}>
           <Grid item xs={6}>
             <Grid container justify="center">
               {this.props.stats.map(tile => (
@@ -78,7 +75,8 @@ export class SensuOverview extends PureComponent <SensuOverviewProps> {
                     secondary_icon={tile.secondary_icon}
                     titleText={tile.title}
                     primaryText={`Active: ${tile.active}`}
-                    secondaryText={`Silenced: ${tile.silenced}`} />
+                    secondaryText={`Silenced: ${tile.silenced}`}
+                  />
                 </Grid>
               ))}
             </Grid>
@@ -93,7 +91,8 @@ export class SensuOverview extends PureComponent <SensuOverviewProps> {
                     secondary_icon={tile.secondary_icon}
                     titleText={tile.title}
                     primaryText={`Active: ${tile.active}`}
-                    secondaryText={`Silenced: ${tile.silenced}`} />
+                    secondaryText={`Silenced: ${tile.silenced}`}
+                  />
                 </Grid>
               ))}
             </Grid>

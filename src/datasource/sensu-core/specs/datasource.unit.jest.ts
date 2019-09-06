@@ -1,7 +1,6 @@
-///<reference path="../../../../node_modules/@types/grafana/app/core/services/backend_srv.d.ts" />
 import _ from 'lodash';
 
-import {SensuCoreDatasource} from "../datasource";
+import { SensuCoreDatasource } from '../datasource';
 
 function TemplateSrvStub(this: any) {
   this.variables = [];
@@ -39,47 +38,46 @@ describe('SensuDataSource', () => {
     const uiSegmentSrv = {};
     const $q = {};
     describe('and call to sensu-core api succeeds', () => {
-        let result: any;
-        let ds: any;
+      let result: any;
+      let ds: any;
 
-        beforeEach(async () => {
-          const backendSrv = {
-            async datasourceRequest() {
-              return Promise.resolve({ status: 200 });
-            },
-          };
-          ds = new SensuCoreDatasource(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv);
-          result = await ds.testDatasource();
-        });
-        it('should return successfully', () => {
-          expect(result.status).toBe('success');
-        });
+      beforeEach(async () => {
+        const backendSrv = {
+          async datasourceRequest() {
+            return Promise.resolve({ status: 200 });
+          },
+        };
+        ds = new SensuCoreDatasource(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv);
+        result = await ds.testDatasource();
       });
-      describe('and call to sensu-core api fails', () => {
-        let result: any;
-        let ds: any;
-
-        beforeEach(async () => {
-          const backendSrv = {
-            async datasourceRequest() {
-              return Promise.resolve({ status: 501 });
-            },
-          };
-          ds = new SensuCoreDatasource(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv);
-          result = await ds.testDatasource();
-        });
-        it('should return error', () => {
-          expect(result.status).toBe('error');
-        });
+      it('should return successfully', () => {
+        expect(result.status).toBe('success');
       });
     });
-    describe('when performing metricFindQuery()', () => {
-      describe('and call to sensu-api api succeeds', function() {
-        it.skip('should be a real test someday', () => {});
+    describe('and call to sensu-core api fails', () => {
+      let result: any;
+      let ds: any;
+
+      beforeEach(async () => {
+        const backendSrv = {
+          async datasourceRequest() {
+            return Promise.resolve({ status: 501 });
+          },
+        };
+        ds = new SensuCoreDatasource(instanceSettings, $q, backendSrv, templateSrv, uiSegmentSrv);
+        result = await ds.testDatasource();
       });
-      describe('and call to sensu-api api fails', function() {
-        it.skip('should be a real test someday', () => {});
+      it('should return error', () => {
+        expect(result.status).toBe('error');
       });
     });
-
+  });
+  describe('when performing metricFindQuery()', () => {
+    describe('and call to sensu-api api succeeds', () => {
+      it.skip('should be a real test someday', () => {});
+    });
+    describe('and call to sensu-api api fails', () => {
+      it.skip('should be a real test someday', () => {});
+    });
+  });
 });

@@ -1,7 +1,7 @@
 /**
  *
  */
-import { getResponseForTarget } from "./utils";
+import { getResponseForTarget } from './utils';
 
 /**
  * [convertAggregatesToDataPoints description]
@@ -9,31 +9,31 @@ import { getResponseForTarget } from "./utils";
  * @return {[type]}        [description]
  */
 function convertAggregatesToDataPoints(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
+  const response = getResponseForTarget(aTarget, responses);
   // the result has no "datapoints", need to create it based on the check data
 
   // when we have a checkname and an clientName, the response is different, the
   // data is not an array, but contains the same information, recreate and push
   if (response.data.length === undefined) {
-    var singleData = response.data;
+    const singleData = response.data;
     response.data = [];
     response.data.push(singleData);
   }
   // storage for new data series constructed by aggregate responses
-  var newData = null;
-  for (var i = 0; i < response.data.length; i++) {
-    var anAggregate = response.data[i];
+  let newData = null;
+  for (let i = 0; i < response.data.length; i++) {
+    const anAggregate = response.data[i];
     // checks is defined when the aggregate mode is either "Clients" or "List"
     if (anAggregate.checks !== undefined) {
       // create a new block of datapoints for each aggregate result json entry
       //
-      var checkType = typeof(anAggregate.checks);
+      const checkType = typeof anAggregate.checks;
       switch (checkType) {
-        case "number":
+        case 'number':
           // checksType is a number, which is an aggregate list response
           newData = convertEventDataToAggregateModeList(anAggregate, newData);
           break;
-        case "object":
+        case 'object':
           // checkType is an object, which is an aggregate clients response
           newData = convertEventDataToAggregateModeClient(anAggregate, newData);
           break;
@@ -52,9 +52,9 @@ function convertAggregatesToDataPoints(aTarget, responses) {
     }
 
     // this is a simple aggregate response (no mode)
-    var datapoints = [];
+    const datapoints = [];
     // timestamp is the query now (just use now)
-    var timestamp = Math.floor(Date.now());
+    const timestamp = Math.floor(Date.now());
     datapoints[0] = [0, timestamp];
     anAggregate.datapoints = datapoints;
     // set the target to be the name of the aggregate
@@ -68,20 +68,18 @@ function convertAggregatesToDataPoints(aTarget, responses) {
 }
 
 function convertEventDataToAggregateModeResults(anEvent, dataSet) {
-  var timestamp = Math.floor(Date.now());
+  const timestamp = Math.floor(Date.now());
   if (dataSet === null) {
     // initialize empty array
     dataSet = [];
   }
   // iterate over the checks
-  for (var i = 0; i < anEvent.summary.length; i++) {
-    var aSummary = anEvent.summary[i];
-    var checkData = {
+  for (let i = 0; i < anEvent.summary.length; i++) {
+    const aSummary = anEvent.summary[i];
+    const checkData = {
       target: anEvent.check,
       clients: aSummary.clients,
-      datapoints: [
-        [aSummary.total, timestamp]
-      ]
+      datapoints: [[aSummary.total, timestamp]],
     };
     dataSet.push(checkData);
   }
@@ -95,19 +93,17 @@ function convertEventDataToAggregateModeResults(anEvent, dataSet) {
 //    name: checkName
 // }
 function convertEventDataToAggregateModeChecks(anEvent, dataSet) {
-  var timestamp = Math.floor(Date.now());
+  const timestamp = Math.floor(Date.now());
   if (dataSet === null) {
     // initialize empty array
     dataSet = [];
   }
   // iterate over the checks
-  for (var i = 0; i < anEvent.clients.length; i++) {
-    var clientName = anEvent.clients[i];
-    var checkData = {
+  for (let i = 0; i < anEvent.clients.length; i++) {
+    const clientName = anEvent.clients[i];
+    const checkData = {
       target: anEvent.name,
-      datapoints: [
-        [clientName, timestamp]
-      ]
+      datapoints: [[clientName, timestamp]],
     };
     dataSet.push(checkData);
   }
@@ -122,19 +118,17 @@ function convertEventDataToAggregateModeChecks(anEvent, dataSet) {
 //    name: clientName
 // }
 function convertEventDataToAggregateModeClient(anEvent, dataSet) {
-  var timestamp = Math.floor(Date.now());
+  const timestamp = Math.floor(Date.now());
   if (dataSet === null) {
     // initialize empty array
     dataSet = [];
   }
   // iterate over the checks
-  for (var i = 0; i < anEvent.checks.length; i++) {
-    var checkName = anEvent.checks[i];
-    var clientData = {
+  for (let i = 0; i < anEvent.checks.length; i++) {
+    const checkName = anEvent.checks[i];
+    const clientData = {
       target: anEvent.name,
-      datapoints: [
-        [checkName, timestamp]
-      ]
+      datapoints: [[checkName, timestamp]],
     };
     dataSet.push(clientData);
   }
@@ -158,61 +152,45 @@ function convertEventDataToAggregateModeList(anEvent, dataSet) {
     // initialize empty array
     dataSet = [];
   }
-  var timestamp = Math.floor(Date.now());
-  var item = {
-    target: "checks",
-    datapoints: [
-      [anEvent.checks, timestamp]
-    ]
+  const timestamp = Math.floor(Date.now());
+  let item = {
+    target: 'checks',
+    datapoints: [[anEvent.checks, timestamp]],
   };
   dataSet.push(item);
   item = {
-    target: "clients",
-    datapoints: [
-      [anEvent.clients, timestamp]
-    ]
+    target: 'clients',
+    datapoints: [[anEvent.clients, timestamp]],
   };
   dataSet.push(item);
   item = {
-    target: "critical",
-    datapoints: [
-      [anEvent.results.critical, timestamp]
-    ]
+    target: 'critical',
+    datapoints: [[anEvent.results.critical, timestamp]],
   };
   dataSet.push(item);
   item = {
-    target: "ok",
-    datapoints: [
-      [anEvent.results.ok, timestamp]
-    ]
+    target: 'ok',
+    datapoints: [[anEvent.results.ok, timestamp]],
   };
   dataSet.push(item);
   item = {
-    target: "stale",
-    datapoints: [
-      [anEvent.results.stale, timestamp]
-    ]
+    target: 'stale',
+    datapoints: [[anEvent.results.stale, timestamp]],
   };
   dataSet.push(item);
   item = {
-    target: "total",
-    datapoints: [
-      [anEvent.results.total, timestamp]
-    ]
+    target: 'total',
+    datapoints: [[anEvent.results.total, timestamp]],
   };
   dataSet.push(item);
   item = {
-    target: "unknown",
-    datapoints: [
-      [anEvent.results.unknown, timestamp]
-    ]
+    target: 'unknown',
+    datapoints: [[anEvent.results.unknown, timestamp]],
   };
   dataSet.push(item);
   item = {
-    target: "warning",
-    datapoints: [
-      [anEvent.results.warning, timestamp]
-    ]
+    target: 'warning',
+    datapoints: [[anEvent.results.warning, timestamp]],
   };
   dataSet.push(item);
 
@@ -220,19 +198,17 @@ function convertEventDataToAggregateModeList(anEvent, dataSet) {
 }
 
 function convertToAggregateModeClientJSON(data, dataSet) {
-  var timestamp = Math.floor(Date.now());
+  const timestamp = Math.floor(Date.now());
   if (dataSet === null) {
     // initialize empty array
     dataSet = [];
   }
   // iterate over the checks
-  for (var i = 0; i < data.checks.length; i++) {
-    var checkName = data.checks[i];
-    var clientData = {
+  for (let i = 0; i < data.checks.length; i++) {
+    const checkName = data.checks[i];
+    const clientData = {
       target: data.name,
-      datapoints: [
-        [checkName, timestamp]
-      ]
+      datapoints: [[checkName, timestamp]],
     };
     dataSet.push(clientData);
   }
@@ -246,22 +222,22 @@ function convertToAggregateModeClientJSON(data, dataSet) {
  * @return {[type]}          [description]
  */
 function convertAggregatesToJSON(aTarget, responses) {
-  var response = getResponseForTarget(aTarget, responses);
-  var aggregateName = "ALL";
+  const response = getResponseForTarget(aTarget, responses);
+  let aggregateName = 'ALL';
   if (aTarget.dimensions.length > 0) {
     aggregateName = aTarget.dimensions[0].value;
   }
-  for (var i = 0; i < response.data.length; i++) {
-    var item = response.data[i];
-    var datapoints = [];
-    var data = {
+  for (let i = 0; i < response.data.length; i++) {
+    const item = response.data[i];
+    const datapoints = [];
+    const data = {
       client: item.name,
       checks: item.checks,
       aggregate_name: aggregateName,
     };
     datapoints.push(data);
     item.datapoints = datapoints;
-    item.type = "docs";
+    item.type = 'docs';
   }
   return response;
 }
@@ -273,5 +249,5 @@ export {
   convertEventDataToAggregateModeClient,
   convertEventDataToAggregateModeList,
   convertToAggregateModeClientJSON,
-  convertAggregatesToJSON
+  convertAggregatesToJSON,
 };

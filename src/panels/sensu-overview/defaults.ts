@@ -1,4 +1,4 @@
-import * as SensuOverviewPanel from "./types";
+import * as SensuOverviewPanel from './types';
 
 const panelDefaults: SensuOverviewPanel.PanelOptions = {
   links: [],
@@ -12,4 +12,4 @@ const defaults = {
   panelDefaults,
 };
 
-export {defaults};
+export { defaults };

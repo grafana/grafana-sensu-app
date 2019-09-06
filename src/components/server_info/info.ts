@@ -19,8 +19,8 @@ export class SensuServerInfoCtrl {
 
     this.server = {};
 
-    if (!("server" in $location.search())) {
-      alertSrv.set("No Sensu server specified.", "No Sensu server specified in url", 'error');
+    if (!('server' in $location.search())) {
+      alertSrv.set('No Sensu server specified.', 'No Sensu server specified in url', 'error');
       return;
     }
 
@@ -29,12 +29,11 @@ export class SensuServerInfoCtrl {
 
   /* this is the safest method to load async and then update */
   getSensuServerInfo(id) {
-    this.getSensuServer(id)
-      .then(serverDS => {
+    this.getSensuServer(id).then(serverDS => {
       this.serverDS = serverDS;
-      this.serverDS.getServerInfo().then((info) => {
+      this.serverDS.getServerInfo().then(info => {
         this.info = info;
-        console.log("INFO: " + JSON.stringify(this.info));
+        console.log('INFO: ' + JSON.stringify(this.info));
         this.pageReady = true;
       });
     });
@@ -46,5 +45,4 @@ export class SensuServerInfoCtrl {
       return this.datasourceSrv.get(ds.name);
     });
   }
-
 }

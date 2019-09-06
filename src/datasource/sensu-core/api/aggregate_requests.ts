@@ -4,35 +4,35 @@
 
 function getAggregateURIs(target, aggregateNames) {
   // https://sensuapp.org/docs/0.28/api/aggregates-api.html
-  var uris = [];
-  var dimensionURI = "/aggregates";
-  var anAggregateName = null;
+  const uris = [];
+  let dimensionURI = '/aggregates';
+  let anAggregateName = null;
   // name, name/clients, name/checks, name/results/severity
   if (aggregateNames.length) {
     for (let i = 0; i < aggregateNames.length; i++) {
       anAggregateName = aggregateNames[i];
-      dimensionURI = "/aggregates/" + anAggregateName;
+      dimensionURI = '/aggregates/' + anAggregateName;
       switch (target.aggregateMode) {
-        case "checks":
-          dimensionURI = "/aggregates/" + anAggregateName + "/checks";
+        case 'checks':
+          dimensionURI = '/aggregates/' + anAggregateName + '/checks';
           break;
-        case "clients":
-          dimensionURI = "/aggregates/" + anAggregateName + "/clients";
+        case 'clients':
+          dimensionURI = '/aggregates/' + anAggregateName + '/clients';
           break;
-        case "list":
-          dimensionURI = "/aggregates/" + anAggregateName;
+        case 'list':
+          dimensionURI = '/aggregates/' + anAggregateName;
           break;
-        case "results_critical":
-          dimensionURI = "/aggregates/" + anAggregateName + "/results/critical";
+        case 'results_critical':
+          dimensionURI = '/aggregates/' + anAggregateName + '/results/critical';
           break;
-        case "results_ok":
-          dimensionURI = "/aggregates/" + anAggregateName + "/results/ok";
+        case 'results_ok':
+          dimensionURI = '/aggregates/' + anAggregateName + '/results/ok';
           break;
-        case "results_unknown":
-          dimensionURI = "/aggregates/" + anAggregateName + "/results/unknown";
+        case 'results_unknown':
+          dimensionURI = '/aggregates/' + anAggregateName + '/results/unknown';
           break;
-        case "results_warning":
-          dimensionURI = "/aggregates/" + anAggregateName + "/results/warning";
+        case 'results_warning':
+          dimensionURI = '/aggregates/' + anAggregateName + '/results/warning';
           break;
       }
       uris.push(dimensionURI);
@@ -44,6 +44,4 @@ function getAggregateURIs(target, aggregateNames) {
   return uris;
 }
 
-export {
-  getAggregateURIs
-};
+export { getAggregateURIs };

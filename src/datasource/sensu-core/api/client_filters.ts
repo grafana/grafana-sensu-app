@@ -1,13 +1,12 @@
-
 function getClientsWithFilter(aTarget, response) {
-  var arrClientNames = [];
+  const arrClientNames = [];
   for (let i = 0; i < aTarget.filters.length; i++) {
-    var aFilter = aTarget.filters[i];
+    const aFilter = aTarget.filters[i];
     switch (aFilter.filterType) {
-      case "field":
+      case 'field':
         for (let j = 0; j < response.data.length; j++) {
           if (response.data[j].hasOwnProperty(aFilter.filterFieldName)) {
-            let fieldVal = response.data[j][aFilter.filterFieldName];
+            const fieldVal = response.data[j][aFilter.filterFieldName];
             if (fieldVal === aFilter.filterFieldValueReplaced) {
               // matched field
               if (arrClientNames.indexOf(response.data[j].name) === -1) {
@@ -17,7 +16,7 @@ function getClientsWithFilter(aTarget, response) {
           }
         }
         break;
-      case "fetch":
+      case 'fetch':
         // iterate over all of the data
         for (let j = 0; j < response.data.length; j++) {
           if (aFilter.value === response.data[j].name) {
@@ -28,11 +27,11 @@ function getClientsWithFilter(aTarget, response) {
           }
         }
         break;
-      case "regex":
+      case 'regex':
         // make sure the regex is valid
         try {
-          var flags = aFilter.filterRegexFlags;
-          var re = new RegExp(aFilter.filterRegex, flags);
+          const flags = aFilter.filterRegexFlags;
+          const re = new RegExp(aFilter.filterRegex, flags);
           // iterate over all of the data
           for (let j = 0; j < response.data.length; j++) {
             if (re.test(response.data[j].name)) {
@@ -43,7 +42,7 @@ function getClientsWithFilter(aTarget, response) {
             }
           }
         } catch (err) {
-          aFilter.filterMessage = "Invalid Regular Expression";
+          aFilter.filterMessage = 'Invalid Regular Expression';
         }
         break;
     }
@@ -51,6 +50,4 @@ function getClientsWithFilter(aTarget, response) {
   return arrClientNames;
 }
 
-export {
-  getClientsWithFilter
-};
+export { getClientsWithFilter };

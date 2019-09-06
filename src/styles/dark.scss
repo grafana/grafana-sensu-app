@@ -1,0 +1,6 @@
+@import '../../node_modules/@grafana/toolkit/sass/_variables.light.scss';
+@import 'sensu';
+// dark style for sensu app
+.sensu-app.generic {
+  border: 0px;
+}

@@ -1,7 +1,7 @@
 function getResponseForTarget(aTarget, responses) {
   // find a response that matches the target
   const response = {
-    data: []
+    data: [],
   };
   for (let i = 0; i < responses.data.length; i++) {
     if (responses.data[i].target === aTarget) {
@@ -13,7 +13,4 @@ function getResponseForTarget(aTarget, responses) {
   return response;
 }
 
-
-export {
-  getResponseForTarget
-};
+export { getResponseForTarget };

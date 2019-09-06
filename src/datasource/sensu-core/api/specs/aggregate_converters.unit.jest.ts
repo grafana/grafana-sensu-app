@@ -5,10 +5,10 @@ import {
   convertEventDataToAggregateModeClient,
   convertEventDataToAggregateModeList,
   convertToAggregateModeClientJSON,
-  convertAggregatesToJSON} from "../aggregate_converters";
+  convertAggregatesToJSON,
+} from '../aggregate_converters';
 
 describe('Sensu Core Aggregate Converters', () => {
-
   describe('when calling convertAggregatesToDataPoints()', () => {
     it.skip('TODO', () => {});
   });

@@ -1,7 +1,7 @@
 <query-editor-row query-ctrl="ctrl" can-collapse="false" class="sensu-datasource-query-row">
 	<div class="gf-form-inline">
 		<div class="gf-form">
-			<label class="gf-form-label width-8">Source Type</label>
+			<label class="gf-form-label width-9">Source Type</label>
 			<div class="gf-form-select-wrapper">
 				<select class="gf-form-input" ng-model="ctrl.target.sourceType" ng-options="c.value as c.text for c in ctrl.sourceTypes" ng-change="ctrl.sourceTypeChanged()">
 				</select>
@@ -53,11 +53,12 @@
 
 	<div ng-if="ctrl.target.sourceType === 'events' || ctrl.target.sourceType === 'events_json'">
 		<div class="gf-form">
-			<editor-checkbox
-			  text="Hide Silenced Events"
-				model="ctrl.target.hideSilencedEvents"
-				change="ctrl.onChangeInternal()">
-			</editor-checkbox>
+				<gf-form-checkbox
+				 on-change="ctrl.onChangeInternal($event)"
+				 checked="ctrl.target.hideSilencedEvents"
+				 label="Hide Silenced Events">
+				</gf-form-checkbox>
+				<!-- <span>Hide Silenced Events</span> -->
 		</div>
 
 		<!--
@@ -73,7 +74,7 @@
 
 	<!-- Alias -->
 	<div class="gf-form">
-			<label class="gf-form-label width-8">Alias</label>
+			<label class="gf-form-label width-9">Alias</label>
 			<input type="text"
 						 class="gf-form-input width-13"
 						 ng-model="ctrl.target.alias"
@@ -85,7 +86,7 @@
 
 	<!-- Dimensions -->
 	<div class="gf-form-inline">
-		<div class="gf-form width-8">
+		<div class="gf-form">
 			<button class="btn btn-inverse" ng-click="ctrl.addDimension()">
 			<i class="fa fa-plus"></i>&nbsp; Dimension
 		</button>
