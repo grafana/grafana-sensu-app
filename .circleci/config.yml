@@ -201,11 +201,10 @@ jobs:
           name: "Publish Release on GitHub"
           command: |
             PLUGIN_NAME=grafana-sensu-app
+            ls -al
             apk add --update --no-cache jq
             RELEASE_NOTES=`awk 'BEGIN {FS="##"; RS=""} FNR==3 {print; exit}' CHANGELOG.md`
             VERSION=`cat dist/plugin.json|jq '.info.version'| sed s/\"//g`
-            ls -al
-            ls -al ./artifacts
             git config user.email "eng@grafana.com"
             git config user.name "CircleCI Automation"
             git checkout -b release-${VERSION}
@@ -250,8 +249,8 @@ workflows:
         type: approval
         requires:
           - package
-        filters: *filter-only-master
+    #    filters: *filter-only-master
     - publish_github_release:
         requires:
           - approve_release
-        filters: *filter-only-master
+    #    filters: *filter-only-master
