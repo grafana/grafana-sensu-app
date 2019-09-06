@@ -3,13 +3,6 @@
 import { SensuCoreDatasource } from './datasource';
 import { SensuCoreDatasourceQueryCtrl } from './query_ctrl';
 
-import { loadPluginCss } from 'grafana/app/plugins/sdk';
-
-loadPluginCss({
-  dark: 'plugins/grafana-sensu-app/datasource/sensu-core/css/query-editor.css',
-  light: 'plugins/grafana-sensu-app/datasource/sensu-core/css/query-editor.css',
-});
-
 class SensuConfigCtrl {
   static templateUrl = 'datasource/sensu-core/partials/config.html';
 }

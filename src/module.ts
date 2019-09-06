@@ -6,8 +6,8 @@ import { SensuServerInfoCtrl } from './components/server_info/info';
 import { loadPluginCss } from 'grafana/app/plugins/sdk';
 
 loadPluginCss({
-  dark: 'plugins/grafana-sensu-app/css/sensu-app.dark.css',
-  light: 'plugins/grafana-sensu-app/css/sensu-app.light.css',
+  dark: 'plugins/grafana-sensu-app/styles/dark.css',
+  light: 'plugins/grafana-sensu-app/styles/light.css',
 });
 
 export { SensuConfigCtrl as ConfigCtrl, SensuServerInfoCtrl, SensuServersCtrl };
