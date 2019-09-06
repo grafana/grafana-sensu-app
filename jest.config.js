@@ -4,8 +4,7 @@ module.exports = {
     "collectCoverage": true,
     "transform": {
       "^.+\\.tsx?$": "ts-jest",
-      "^.+\\.(j|t)sx?$": "ts-jest",
-      "^.+\\.js$": "./node_modules/babel-jest"
+      "^.+\\.(j|t)sx?$": "ts-jest"
     },
     "testRegex": "(\\.|/)(spec|jest)\\.(jsx?|tsx?)$",
     "roots": [
