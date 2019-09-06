@@ -238,16 +238,16 @@ workflows:
         - build_osx
         - build_win64
         - build_docs
-    - test_v6:
-        requires:
-        - package
-    - report:
-        requires:
-        - test_v6
+    #- test_v6:
+    #    requires:
+    #    - package
+    #- report:
+    #    requires:
+    #    - test_v6
     - approve_release:
         type: approval
         requires:
-          - report
+          - package
         filters: *filter-only-master
     - publish_github_release:
         requires:
