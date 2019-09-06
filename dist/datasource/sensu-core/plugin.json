@@ -1,0 +1,41 @@
+{
+  "type": "datasource",
+  "name": "Sensu Core",
+  "id": "grafana-sensucore-datasource",
+
+  "metrics": true,
+  "annotations": true,
+
+  "info": {
+    "description": "Grafana datasource plugin for Sensu Core",
+    "author": {
+      "name": "Grafana Labs",
+      "url": "https://github.com/grafana/grafana-sensu-app"
+    },
+    "keywords": ["sensu", "datasource"],
+    "logos": {
+      "small": "img/sensu-v2-logo-dark.svg",
+      "large": "img/sensu-v2-logo-dark.svg"
+    },
+    "links": [{
+        "name": "Project site",
+        "url": "https://github.com/grafana/grafana-sensu-app"
+      }, {
+        "name": "MIT License",
+        "url": "https://github.com/grafana/grafana-sensu-app/blob/master/LICENSE"
+      }],
+    "screenshots": [{
+      "name": "Showcase",
+      "path": "screenshots/sensu.png"
+    }, {
+      "name": "Options",
+      "path": "screenshots/options.png"
+    }],
+    "version": "1.0.3",
+    "updated": "2019-01-10"
+  },
+  "dependencies": {
+    "grafanaVersion": "5.0+",
+    "plugins": [    ]
+  }
+}
