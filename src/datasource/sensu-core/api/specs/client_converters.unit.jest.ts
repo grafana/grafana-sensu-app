@@ -4,10 +4,10 @@ import {
   convertClientHistoryToDataPoints,
   convertClientSummaryMetricsToJSON,
   convertClientHealthToJSON,
-  convertClientHealthMetricsToJSON} from "../client_converters";
+  convertClientHealthMetricsToJSON,
+} from '../client_converters';
 
 describe('Sensu Core Client Converters', () => {
-
   describe('when calling convertClientsToDataPoints()', () => {
     it.skip('TODO', () => {});
   });

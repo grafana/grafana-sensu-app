@@ -1,9 +1,7 @@
-import {getResponseForTarget} from "../utils";
+import { getResponseForTarget } from '../utils';
 
 describe('Sensu Core API Utils', () => {
-
   describe('when calling getResponseForTarget()', () => {
-
     describe('and target is found', () => {
       it.skip('TODO', () => {});
     });
@@ -12,5 +10,4 @@ describe('Sensu Core API Utils', () => {
       it.skip('TODO', () => {});
     });
   });
-
 });

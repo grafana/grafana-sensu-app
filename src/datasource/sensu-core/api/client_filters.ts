@@ -1,10 +1,9 @@
-
 function getClientsWithFilter(aTarget, response) {
   const arrClientNames = [];
   for (let i = 0; i < aTarget.filters.length; i++) {
     const aFilter = aTarget.filters[i];
     switch (aFilter.filterType) {
-      case "field":
+      case 'field':
         for (let j = 0; j < response.data.length; j++) {
           if (response.data[j].hasOwnProperty(aFilter.filterFieldName)) {
             const fieldVal = response.data[j][aFilter.filterFieldName];
@@ -17,7 +16,7 @@ function getClientsWithFilter(aTarget, response) {
           }
         }
         break;
-      case "fetch":
+      case 'fetch':
         // iterate over all of the data
         for (let j = 0; j < response.data.length; j++) {
           if (aFilter.value === response.data[j].name) {
@@ -28,7 +27,7 @@ function getClientsWithFilter(aTarget, response) {
           }
         }
         break;
-      case "regex":
+      case 'regex':
         // make sure the regex is valid
         try {
           const flags = aFilter.filterRegexFlags;
@@ -43,7 +42,7 @@ function getClientsWithFilter(aTarget, response) {
             }
           }
         } catch (err) {
-          aFilter.filterMessage = "Invalid Regular Expression";
+          aFilter.filterMessage = 'Invalid Regular Expression';
         }
         break;
     }
@@ -51,6 +50,4 @@ function getClientsWithFilter(aTarget, response) {
   return arrClientNames;
 }
 
-export {
-  getClientsWithFilter
-};
+export { getClientsWithFilter };

@@ -1,10 +1,6 @@
-import {
-  getClientsURIs,
-  getClientHealthURIs,
-  getClientHistoryURIs} from "../client_requests";
+import { getClientsURIs, getClientHealthURIs, getClientHistoryURIs } from '../client_requests';
 
 describe('Sensu Core Client Requests', () => {
-
   describe('when calling getClientsURIs()', () => {
     it.skip('TODO', () => {});
   });

@@ -1,8 +1,8 @@
 /*
 
  */
-import { getResponseForTarget } from "./utils";
-import { getClientsWithFilter } from "./client_filters";
+import { getResponseForTarget } from './utils';
+import { getClientsWithFilter } from './client_filters';
 
 /**
  * [convertClientsToDataPoints description]
@@ -21,10 +21,10 @@ function convertClientsToDataPoints(aTarget, responses) {
     response.data.push(singleData);
   }
   switch (aTarget.clientQueryMode) {
-    case "list":
+    case 'list':
       const filterData = [];
       let arrClientNames = [];
-      if ((aTarget.filters !== undefined) && (aTarget.filters.length > 0)) {
+      if (aTarget.filters !== undefined && aTarget.filters.length > 0) {
         arrClientNames = getClientsWithFilter(aTarget, response);
         // iterate over the data and store the matching clients in the new filteredData
         for (let i = 0; i < response.data.length; i++) {
@@ -40,27 +40,27 @@ function convertClientsToDataPoints(aTarget, responses) {
         const data = response.data[i];
         const datapoints = [];
         if (data.timestamp !== undefined) {
-          datapoints[0] = [1, (data.timestamp * 1000)];
+          datapoints[0] = [1, data.timestamp * 1000];
         }
         data.datapoints = datapoints;
         // set the target
         data.target = data.name;
       }
       break;
-    case "count":
+    case 'count':
       if (response.data.length > 0) {
         const data = response.data[0];
         const datapoints = [];
         let clientCount = 0;
         let arrClientNames = [];
-        if ((aTarget.filters !== undefined) && (aTarget.filters.length > 0)) {
+        if (aTarget.filters !== undefined && aTarget.filters.length > 0) {
           arrClientNames = getClientsWithFilter(aTarget, response);
           clientCount = arrClientNames.length;
         } else {
           clientCount = response.data.length;
         }
         if (data.timestamp !== undefined) {
-          datapoints[0] = [clientCount, (data.timestamp * 1000)];
+          datapoints[0] = [clientCount, data.timestamp * 1000];
         }
         data.datapoints = datapoints;
         // set the target
@@ -69,7 +69,7 @@ function convertClientsToDataPoints(aTarget, responses) {
         data.socket = undefined;
         data.subscriptions = undefined;
         data.version = undefined;
-        data.target = "ClientCount";
+        data.target = 'ClientCount';
         if (aTarget.aliasReplaced) {
           data.target = aTarget.aliasReplaced;
         }
@@ -104,12 +104,12 @@ function convertClientsToJSON(aTarget, responses) {
     // empty datapoints
     item.datapoints = [];
     // set the type to docs
-    item.type = "docs";
+    item.type = 'docs';
     //item.value = 0;
     // if there"s no address, it is a JIT client
     const address = item.address;
-    if (item.address === "unknown") {
-      item.address = "JIT Client";
+    if (item.address === 'unknown') {
+      item.address = 'JIT Client';
     }
     // check filters
     if (aTarget.filters !== undefined) {
@@ -117,7 +117,7 @@ function convertClientsToJSON(aTarget, responses) {
         for (let j = 0; j < aTarget.filters.length; j++) {
           const aFilter = aTarget.filters[j];
           switch (aFilter.filterType) {
-            case "regex":
+            case 'regex':
               // make sure the regex is valid
               try {
                 const flags = aFilter.filterRegexFlags;
@@ -125,17 +125,17 @@ function convertClientsToJSON(aTarget, responses) {
                 if (re.test(item.name)) {
                   // push this one
                   //console.log("matched regex");
-                  aFilter.filterMessage = "OK";
+                  aFilter.filterMessage = 'OK';
                 } else {
                   pushItem = false;
                 }
               } catch (err) {
-                aFilter.filterMessage = "Invalid Regular Expression";
+                aFilter.filterMessage = 'Invalid Regular Expression';
                 //console.log("Invalid Regex Detected!");
                 break;
               }
               break;
-            case "field":
+            case 'field':
               if (item.hasOwnProperty(aFilter.filterFieldName)) {
                 const fieldVal = item[aFilter.filterFieldName];
                 if (fieldVal !== aFilter.filterFieldValueReplaced) {
@@ -154,8 +154,8 @@ function convertClientsToJSON(aTarget, responses) {
     if (pushItem) {
       //itemData.datapoints.push(itemData);
       const entry = {
-        type: "docs",
-        datapoints: [item]
+        type: 'docs',
+        datapoints: [item],
       };
       newData.push(entry);
     }
@@ -185,17 +185,17 @@ function convertClientHistoryToDataPoints(aTarget, responses) {
     const datapoints = [];
     let startingTimestamp = 0;
     if (anEvent.last_execution !== undefined) {
-      startingTimestamp = anEvent.last_execution - (60 * anEvent.history.length);
+      startingTimestamp = anEvent.last_execution - 60 * anEvent.history.length;
     }
     // time needs to be in MS, we get EPOCH from Sensu
     if (anEvent.history !== undefined) {
       for (let y = 0; y < anEvent.history.length; y++) {
-        datapoints[y] = [anEvent.history[y], (startingTimestamp + (60 * y)) * 1000];
+        datapoints[y] = [anEvent.history[y], (startingTimestamp + 60 * y) * 1000];
       }
     }
     anEvent.datapoints = datapoints;
     // set the target to be the check name
-    anEvent.target = "unknown";
+    anEvent.target = 'unknown';
     if (anEvent.name !== undefined) {
       anEvent.target = anEvent.name;
     }
@@ -223,7 +223,6 @@ function convertClientHistoryToDataPoints(aTarget, responses) {
  */
 function convertClientSummaryMetricsToJSON(aTarget, responses) {
   const response = getResponseForTarget(aTarget, responses);
-
 }
 
 /*
@@ -260,7 +259,7 @@ function convertClientHealthToJSON(aTarget, responses) {
     //console.log(JSON.stringify(anEvent));
     if (anEvent.check.issued !== undefined) {
       const data = {
-        timestamp: (anEvent.check.issued * 1000),
+        timestamp: anEvent.check.issued * 1000,
         check_name: anEvent.check.name,
         client: anEvent.client,
         check: anEvent.check,
@@ -268,10 +267,10 @@ function convertClientHealthToJSON(aTarget, responses) {
         occurrences_watermark: anEvent.occurrences_watermark,
         action: anEvent.action,
         id: anEvent.id,
-        last_state_change: (anEvent.last_state_change * 1000),
-        last_ok: (anEvent.last_ok * 1000),
+        last_state_change: anEvent.last_state_change * 1000,
+        last_ok: anEvent.last_ok * 1000,
         silenced: anEvent.silenced,
-        silenced_by: anEvent.silenced_by
+        silenced_by: anEvent.silenced_by,
       };
       try {
         data.check.issued = data.check.issued * 1000;
@@ -283,7 +282,7 @@ function convertClientHealthToJSON(aTarget, responses) {
       anEvent.datapoints = datapoints;
       delete anEvent.check;
       delete anEvent.client;
-      anEvent.type = "docs";
+      anEvent.type = 'docs';
       if (!anEvent.silenced) {
         filteredData.push(anEvent);
       }
@@ -304,12 +303,11 @@ function convertClientHealthMetricsToJSON(aTarget, responses) {
   const response = getResponseForTarget(aTarget, responses);
 }
 
-
 export {
   convertClientsToDataPoints,
   convertClientsToJSON,
   convertClientHistoryToDataPoints,
   convertClientSummaryMetricsToJSON,
   convertClientHealthToJSON,
-  convertClientHealthMetricsToJSON
+  convertClientHealthMetricsToJSON,
 };

@@ -25,4 +25,4 @@ export interface SeriesStat {
   scopedVars?: any;
 }
 
-export type NullPointMode = "null" | "connected" | "null as zero" | null;
+export type NullPointMode = 'null' | 'connected' | 'null as zero' | null;

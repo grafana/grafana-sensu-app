@@ -17,7 +17,7 @@ function includeEventTarget(target, anEvent) {
   for (let i = 0; i < target.filters.length; i++) {
     const aFilter = target.filters[i];
     switch (aFilter.filterType) {
-      case "field":
+      case 'field':
         // filterFieldName
         // filterFieldValue
         if (anEvent.client.hasOwnProperty(aFilter.filterFieldName)) {
@@ -33,6 +33,4 @@ function includeEventTarget(target, anEvent) {
   return false;
 }
 
-export {
-  includeEventTarget
-};
+export { includeEventTarget };

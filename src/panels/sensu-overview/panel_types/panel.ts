@@ -1,4 +1,4 @@
-import * as Series from "./series";
+import * as Series from './series';
 
 export interface PanelOptions {
   links?: any[];

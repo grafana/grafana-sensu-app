@@ -1,7 +1,7 @@
-import React, {PureComponent} from "react";
-import { getBGColor } from "./utils";
+import React, { PureComponent } from 'react';
+import { getBGColor } from './utils';
 
-const DEFAULT_COLOR = "rgb(31, 120, 193)";
+const DEFAULT_COLOR = 'rgb(31, 120, 193)';
 const BACKGROUND_OPACITY = 0.1;
 const LABEL_SIZE_COEF = 0.7;
 
@@ -25,7 +25,7 @@ export class SensuMenu extends PureComponent<SensuMenuProps> {
   }
 
   static defaultProps: Partial<SensuMenuProps> = {
-    color: "white",
+    color: 'white',
   };
 
   render() {
@@ -47,17 +47,17 @@ export class SensuMenu extends PureComponent<SensuMenuProps> {
       fontSize: labelFontSize,
     };
     const labelContainerStyle: React.CSSProperties = {
-      lineHeight: labelFontSize + "px",
+      lineHeight: labelFontSize + 'px',
     };
 
     const valueStyle: React.CSSProperties = {
-      fontSize: valueFontSize + "px",
+      fontSize: valueFontSize + 'px',
     };
     if (colorValue) {
       valueStyle.color = valueColor;
     }
     const valueContainerStyle: React.CSSProperties = {
-      fontSize: valueFontSize + "px",
+      fontSize: valueFontSize + 'px',
     };
     return (
       <div className={`multistat-single`} style={containerStyle}>

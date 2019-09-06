@@ -1,15 +1,18 @@
-///<reference path="../../../node_modules/@types/grafana/app/core/utils/kbn.d.ts" />
 import angular from 'angular';
 
-import _ from "lodash";
+import _ from 'lodash';
 
-import { interval_to_ms, secondsToHms } from "grafana/app/core/utils/kbn";
+import { interval_to_ms, secondsToHms } from 'grafana/app/core/utils/kbn';
 
 import { getAggregateURIs } from './api/aggregate_requests';
 import { convertAggregatesToDataPoints, convertAggregatesToJSON } from './api/aggregate_converters';
 import { getClientsURIs, getClientHealthURIs, getClientHistoryURIs } from './api/client_requests';
-import { convertClientsToDataPoints, convertClientsToJSON, convertClientHealthToJSON, convertClientHistoryToDataPoints }
-  from './api/client_converters';
+import {
+  convertClientsToDataPoints,
+  convertClientsToJSON,
+  convertClientHealthToJSON,
+  convertClientHistoryToDataPoints,
+} from './api/client_converters';
 import { getEventsURIs } from './api/event_requests';
 import { convertEventsToDataPoints, convertEventsToJSON, convertEventsToEventMetrics, convertEventsToEventMetricsJSON } from './api/event_converters';
 import { getResultURIs } from './api/result_requests';
@@ -47,73 +50,64 @@ export class SensuCoreDatasource {
     //console.log("metricFindQuery entered: " + options);
     let isClientTags = false;
     let isClientTagValue = false;
-    let aQuery = "/clients";
-    let tagToValue = "";
+    let aQuery = '/clients';
+    let tagToValue = '';
     // substitute template vars
     options = this.templateSrv.replaceWithText(options);
-    if ((options !== undefined) && (options !== "")) {
+    if (options !== undefined && options !== '') {
       switch (true) {
         case /clienttags/.test(options):
-          aQuery = "/clients";
+          aQuery = '/clients';
           isClientTags = true;
           break;
         case /clienttagvalue/.test(options):
-          aQuery = "/clients";
+          aQuery = '/clients';
           isClientTagValue = true;
           // split out the tag from the query
-          tagToValue = options.split("tag=")[1];
+          tagToValue = options.split('tag=')[1];
           break;
         default:
           aQuery = options;
       }
       // make sure there is a leading slash
-      if (!aQuery.startsWith("/", 0)) {
-        aQuery = "/" + aQuery;
+      if (!aQuery.startsWith('/', 0)) {
+        aQuery = '/' + aQuery;
       }
     }
     const thisRef = this;
-    return this.backendSrv.datasourceRequest({
-      url: this.url + aQuery,
-      data: options,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": this.basicAuth
-      }
-    }).then((response: any) => {
-      //thisRef.clientQueryTags = _this.generateClientQueryTags(response);
-      if (isClientTags) {
-        return thisRef.generateClientQueryTags(response);
-      }
-      if (isClientTagValue) {
-        return thisRef.getClientQueryTagValue(response, tagToValue);
-      }
-      return thisRef.mapToClientNameAndVersion(response);
-    });
+    return this.backendSrv
+      .datasourceRequest({
+        url: this.url + aQuery,
+        data: options,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.basicAuth,
+        },
+      })
+      .then((response: any) => {
+        //thisRef.clientQueryTags = _this.generateClientQueryTags(response);
+        if (isClientTags) {
+          return thisRef.generateClientQueryTags(response);
+        }
+        if (isClientTagValue) {
+          return thisRef.getClientQueryTagValue(response, tagToValue);
+        }
+        return thisRef.mapToClientNameAndVersion(response);
+      });
   }
-
 
   generateClientQueryTags(response: any) {
     const clientQueryTags = [];
     const allTags = [];
-    const excludedTags = [
-      "name",
-      "socket",
-      "address",
-      "subscriptions",
-      "timestamp",
-      "keepalive",
-      "keepalives",
-      "redact",
-      "version"
-    ];
+    const excludedTags = ['name', 'socket', 'address', 'subscriptions', 'timestamp', 'keepalive', 'keepalives', 'redact', 'version'];
     for (let i = 0; i < response.data.length; i++) {
       const keys = Object.keys(response.data[i]);
       for (let j = 0; j < keys.length; j++) {
         const keyName = keys[j];
         if (excludedTags.indexOf(keyName) === -1) {
           const tagValue = response.data[i][keyName];
-          const fullKeyName = keyName + "=" + tagValue;
+          const fullKeyName = keyName + '=' + tagValue;
           if (allTags.indexOf(fullKeyName) < 0) {
             allTags.push(fullKeyName);
           }
@@ -124,19 +118,17 @@ export class SensuCoreDatasource {
       // build the tags
       allTags.sort();
       for (let i = 0; i < allTags.length; i++) {
-        clientQueryTags.push(
-          {
-            text: allTags[i],
-            expandable: true
-          }
-        );
+        clientQueryTags.push({
+          text: allTags[i],
+          expandable: true,
+        });
       }
     }
     return clientQueryTags;
   }
 
   getClientQueryTagValue(response: any, tag: string) {
-    const tagSplit = tag.split("=");
+    const tagSplit = tag.split('=');
     const tagToMatch = tagSplit[0];
     const tagValueToMatch = tagSplit[1];
     const clientQueryTags = [];
@@ -146,9 +138,8 @@ export class SensuCoreDatasource {
       for (let j = 0; j < keys.length; j++) {
         const keyName = keys[j];
         if (tagToMatch === keyName) {
-
           // this can be a value or an array inside, check both
-          if (typeof response.data[i][tagToMatch] !== "string") {
+          if (typeof response.data[i][tagToMatch] !== 'string') {
             for (let z = 0; z < response.data[i][tagToMatch].length; z++) {
               if (response.data[i][tagToMatch][z] === tagValueToMatch) {
                 //let tagValue = response.data[i][keyName];
@@ -173,11 +164,9 @@ export class SensuCoreDatasource {
     if (allTagValues.length > 0) {
       // build the tags
       for (let i = 0; i < allTagValues.length; i++) {
-        clientQueryTags.push(
-          {
-            text: allTagValues[i]
-          }
-        );
+        clientQueryTags.push({
+          text: allTagValues[i],
+        });
       }
     }
     return clientQueryTags;
@@ -192,17 +181,19 @@ export class SensuCoreDatasource {
     if (result.data.length === 0) {
       return {};
     }
-    return _.map(result.data, (d) => {
+    return _.map(result.data, d => {
       let x = {
-        text: "",
-        expandable: true
+        text: '',
+        expandable: true,
       };
       try {
         x = {
           text: d.name,
-          expandable: true
+          expandable: true,
         };
-      } catch (e) { console.log("bad data"); }
+      } catch (e) {
+        console.log('bad data');
+      }
       return x;
     });
   }
@@ -215,7 +206,7 @@ export class SensuCoreDatasource {
   getClientNames(dimensions: any) {
     const values = [];
     for (let i = 0; i < dimensions.length; i++) {
-      if (dimensions[i].dimensionType === "clientName") {
+      if (dimensions[i].dimensionType === 'clientName') {
         const aDimension = dimensions[i].value;
         if (this.templateSrv.getVariableName(aDimension)) {
           // template variable found, expand it
@@ -223,9 +214,9 @@ export class SensuCoreDatasource {
           if (templateVar.length > 0) {
             // the expanded variable comes back as { value1 , value2 }
             // or it comes back as just a value
-            if (templateVar.startsWith("{")) {
+            if (templateVar.startsWith('{')) {
               templateVar = templateVar.slice(1, -1);
-              const templateVars = templateVar.split(",");
+              const templateVars = templateVar.split(',');
               values.push.apply(values, templateVars);
             } else {
               values.push(templateVar);
@@ -248,7 +239,7 @@ export class SensuCoreDatasource {
   getCheckNames(dimensions: any) {
     const values = [];
     for (let i = 0; i < dimensions.length; i++) {
-      if (dimensions[i].dimensionType === "checkName") {
+      if (dimensions[i].dimensionType === 'checkName') {
         const aDimension = dimensions[i].value;
         if (this.templateSrv.getVariableName(aDimension)) {
           // template variable found, expand it
@@ -256,9 +247,9 @@ export class SensuCoreDatasource {
           if (templateVar.length > 0) {
             // the expanded variable comes back as { value1 , value2 }
             // or it comes back as just a value
-            if (templateVar.startsWith("{")) {
+            if (templateVar.startsWith('{')) {
               templateVar = templateVar.slice(1, -1);
-              const templateVars = templateVar.split(",");
+              const templateVars = templateVar.split(',');
               values.push.apply(values, templateVars);
             } else {
               values.push(templateVar);
@@ -280,7 +271,7 @@ export class SensuCoreDatasource {
   getAggregateNames(dimensions) {
     const values = [];
     for (let i = 0; i < dimensions.length; i++) {
-      if (dimensions[i].dimensionType === "aggregateName") {
+      if (dimensions[i].dimensionType === 'aggregateName') {
         const aDimension = dimensions[i].value;
         if (this.templateSrv.getVariableName(aDimension)) {
           // template variable found, expand it
@@ -288,9 +279,9 @@ export class SensuCoreDatasource {
           if (templateVar.length > 0) {
             // the expanded variable comes back as { value1 , value2 }
             // or it comes back as just a value
-            if (templateVar.startsWith("{")) {
+            if (templateVar.startsWith('{')) {
               templateVar = templateVar.slice(1, -1);
-              const templateVars = templateVar.split(",");
+              const templateVars = templateVar.split(',');
               values.push.apply(values, templateVars);
             } else {
               values.push(templateVar);
@@ -308,7 +299,7 @@ export class SensuCoreDatasource {
     for (let i = 0; i < filters.length; i++) {
       const aFilter = filters[i];
       switch (aFilter.filterType) {
-        case "field":
+        case 'field':
           // Field filters have these properties
           // filterFieldName
           // filterFieldValue
@@ -329,7 +320,7 @@ export class SensuCoreDatasource {
    */
   getQueryURIByType(target) {
     let uris = [];
-    const dimensionURI = "/events";
+    const dimensionURI = '/events';
     let clientNames = null;
     let checkNames = null;
     let aggregateNames = null;
@@ -346,12 +337,12 @@ export class SensuCoreDatasource {
       target.aliasReplaced = this.templateSrv.replace(target.alias);
     }
     switch (target.sourceType) {
-      case "aggregates":
-      case "aggregates_json":
+      case 'aggregates':
+      case 'aggregates_json':
         // https://sensuapp.org/docs/0.28/api/aggregates-api.html
         uris = getAggregateURIs(target, aggregateNames);
         break;
-      case "check_subscriptions":
+      case 'check_subscriptions':
         // https://sensuapp.org/docs/0.28/api/checks-api.html
         //
         // Returns list of subscription names, with the corresponding checks for the subscription
@@ -362,38 +353,38 @@ export class SensuCoreDatasource {
         //    source - JIT client
         //
         break;
-      case "client_health_json":
+      case 'client_health_json':
         uris = getClientHealthURIs(clientNames);
         break;
-      case "clients":
-      case "clients_json":
+      case 'clients':
+      case 'clients_json':
         // https://sensuapp.org/docs/0.28/api/clients-api.html
         uris = getClientsURIs(checkNames, clientNames);
         break;
-      case "clienthistory":
+      case 'clienthistory':
         // https://sensuapp.org/docs/0.28/api/clients-api.html
         // look for clientName in dimensions
         uris = getClientHistoryURIs(clientNames);
         break;
-      case "event_metrics":
-      case "event_metrics_json":
-      case "events":
-      case "events_json":
+      case 'event_metrics':
+      case 'event_metrics_json':
+      case 'events':
+      case 'events_json':
         // https://sensuapp.org/docs/0.28/api/events-api.html
         uris = getEventsURIs(checkNames, clientNames);
         break;
-      case "results_json":
-      case "results_table":
+      case 'results_json':
+      case 'results_table':
         // https://sensuapp.org/docs/0.28/api/results-api.html
         uris = getResultURIs(checkNames, clientNames);
         break;
-      case "sensu_health_json":
+      case 'sensu_health_json':
         // https://sensuapp.org/docs/0.28/api/health-and-info-api.html
         break;
-      case "silenced_entries_json":
+      case 'silenced_entries_json':
         // https://sensuapp.org/docs/0.28/api/silenced-api.html
         break;
-      case "stashes_json":
+      case 'stashes_json':
         // https://sensuapp.org/docs/0.28/api/stashes-api.html
         break;
     }
@@ -416,44 +407,44 @@ export class SensuCoreDatasource {
   processConversions(sourceType, aTarget, responses) {
     let result = { data: [] };
     switch (sourceType) {
-      case "aggregates":
+      case 'aggregates':
         result = convertAggregatesToDataPoints(aTarget, responses);
         break;
-      case "aggregates_json":
+      case 'aggregates_json':
         result = convertAggregatesToJSON(aTarget, responses);
         return result;
-      case "clients":
+      case 'clients':
         result = convertClientsToDataPoints(aTarget, responses);
         return result;
-      case "clients_json":
+      case 'clients_json':
         result = convertClientsToJSON(aTarget, responses);
         return result;
-      case "client_health_json":
+      case 'client_health_json':
         result = convertClientHealthToJSON(aTarget, responses);
         return result;
-      case "clienthistory":
+      case 'clienthistory':
         result = convertClientHistoryToDataPoints(aTarget, responses);
         break;
-      case "events":
+      case 'events':
         result = convertEventsToDataPoints(aTarget, responses);
         break;
-      case "events_json":
+      case 'events_json':
         result = convertEventsToJSON(aTarget, responses);
         break;
-      case "event_metrics":
+      case 'event_metrics':
         result = convertEventsToEventMetrics(aTarget, responses);
         break;
-      case "event_metrics_json":
+      case 'event_metrics_json':
         result = convertEventsToEventMetricsJSON(aTarget, responses);
         break;
-      case "results_json":
+      case 'results_json':
         result = convertResultsToJSON(aTarget, responses);
         break;
-      case "results_table":
+      case 'results_table':
         result = convertResultsToTable(aTarget, responses);
         break;
       default:
-        console.log("Unknown source type");
+        console.log('Unknown source type');
         break;
     }
     return result;
@@ -469,7 +460,7 @@ export class SensuCoreDatasource {
 
   processFilters(aTarget, result) {
     // if there are no filters, return all data[] items
-    if ((aTarget.filters !== undefined) && (aTarget.filters.length > 0)) {
+    if (aTarget.filters !== undefined && aTarget.filters.length > 0) {
       const filterData = [];
       for (let i = 0; i < aTarget.filters.length; i++) {
         const aFilter = aTarget.filters[i];
@@ -479,7 +470,7 @@ export class SensuCoreDatasource {
           if (aFilter.filterType === aRawTarget) {
             // Prepend Alias
             if (aTarget.aliasReplaced) {
-              result.data[j].target = aTarget.aliasReplaced + " " + aRawTarget;
+              result.data[j].target = aTarget.aliasReplaced + ' ' + aRawTarget;
             }
             // save this result
             filterData.push(result.data[j]);
@@ -508,7 +499,6 @@ export class SensuCoreDatasource {
    * @return {[type]}          [description]
    */
   parseQueryResult(responses) {
-
     // This will match refId's for responses and bucket them together, then pass the bucket to the conversion routines
     // This allows multiple responses intended for a single target to all be processed at once
     // It is up to the processor to use the data sent, and return a result that can be used.
@@ -571,33 +561,35 @@ export class SensuCoreDatasource {
    * @return {[type]}           [description]
    */
   dimensionFindValues(target, dimension) {
-    let dimensionURI = "/clients";
+    let dimensionURI = '/clients';
     switch (dimension.dimensionType) {
-      case "clientName":
-        dimensionURI = "/clients";
+      case 'clientName':
+        dimensionURI = '/clients';
         break;
-      case "checkName":
-        dimensionURI = "/checks";
+      case 'checkName':
+        dimensionURI = '/checks';
         break;
-      case "aggregateName":
-        dimensionURI = "/aggregates";
+      case 'aggregateName':
+        dimensionURI = '/aggregates';
         break;
     }
-    return this.backendSrv.datasourceRequest({
-      url: this.url + dimensionURI,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": this.basicAuth
-      }
-    }).then(this.mapToTextValue);
+    return this.backendSrv
+      .datasourceRequest({
+        url: this.url + dimensionURI,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.basicAuth,
+        },
+      })
+      .then(this.mapToTextValue);
   }
 
   mapToTextValue(result) {
     return _.map(result.data, (d, i) => {
       return {
         text: d.name,
-        value: d.name
+        value: d.name,
       };
     });
   }
@@ -609,26 +601,28 @@ export class SensuCoreDatasource {
    * @return {[type]}           [description]
    */
   filterFindValues(target, filter) {
-    let filterURI = "/clients";
+    let filterURI = '/clients';
     switch (filter.filterType) {
-      case "clientName":
-        filterURI = "/clients";
+      case 'clientName':
+        filterURI = '/clients';
         break;
-      case "checkName":
-        filterURI = "/checks";
+      case 'checkName':
+        filterURI = '/checks';
         break;
-      case "aggregateName":
-        filterURI = "/aggregates";
+      case 'aggregateName':
+        filterURI = '/aggregates';
         break;
     }
-    return this.backendSrv.datasourceRequest({
-      url: this.url + filterURI,
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": this.basicAuth
-      }
-    }).then(this.mapToTextValue);
+    return this.backendSrv
+      .datasourceRequest({
+        url: this.url + filterURI,
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.basicAuth,
+        },
+      })
+      .then(this.mapToTextValue);
   }
 
   query(options) {
@@ -636,7 +630,7 @@ export class SensuCoreDatasource {
     //var queries = [];
     const thisRef = this;
     const singleTarget = null;
-    options.targets.forEach((target) => {
+    options.targets.forEach(target => {
       // TODO handle hide and no target specified
       //if (target.hide || !target.target) {
       //  continue;
@@ -659,14 +653,14 @@ export class SensuCoreDatasource {
     if (queries.length === 0) {
       // console.log("no tags visible or specified, no data to fetch");
       deferred.resolve({
-        data: []
+        data: [],
       });
       return deferred.promise;
     }
     const allQueries = this.q.all({
       first: thisRef.multipleDataQueries(queries),
     });
-    allQueries.then((results) => {
+    allQueries.then(results => {
       // return results from queries
       deferred.resolve(results.first);
     });
@@ -679,35 +673,37 @@ export class SensuCoreDatasource {
     const deferred = this.q.defer();
     const params = {};
     const httpOptions = {
-      method: "GET",
+      method: 'GET',
       url: this.url + uriType,
       params: params,
       headers: {
-        "Content-Type": "application/json",
-        "Authorization": this.basicAuth
-      }
+        'Content-Type': 'application/json',
+        Authorization: this.basicAuth,
+      },
     };
-    this.backendSrv.datasourceRequest(httpOptions)
-      .then((response) => {
+    this.backendSrv.datasourceRequest(httpOptions).then(
+      response => {
         let anError = null;
         if (response.status !== 200) {
-          console.log("error...");
-          anError = new Error("Bad Status: " + response.status);
+          console.log('error...');
+          anError = new Error('Bad Status: ' + response.status);
           deferred.reject(anError);
         }
         if (!response.data) {
-          anError = new Error("No data");
+          anError = new Error('No data');
           deferred.reject(anError);
         }
         // this used to parse per response, instead this is returning the target and response to be later
         // used by multiDone
         // OLD: deferred.resolve(_this.parseQueryResult(singleTarget, response));
         deferred.resolve({ target: singleTarget, response: response });
-      }, (response) => {
-        console.error("Unable to load data. Response: %o", response.data ? response.data.message : response);
-        const error = new Error("Unable to load data");
+      },
+      response => {
+        console.error('Unable to load data. Response: %o', response.data ? response.data.message : response);
+        const error = new Error('Unable to load data');
         deferred.reject(error);
-      });
+      }
+    );
 
     return deferred.promise;
   }
@@ -749,19 +745,18 @@ export class SensuCoreDatasource {
       }
     });
     */
-    this.q.all(dataCalls)
-      .then(
-        (results) => {
-          const response = {
-            data: []
-          };
-          let i = 0;
-          // merge all of the results into one response
-          while (i < results.length) {
-            response.data.push(results[i]);
-            i++;
-          }
-          /*
+    this.q.all(dataCalls).then(
+      results => {
+        const response = {
+          data: [],
+        };
+        let i = 0;
+        // merge all of the results into one response
+        while (i < results.length) {
+          response.data.push(results[i]);
+          i++;
+        }
+        /*
           angular.forEach(results, function(result) {
             response.data.push(result);
             //angular.forEach(result.data, function(dataSet) {
@@ -769,30 +764,32 @@ export class SensuCoreDatasource {
             //});
           });
           */
-          // multiDone needs to return all of the parsed results inside somevar.data[]
-          deferred.resolve(thisRef.multiDone(response));
-        },
-        (errors) => {
-          deferred.reject(errors);
-        },
-        (updates) => {
-          deferred.update(updates);
-        }
-      );
+        // multiDone needs to return all of the parsed results inside somevar.data[]
+        deferred.resolve(thisRef.multiDone(response));
+      },
+      errors => {
+        deferred.reject(errors);
+      },
+      updates => {
+        deferred.update(updates);
+      }
+    );
     return deferred.promise;
   }
 
   getServerInfo() {
-    return this.backendSrv.datasourceRequest({
-      url: this.url + "/info",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": this.basicAuth
-      },
-      method: "GET",
-    }).then((response) => {
-      return response.data;
-    });
+    return this.backendSrv
+      .datasourceRequest({
+        url: this.url + '/info',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.basicAuth,
+        },
+        method: 'GET',
+      })
+      .then(response => {
+        return response.data;
+      });
   }
 
   // Required
@@ -801,26 +798,28 @@ export class SensuCoreDatasource {
   //
 
   testDatasource() {
-    return this.backendSrv.datasourceRequest({
-      url: this.url + "/info",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": this.basicAuth
-      },
-      method: "GET",
-    }).then((response: { status: number; }) => {
-      if (response.status === 200) {
+    return this.backendSrv
+      .datasourceRequest({
+        url: this.url + '/info',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: this.basicAuth,
+        },
+        method: 'GET',
+      })
+      .then((response: { status: number }) => {
+        if (response.status === 200) {
+          return {
+            status: 'success',
+            message: 'Data source is working',
+            title: 'Success',
+          };
+        }
         return {
-          status: "success",
-          message: "Data source is working",
-          title: "Success"
+          status: 'error',
+          message: 'Data source is not working',
+          title: 'Error',
         };
-      }
-      return {
-        status: "error",
-        message: "Data source is not working",
-        title: "Error"
-      };
-    });
+      });
   }
 }

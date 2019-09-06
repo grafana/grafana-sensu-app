@@ -4,20 +4,20 @@
 
 function getClientsURIs(checkNames, clientNames) {
   const uris = [];
-  let dimensionURI = "/clients";
+  let dimensionURI = '/clients';
   // look for clientName in dimensions
   if (clientNames.length) {
     for (let i = 0; i < clientNames.length; i++) {
       const aClientName = clientNames[i];
-      dimensionURI = "/clients/" + aClientName;
+      dimensionURI = '/clients/' + aClientName;
       uris.push(dimensionURI);
     }
   }
   if (uris.length === 0) {
     uris.push(dimensionURI);
   }
-  uris.push("/events");
-  uris.push("/results");
+  uris.push('/events');
+  uris.push('/results');
 
   return uris;
 }
@@ -33,15 +33,15 @@ function getClientHealthURIs(clientNames) {
   if (clientNames.length) {
     for (let i = 0; i < clientNames.length; i++) {
       const aClientName = clientNames[i];
-      const resultsURI = "/results/" + aClientName;
+      const resultsURI = '/results/' + aClientName;
       uris.push(resultsURI);
-      const eventsURI = "/events/" + aClientName;
+      const eventsURI = '/events/' + aClientName;
       uris.push(eventsURI);
     }
   }
   if (uris.length === 0) {
-    uris.push("/results");
-    uris.push("/events");
+    uris.push('/results');
+    uris.push('/events');
   }
   return uris;
 }
@@ -53,12 +53,12 @@ function getClientHealthURIs(clientNames) {
  */
 function getClientHistoryURIs(clientNames) {
   const uris = [];
-  let dimensionURI = "/clients";
+  let dimensionURI = '/clients';
   // look for clientName in dimensions
   if (clientNames.length) {
     for (let i = 0; i < clientNames.length; i++) {
       const aClientName = clientNames[i];
-      dimensionURI = "/clients/" + aClientName + "/history";
+      dimensionURI = '/clients/' + aClientName + '/history';
       uris.push(dimensionURI);
     }
   }
@@ -68,8 +68,4 @@ function getClientHistoryURIs(clientNames) {
   return uris;
 }
 
-export {
-  getClientsURIs,
-  getClientHealthURIs,
-  getClientHistoryURIs
-};
+export { getClientsURIs, getClientHealthURIs, getClientHistoryURIs };

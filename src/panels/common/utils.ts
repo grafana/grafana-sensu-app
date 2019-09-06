@@ -1,7 +1,7 @@
-import _ from "lodash";
-function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaledDecimals; } {
+import _ from 'lodash';
+function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaledDecimals } {
   if (_.isNumber(panelDecimals)) {
-    return {decimals: panelDecimals, scaledDecimals: null};
+    return { decimals: panelDecimals, scaledDecimals: null };
   }
 
   const delta = value / 2;
@@ -29,7 +29,9 @@ function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaled
   size *= magn;
 
   // reduce starting decimals if not needed
-  if (Math.floor(value) === value) { dec = 0; }
+  if (Math.floor(value) === value) {
+    dec = 0;
+  }
 
   const result = {
     decimals: 0,
@@ -51,25 +53,25 @@ function GetDecimalsForValue(value: any, panelDecimals: any): { decimals; scaled
  * @param {width} the width in pixels the string must fit in
  * @param {minFontPx} the smallest acceptable font size in pixels
  * @param {maxFontPx} the largest acceptable font size in pixels
-*/
+ */
 function getTextSizeForWidth(text: string, font: any, width, minFontPx, maxFontPx) {
-    let s = font.replace("?", maxFontPx);
-    let w = getTextWidth(text, s);
-    if (w <= width) {
-      return maxFontPx;
+  let s = font.replace('?', maxFontPx);
+  let w = getTextWidth(text, s);
+  if (w <= width) {
+    return maxFontPx;
+  }
+  // pad width by 10px
+  width = width - 20;
+  // start from large to small, return 0 for no-fit
+  for (let fontSize = maxFontPx; fontSize >= minFontPx; fontSize--) {
+    s = font.replace('?', fontSize);
+    w = getTextWidth(text, s);
+    if (w < width) {
+      return Math.ceil(fontSize);
     }
-    // pad width by 10px
-    width = width - 20;
-    // start from large to small, return 0 for no-fit
-    for (let fontSize = maxFontPx; fontSize >= minFontPx; fontSize--) {
-      s = font.replace("?", fontSize);
-      w = getTextWidth(text, s);
-      if (w < width) {
-        return Math.ceil(fontSize);
-      }
-    }
-    // 0 if no fit
-    return 0;
+  }
+  // 0 if no fit
+  return 0;
 }
 
 /**
@@ -82,16 +84,11 @@ function getTextSizeForWidth(text: string, font: any, width, minFontPx, maxFontP
  */
 function getTextWidth(text: string, font: string) {
   // re-use canvas object for better performance
-  const canvas = document.createElement("canvas");
-  const context = canvas.getContext("2d");
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
   context.font = font;
   const metrics = context.measureText(text);
   return metrics.width;
 }
 
-
-export {
-GetDecimalsForValue,
-getTextSizeForWidth,
-getTextWidth
-};
+export { GetDecimalsForValue, getTextSizeForWidth, getTextWidth };

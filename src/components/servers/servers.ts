@@ -1,6 +1,6 @@
 import angular from 'angular';
 
-import appEvents from "grafana/app/core/app_events";
+import appEvents from 'grafana/app/core/app_events';
 
 export class SensuServersCtrl {
   server: any;
@@ -9,13 +9,13 @@ export class SensuServersCtrl {
   servers: any;
   isOrgEditor: boolean;
 
-  static templateUrl = "components/servers/partials/servers.html";
+  static templateUrl = 'components/servers/partials/servers.html';
 
   /** @ngInject */
   constructor($scope, $injector, private backendSrv, private contextSrv, private $location) {
     const self = this;
-    this.isOrgEditor = contextSrv.hasRole("Editor") || contextSrv.hasRole("Admin");
-    document.title = "Grafana Sensu App";
+    this.isOrgEditor = contextSrv.hasRole('Editor') || contextSrv.hasRole('Admin');
+    document.title = 'Grafana Sensu App';
     this.servers = [];
     this.pageReady = false;
     this.getSensuServers();
@@ -23,31 +23,30 @@ export class SensuServersCtrl {
 
   async getSensuServers() {
     const self = this;
-    return this.backendSrv.get("/api/datasources")
-    .then((result: any) => {
-      self.servers = result.filter((o: { type: {}; }) => {
-        return o.type === "grafana-sensucore-datasource";
+    return this.backendSrv.get('/api/datasources').then((result: any) => {
+      self.servers = result.filter((o: { type: {} }) => {
+        return o.type === 'grafana-sensucore-datasource';
       });
-      console.log("servers..." + JSON.stringify(self.servers));
+      console.log('servers...' + JSON.stringify(self.servers));
       self.pageReady = true;
     });
   }
 
   confirmDelete(id: any) {
-    this.backendSrv.delete("/api/datasources/" + id).then(() => {
+    this.backendSrv.delete('/api/datasources/' + id).then(() => {
       this.getSensuServers();
     });
   }
 
   deleteSensuServer(server) {
-    appEvents.emit("confirm-modal", {
-      title: "Delete",
-      text: "Are you sure you want to delete this data source?",
-      yesText: "Delete",
-      icon: "fa-trash",
+    appEvents.emit('confirm-modal', {
+      title: 'Delete',
+      text: 'Are you sure you want to delete this data source?',
+      yesText: 'Delete',
+      icon: 'fa-trash',
       onConfirm: () => {
         this.confirmDelete(server.id);
-      }
+      },
     });
   }
 
@@ -69,18 +68,18 @@ export class SensuServersCtrl {
    */
   async addSensuServer() {
     const payload = {
-      "name": "SensuAppCore-" + this.servers.length,
-      "type": "grafana-sensucore-datasource",
-      "access": "proxy",
-      "isDefault": false
+      name: 'SensuAppCore-' + this.servers.length,
+      type: 'grafana-sensucore-datasource',
+      access: 'proxy',
+      isDefault: false,
     };
-    const response = await this.backendSrv.post("/api/datasources", payload);
+    const response = await this.backendSrv.post('/api/datasources', payload);
     const instanceId = response.datasource.id;
     this.$location.url('/plugins/grafana-sensu-app/page/sensu-servers');
     window.location.href = '/datasources/edit/' + instanceId;
   }
 
   serverInfo(server) {
-    this.$location.path("plugins/grafana-sensu-app/page/sensu-server-info").search({"server": server.id});
+    this.$location.path('plugins/grafana-sensu-app/page/sensu-server-info').search({ server: server.id });
   }
 }

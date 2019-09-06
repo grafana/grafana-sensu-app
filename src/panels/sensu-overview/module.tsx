@@ -1,24 +1,24 @@
 import angular from 'angular';
 
-import _ from "lodash";
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import {defaults} from "./defaults";
-import {MetricsPanelCtrl} from "grafana/app/plugins/sdk";
-import {SensuOverview} from "./components/sensu_overview";
-import * as Series from "./panel_types/series";
-import {OverviewDatasource} from "./overview_datasource";
-import {loadPluginCss} from "grafana/app/plugins/sdk";
-import {convertStatsToPanelStats, convertClientHealthStatsToPanelStats} from "./converters";
+import _ from 'lodash';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { defaults } from './defaults';
+import { MetricsPanelCtrl } from 'grafana/app/plugins/sdk';
+import { SensuOverview } from './components/sensu_overview';
+import * as Series from './panel_types/series';
+import { OverviewDatasource } from './overview_datasource';
+import { loadPluginCss } from 'grafana/app/plugins/sdk';
+import { convertStatsToPanelStats, convertClientHealthStatsToPanelStats } from './converters';
 
 loadPluginCss({
-  dark : "plugins/grafana-sensu-app/panels/external/material-icons.css",
-  light : "plugins/grafana-sensu-app/panels/external/material-icons.css"
+  dark: 'plugins/grafana-sensu-app/panels/external/material-icons.css',
+  light: 'plugins/grafana-sensu-app/panels/external/material-icons.css',
 });
 
 class SensuOverviewCtrl extends MetricsPanelCtrl {
-  static templateUrl = "panels/sensu-overview/partials/template.html";
-  dataType = "timeseries";
+  static templateUrl = 'panels/sensu-overview/partials/template.html';
+  dataType = 'timeseries';
   series: any[];
   data: Series.SeriesStat[];
   eventData: any;
@@ -46,29 +46,31 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     this.datasourceSrv = datasourceSrv;
     this.alertSrv = alertSrv;
     this.overviewDatasource = new OverviewDatasource(datasourceSrv);
-    this.containerId = "container_react_" + this.panel.id;
-    this.events.on("data-received", this.onDataReceived.bind(this));
-    this.events.on("data-error", this.onDataError.bind(this));
-    this.events.on("data-snapshot-load", this.onDataReceived.bind(this));
-    this.events.on("init-edit-mode", this.onInitEditMode.bind(this));
+    this.containerId = 'container_react_' + this.panel.id;
+    this.events.on('data-received', this.onDataReceived.bind(this));
+    this.events.on('data-error', this.onDataError.bind(this));
+    this.events.on('data-snapshot-load', this.onDataReceived.bind(this));
+    this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
     this.cluster = {};
     this.sensuDS = {};
     this.loadSensuData();
   }
 
   loadDatasource(id) {
-    return this.backendSrv.get('/api/datasources')
+    return this.backendSrv
+      .get('/api/datasources')
       .then(result => {
-        return _.filter(result, {"type": "grafana-sensucore-datasource"})[0];
+        return _.filter(result, { type: 'grafana-sensucore-datasource' })[0];
       })
-      .then( (ds) => {
+      .then(ds => {
         if (ds == null) {
-          this.alertSrv.set("Failed to connect", "Could not connect to the specified sensu server.", 'error');
-          throw new Error("Failed to connect to " + id);
+          this.alertSrv.set('Failed to connect', 'Could not connect to the specified sensu server.', 'error');
+          throw new Error('Failed to connect to ' + id);
         }
         this.cluster = ds;
         return this.datasourceSrv.get(ds.name);
-      }).then(sensuDS => {
+      })
+      .then(sensuDS => {
         this.sensuDS = sensuDS;
         return sensuDS;
       });
@@ -89,9 +91,9 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
   */
 
   checkRender() {
-    console.log("have events: " + this.haveEventStats);
-    console.log("have clients: " + this.haveClientStats);
-    if ((this.haveEventStats) && (this.haveClientStats)) {
+    console.log('have events: ' + this.haveEventStats);
+    console.log('have clients: ' + this.haveClientStats);
+    if (this.haveEventStats && this.haveClientStats) {
       this.panelReady = true;
       // call render() once the data loads
       this.render();
@@ -101,12 +103,11 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
   /* fetches all instances of datasource */
   async getSensuServers() {
     const self = this;
-    return this.backendSrv.get("/api/datasources")
-    .then((result: any) => {
-      self.servers = result.filter((o: { type: {}; }) => {
-        return o.type === "grafana-sensucore-datasource";
+    return this.backendSrv.get('/api/datasources').then((result: any) => {
+      self.servers = result.filter((o: { type: {} }) => {
+        return o.type === 'grafana-sensucore-datasource';
       });
-      console.log("servers..." + JSON.stringify(self.servers));
+      console.log('servers...' + JSON.stringify(self.servers));
     });
   }
 
@@ -116,13 +117,13 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     this.haveClientStats = false;
     this.loadDatasource(serverId).then(() => {
       // load events, client health
-      this.overviewDatasource.getSensuStats(serverId, this.sensuDS).then((eventStats) => {
+      this.overviewDatasource.getSensuStats(serverId, this.sensuDS).then(eventStats => {
         this.eventData = convertStatsToPanelStats(eventStats);
         if (this.eventData) {
           this.haveEventStats = true;
           this.checkRender();
         }
-        this.overviewDatasource.getSensuClientHealthStats(serverId, this.sensuDS).then((clientHealthStats) => {
+        this.overviewDatasource.getSensuClientHealthStats(serverId, this.sensuDS).then(clientHealthStats => {
           this.clientData = convertClientHealthStatsToPanelStats(clientHealthStats);
           if (this.clientData) {
             this.haveClientStats = true;
@@ -132,7 +133,6 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
       });
     });
   }
-
 
   /*
   loadSensuEvents(serverId: number) {
@@ -206,18 +206,18 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
 
 */
   onInitEditMode() {
-    this.fontSizes = ["20%", "30%", "50%", "70%", "80%", "100%", "110%", "120%", "150%", "170%", "200%"];
+    this.fontSizes = ['20%', '30%', '50%', '70%', '80%', '100%', '110%', '120%', '150%', '170%', '200%'];
     // determine the path to this plugin
-    const partialsPath = "public/plugins/" + this.panel.type + "/partials";
-    this.addEditorTab("Options", partialsPath + "/options.html", 2);
+    const partialsPath = 'public/plugins/' + this.panel.type + '/partials';
+    this.addEditorTab('Options', partialsPath + '/options.html', 2);
     //this.unitFormats = kbn.getUnitFormats();
   }
 
   async onDataReceived(dataList: any) {
-    if (dataList.length > 0 && dataList[0].type === "table") {
-      this.dataType = "table";
+    if (dataList.length > 0 && dataList[0].type === 'table') {
+      this.dataType = 'table';
       if (dataList[0].rows && !dataList[0].rows.length) {
-        return this.onDataError("No data");
+        return this.onDataError('No data');
       }
       //this.setTableColumnToSensibleDefault(dataList[0]);
       //this.data = convertTableDataToMultistat(dataList, this.panel);
@@ -245,17 +245,14 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     });
 
     //this.tableColumnOptions = columnNames;
-    if (
-      _.find(tableData.columns, ["text", this.panel.tableColumnValue]) &&
-      _.find(tableData.columns, ["text", this.panel.tableColumnLabel])
-    ) {
+    if (_.find(tableData.columns, ['text', this.panel.tableColumnValue]) && _.find(tableData.columns, ['text', this.panel.tableColumnLabel])) {
       return;
     }
 
     if (tableData.columns.length === 1) {
       this.panel.tableColumnValue = tableData.columns[0].text;
     } else {
-      const notTimeColumns = _.filter(tableData.columns, col => col.type !== "time");
+      const notTimeColumns = _.filter(tableData.columns, col => col.type !== 'time');
       this.panel.tableColumnValue = _.last(notTimeColumns).text;
       this.panel.tableColumnLabel = _.first(notTimeColumns).text;
       /*
@@ -272,13 +269,12 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
         // Backup original value
         seriesStat._valueFormatted = seriesStat.valueFormatted;
       }
-      let value = this.panel.prefix ? this.templateSrv.replace(this.panel.prefix, seriesStat.scopedVars) : "";
+      let value = this.panel.prefix ? this.templateSrv.replace(this.panel.prefix, seriesStat.scopedVars) : '';
       value += seriesStat._valueFormatted;
-      value += this.panel.postfix ? this.templateSrv.replace(this.panel.postfix, seriesStat.scopedVars) : "";
+      value += this.panel.postfix ? this.templateSrv.replace(this.panel.postfix, seriesStat.scopedVars) : '';
       seriesStat.valueFormatted = value;
     });
   }
-
 
   link(scope: any, elem: any, attrs: any, ctrl: any) {
     if (!scope) {
@@ -287,12 +283,12 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     if (!attrs) {
       return;
     }
-    const panelByClass = elem.find(".grafana-sensu-app-overview-panel");
-    panelByClass.append("<div style=\"width: 100%; height: 100%;\" id=\"" + ctrl.containerId + "\"></div>");
+    const panelByClass = elem.find('.grafana-sensu-app-overview-panel');
+    panelByClass.append('<div style="width: 100%; height: 100%;" id="' + ctrl.containerId + '"></div>');
     const container = panelByClass[0].childNodes[0];
 
     // bind render event
-    this.events.on("render", () => {
+    this.events.on('render', () => {
       const container = document.getElementById(ctrl.containerId);
       ReactDOM.unmountComponentAtNode(container);
       render();
@@ -310,19 +306,16 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
         stats: ctrl.eventData,
         clientHealthStats: ctrl.clientData,
         options: ctrl.panel,
-        size: scope.size
+        size: scope.size,
       };
       const sensuOverviewReactElem = React.createElement(SensuOverview, sensuOverviewProps);
-      ReactDOM.render(
-        sensuOverviewReactElem,
-        document.getElementById(ctrl.containerId)
-      );
+      ReactDOM.render(sensuOverviewReactElem, document.getElementById(ctrl.containerId));
     }
 
     /*
      * cleanup when scope is destroyed
      */
-    scope.$on("$destroy", () => {
+    scope.$on('$destroy', () => {
       ReactDOM.unmountComponentAtNode(container[0]);
     });
   }

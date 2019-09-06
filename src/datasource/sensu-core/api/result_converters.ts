@@ -1,5 +1,4 @@
-
-import { getResponseForTarget } from "./utils";
+import { getResponseForTarget } from './utils';
 
 function convertResultsToTable(aTarget, responses) {
   const response = getResponseForTarget(aTarget, responses);
@@ -27,7 +26,7 @@ function convertResultsToTable(aTarget, responses) {
       rowInfo.check.output,
       rowInfo.check.type,
       rowInfo.check.thresholds.warning,
-      rowInfo.check.thresholds.critical
+      rowInfo.check.thresholds.critical,
     ];
     // now push into rowData
     rowData.push(aRow);
@@ -35,20 +34,20 @@ function convertResultsToTable(aTarget, responses) {
   // collapse everything into data[0]
   const anEvent = response.data[0];
   const datapoints = [];
-  datapoints[0] = [anEvent.check.status, (anEvent.check.issued * 1000)];
+  datapoints[0] = [anEvent.check.status, anEvent.check.issued * 1000];
   anEvent.datapoints = datapoints;
-  anEvent.type = "table";
+  anEvent.type = 'table';
   anEvent.columns = [
-    { text: "Time", type: "date"},
-    { text: "client" },
-    { text: "check.name" },
-    { text: "check.status" },
-    { text: "check.issued", type: "date" },
-    { text: "check.executed", type: "date" },
-    { text: "check.output" },
-    { text: "check.type" },
-    { text: "check.thresholds.warning" },
-    { text: "check.thresholds.critical" }
+    { text: 'Time', type: 'date' },
+    { text: 'client' },
+    { text: 'check.name' },
+    { text: 'check.status' },
+    { text: 'check.issued', type: 'date' },
+    { text: 'check.executed', type: 'date' },
+    { text: 'check.output' },
+    { text: 'check.type' },
+    { text: 'check.thresholds.warning' },
+    { text: 'check.thresholds.critical' },
   ];
   anEvent.rows = rowData;
   // truncate the rest
@@ -84,23 +83,23 @@ function convertResultsToJSON(aTarget, responses) {
     const datapoints = [];
     if (anEvent.check.issued !== undefined) {
       const data = {
-        timestamp: (anEvent.check.issued * 1000),
+        timestamp: anEvent.check.issued * 1000,
         message: anEvent.check.name,
         client: anEvent.client,
         check: {
           name: anEvent.check.name,
-          issued: (anEvent.check.issued * 1000),
-          executed: (anEvent.check.executed * 1000),
+          issued: anEvent.check.issued * 1000,
+          executed: anEvent.check.executed * 1000,
           output: anEvent.check.output,
           status: anEvent.check.status,
-          type: anEvent.check.type
-        }
+          type: anEvent.check.type,
+        },
       };
       datapoints.push(data);
       anEvent.datapoints = datapoints;
       delete anEvent.check;
       delete anEvent.client;
-      anEvent.type = "docs";
+      anEvent.type = 'docs';
     }
   }
   //var str = JSON.stringify(response, null, 2);
@@ -130,7 +129,7 @@ function convertResultsToDataPoints(aTarget, responses) {
     //console.log(str);
     const datapoints = [];
     if (anEvent.check.issued !== undefined) {
-      datapoints[0] = [anEvent.check.status, (anEvent.check.issued * 1000)];
+      datapoints[0] = [anEvent.check.status, anEvent.check.issued * 1000];
       // the duration is here...
       // datapoints[0] = [anEvent.check.duration, (anEvent.check.issued * 1000)];
     }
@@ -145,9 +144,4 @@ function convertResultsToDataPoints(aTarget, responses) {
   return response;
 }
 
-
-export {
-  convertResultsToTable,
-  convertResultsToDataPoints,
-  convertResultsToJSON
-};
+export { convertResultsToTable, convertResultsToDataPoints, convertResultsToJSON };

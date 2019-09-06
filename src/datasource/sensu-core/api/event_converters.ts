@@ -1,8 +1,8 @@
 /**
  *
  */
-import { getResponseForTarget } from "./utils";
-import { includeEventTarget } from "./event_filters";
+import { getResponseForTarget } from './utils';
+import { includeEventTarget } from './event_filters';
 /**
  * [convertEventsToDataPoints description]
  * @param  {[type]} response [description]
@@ -29,14 +29,14 @@ function convertEventsToDataPoints(aTarget, responses) {
     let startingTimestamp = 0;
     // an event with client param has a timestamp at the toplevel
     if (anEvent.timestamp !== undefined) {
-      startingTimestamp = anEvent.timestamp - (60 * anEvent.check.history.length);
+      startingTimestamp = anEvent.timestamp - 60 * anEvent.check.history.length;
     }
     if (anEvent.last_execution !== undefined) {
-      startingTimestamp = anEvent.last_execution - (60 * anEvent.history.length);
+      startingTimestamp = anEvent.last_execution - 60 * anEvent.history.length;
     }
     // time needs to be in MS, we get EPOCH from Sensu
     for (let y = 0; y < anEvent.check.history.length; y++) {
-      datapoints[y] = [anEvent.check.history[y], (startingTimestamp + (60 * y)) * 1000];
+      datapoints[y] = [anEvent.check.history[y], (startingTimestamp + 60 * y) * 1000];
     }
     anEvent.datapoints = datapoints;
     // set the target to be the check name
@@ -63,7 +63,6 @@ function convertEventsToDataPoints(aTarget, responses) {
   return newResponse;
 }
 
-
 function convertEventsToJSON(aTarget, responses) {
   const response = getResponseForTarget(aTarget, responses);
   // do not allow modification of response
@@ -74,38 +73,38 @@ function convertEventsToJSON(aTarget, responses) {
     const anEvent = response.data[i];
     const datapoints = [];
     //console.log(JSON.stringify(anEvent));
-    if ((anEvent.check.issued !== undefined) && includeEventTarget(aTarget, anEvent)) {
+    if (anEvent.check.issued !== undefined && includeEventTarget(aTarget, anEvent)) {
       let clientShortname = anEvent.client.name;
       // try to split on dot notation, take the first item
-      const parts = anEvent.client.name.split(".");
+      const parts = anEvent.client.name.split('.');
       if (parts.length > 0) {
         clientShortname = parts[0];
       }
       anEvent.client.client_short_name = clientShortname;
       // now create text-based version of status
-      let statusText = "UNKNOWN";
-      if ((anEvent.check !== undefined) && (anEvent.check.status !== undefined)) {
+      let statusText = 'UNKNOWN';
+      if (anEvent.check !== undefined && anEvent.check.status !== undefined) {
         switch (anEvent.check.status) {
           case 0:
-            statusText = "OK";
+            statusText = 'OK';
             break;
           case 1:
-            statusText = "WARNING";
+            statusText = 'WARNING';
             break;
           case 2:
-            statusText = "CRITICAL";
+            statusText = 'CRITICAL';
             break;
           case 3:
-            statusText = "UNKNOWN";
+            statusText = 'UNKNOWN';
             break;
           default:
-            statusText = "UNKNOWN";
+            statusText = 'UNKNOWN';
             break;
         }
       }
       anEvent.check.status_text = statusText;
       const data = {
-        timestamp: (anEvent.check.issued * 1000),
+        timestamp: anEvent.check.issued * 1000,
         check_name: anEvent.check.name,
         client: anEvent.client,
         check: anEvent.check,
@@ -113,10 +112,10 @@ function convertEventsToJSON(aTarget, responses) {
         occurrences_watermark: anEvent.occurrences_watermark,
         action: anEvent.action,
         id: anEvent.id,
-        last_state_change: (anEvent.last_state_change * 1000),
-        last_ok: (anEvent.last_ok * 1000),
+        last_state_change: anEvent.last_state_change * 1000,
+        last_ok: anEvent.last_ok * 1000,
         silenced: anEvent.silenced,
-        silenced_by: anEvent.silenced_by
+        silenced_by: anEvent.silenced_by,
       };
       try {
         data.check.issued = data.check.issued * 1000;
@@ -128,7 +127,7 @@ function convertEventsToJSON(aTarget, responses) {
       anEvent.datapoints = datapoints;
       delete anEvent.check;
       delete anEvent.client;
-      anEvent.type = "docs";
+      anEvent.type = 'docs';
       if (!anEvent.silenced) {
         filteredData.push(anEvent);
       }
@@ -171,7 +170,7 @@ function convertEventsToEventMetricsJSON(aTarget, responses) {
     // do nothing
   }
   const eventMetrics = {
-    target: "allEvents",
+    target: 'allEvents',
     timestamp: timestamp,
     numEvents: 0,
     numSilenced: 0,
@@ -182,14 +181,14 @@ function convertEventsToEventMetricsJSON(aTarget, responses) {
     numCriticalEvents: 0,
     numCriticalEventsSilenced: 0,
     numUnknownEvents: 0,
-    numUnknownEventsSilenced: 0
+    numUnknownEventsSilenced: 0,
   };
   const clientNames = [];
   const checkNames = [];
   for (let i = 0; i < response.data.length; i++) {
     const anEvent = response.data[i];
     if (anEvent.check.issued !== undefined) {
-      if ((anEvent.check !== undefined) && (anEvent.check.status !== undefined) && includeEventTarget(aTarget, anEvent)) {
+      if (anEvent.check !== undefined && anEvent.check.status !== undefined && includeEventTarget(aTarget, anEvent)) {
         eventMetrics.numEvents += 1;
         switch (anEvent.check.status) {
           case 1:
@@ -225,7 +224,7 @@ function convertEventsToEventMetricsJSON(aTarget, responses) {
       }
       // inspect silenced_by for clientname:*, wich means the client is silenced
       for (let i = 0; i < anEvent.silenced_by.length; i++) {
-        if (anEvent.silenced_by[i].indexOf("*") >= 0) {
+        if (anEvent.silenced_by[i].indexOf('*') >= 0) {
           eventMetrics.numClientsSilenced += 1;
         } else {
           eventMetrics.numChecksSilenced += 1;
@@ -235,12 +234,14 @@ function convertEventsToEventMetricsJSON(aTarget, responses) {
   }
   eventMetrics.numClientsSilenced = clientNames.length;
   eventMetrics.numChecksSilenced = checkNames.length;
-  response.data = [{
-    target: "allEvents",
-    timestamp: timestamp,
-    type: "docs",
-    datapoints: [eventMetrics]
-  }];
+  response.data = [
+    {
+      target: 'allEvents',
+      timestamp: timestamp,
+      type: 'docs',
+      datapoints: [eventMetrics],
+    },
+  ];
   //var str = JSON.stringify(response, null, 2);
   //console.log(str);
   //var x = response.data[0].datapoints[0][1];
@@ -257,7 +258,7 @@ function convertEventsToEventMetricsJSON(aTarget, responses) {
 function convertEventsToEventMetrics(aTarget, responses) {
   // find a response that matches the target
   const response = getResponseForTarget(aTarget, responses);
-  const newResponse = { data: []};
+  const newResponse = { data: [] };
   // timestamp is taken from first item in response
   let timestamp = 0;
   try {
@@ -266,7 +267,7 @@ function convertEventsToEventMetrics(aTarget, responses) {
     // do nothing
   }
   const eventMetrics = {
-    target: "allEvents",
+    target: 'allEvents',
     timestamp: timestamp,
     numEvents: 0.0,
     numSilenced: 0.0,
@@ -277,14 +278,14 @@ function convertEventsToEventMetrics(aTarget, responses) {
     numCriticalEvents: 0.0,
     numCriticalEventsSilenced: 0.0,
     numUnknownEvents: 0.0,
-    numUnknownEventsSilenced: 0.0
+    numUnknownEventsSilenced: 0.0,
   };
   const clientNames = [];
   const checkNames = [];
   for (let i = 0; i < response.data.length; i++) {
     const anEvent = response.data[i];
     if (anEvent.check.issued !== undefined) {
-      if ((anEvent.check !== undefined) && (anEvent.check.status !== undefined) && includeEventTarget(aTarget, anEvent)) {
+      if (anEvent.check !== undefined && anEvent.check.status !== undefined && includeEventTarget(aTarget, anEvent)) {
         eventMetrics.numEvents += 1.0;
         switch (anEvent.check.status) {
           case 1:
@@ -320,7 +321,7 @@ function convertEventsToEventMetrics(aTarget, responses) {
       }
       // inspect silenced_by for clientname:*, wich means the client is silenced
       for (let i = 0; i < anEvent.silenced_by.length; i++) {
-        if (anEvent.silenced_by[i].indexOf("*") >= 0) {
+        if (anEvent.silenced_by[i].indexOf('*') >= 0) {
           eventMetrics.numClientsSilenced += 1.0;
         } else {
           eventMetrics.numChecksSilenced += 1.0;
@@ -336,102 +337,102 @@ function convertEventsToEventMetrics(aTarget, responses) {
   if (aTarget.aliasReplaced !== undefined) {
     targetName = aTarget.aliasReplaced;
   }
-  newResponse.data = [{
-    target: targetName,
-    datapoints: [
-      [ 0.00, timestamp ]
-    ]
-  }];
+  newResponse.data = [
+    {
+      target: targetName,
+      datapoints: [[0.0, timestamp]],
+    },
+  ];
   switch (aTarget.eventMetricMode) {
-    case "all_events_count":
+    case 'all_events_count':
       if (targetName === null) {
-        newResponse.data[0].target = "all_events_count";
+        newResponse.data[0].target = 'all_events_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numEvents, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numEvents, timestamp]];
       break;
-    case "active_events_count":
+    case 'active_events_count':
       if (targetName === null) {
-        newResponse.data[0].target = "active_events_count";
+        newResponse.data[0].target = 'active_events_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numEvents - eventMetrics.numSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numEvents - eventMetrics.numSilenced, timestamp]];
       break;
-    case "critical_count":
+    case 'critical_count':
       if (targetName === null) {
-        newResponse.data[0].target = "critical_events_count";
+        newResponse.data[0].target = 'critical_events_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numCriticalEvents, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numCriticalEvents, timestamp]];
       break;
-    case "critical_active_count":
+    case 'critical_active_count':
       if (targetName === null) {
-        newResponse.data[0].target = "critical_active_count";
+        newResponse.data[0].target = 'critical_active_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numCriticalEvents - eventMetrics.numCriticalEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numCriticalEvents - eventMetrics.numCriticalEventsSilenced, timestamp]];
       break;
-    case "critical_silenced_count":
+    case 'critical_silenced_count':
       if (targetName === null) {
-        newResponse.data[0].target = "critical_silenced_count";
+        newResponse.data[0].target = 'critical_silenced_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numCriticalEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numCriticalEventsSilenced, timestamp]];
       break;
-    case "warning_count":
+    case 'warning_count':
       if (targetName === null) {
-        newResponse.data[0].target = "warning_events_count";
+        newResponse.data[0].target = 'warning_events_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numWarningEvents, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numWarningEvents, timestamp]];
       break;
-    case "warning_active_count":
+    case 'warning_active_count':
       if (targetName === null) {
-        newResponse.data[0].target = "warning_active_count";
+        newResponse.data[0].target = 'warning_active_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numWarningEvents - eventMetrics.numWarningEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numWarningEvents - eventMetrics.numWarningEventsSilenced, timestamp]];
       break;
-    case "warning_silenced_count":
+    case 'warning_silenced_count':
       if (targetName === null) {
-        newResponse.data[0].target = "warning_silenced_count";
+        newResponse.data[0].target = 'warning_silenced_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numWarningEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numWarningEventsSilenced, timestamp]];
       break;
-    case "unknown_count":
+    case 'unknown_count':
       if (targetName === null) {
-        newResponse.data[0].target = "unknown_events_count";
+        newResponse.data[0].target = 'unknown_events_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numUnknownEvents, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numUnknownEvents, timestamp]];
       break;
-    case "unknown_active_count":
+    case 'unknown_active_count':
       if (targetName === null) {
-        newResponse.data[0].target = "unknown_active_count";
+        newResponse.data[0].target = 'unknown_active_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numUnknownEvents - eventMetrics.numUnknownEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numUnknownEvents - eventMetrics.numUnknownEventsSilenced, timestamp]];
       break;
-    case "unknown_silenced_count":
+    case 'unknown_silenced_count':
       if (targetName === null) {
-        newResponse.data[0].target = "unknown_silenced_count";
+        newResponse.data[0].target = 'unknown_silenced_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numUnknownEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numUnknownEventsSilenced, timestamp]];
       break;
-    case "silenced_count":
+    case 'silenced_count':
       if (targetName === null) {
-        newResponse.data[0].target = "silenced_events_count";
+        newResponse.data[0].target = 'silenced_events_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numSilenced, timestamp]];
       break;
-    case "clients_silenced_count":
+    case 'clients_silenced_count':
       if (targetName === null) {
-        newResponse.data[0].target = "clients_silenced_count";
+        newResponse.data[0].target = 'clients_silenced_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numClientsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numClientsSilenced, timestamp]];
       break;
-    case "checks_silenced_count":
+    case 'checks_silenced_count':
       if (targetName === null) {
-        newResponse.data[0].target = "checks_silenced_count";
+        newResponse.data[0].target = 'checks_silenced_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numChecksSilenced, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numChecksSilenced, timestamp]];
       break;
     default:
       if (targetName === null) {
-        newResponse.data[0].target = "all_events_count";
+        newResponse.data[0].target = 'all_events_count';
       }
-      newResponse.data[0].datapoints = [[ eventMetrics.numEvents, timestamp]];
+      newResponse.data[0].datapoints = [[eventMetrics.numEvents, timestamp]];
       break;
   }
   //var str = JSON.stringify(newResponse, null, 2);
@@ -439,9 +440,4 @@ function convertEventsToEventMetrics(aTarget, responses) {
   return newResponse;
 }
 
-export {
-  convertEventsToJSON,
-  convertEventsToDataPoints,
-  convertEventsToEventMetrics,
-  convertEventsToEventMetricsJSON
-};
+export { convertEventsToJSON, convertEventsToDataPoints, convertEventsToEventMetrics, convertEventsToEventMetricsJSON };

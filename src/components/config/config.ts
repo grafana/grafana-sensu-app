@@ -1,7 +1,7 @@
 import angular from 'angular';
 
 export class SensuConfigCtrl {
-  static templateUrl = "components/config/config.html";
+  static templateUrl = 'components/config/config.html';
   enabled: boolean;
   appEditCtrl: any;
   appModel: any;
@@ -19,8 +19,8 @@ export class SensuConfigCtrl {
     return this.appEditCtrl.importDashboards().then(() => {
       this.enabled = true;
       return {
-        url: "plugins/grafana-sensu-app/page/configure",
-        message: "Sensu App enabled!"
+        url: 'plugins/grafana-sensu-app/page/configure',
+        message: 'Sensu App enabled!',
       };
     });
   }
