@@ -203,7 +203,7 @@ jobs:
             PLUGIN_NAME=grafana-sensu-app
             ls -al ci
             mv ci/dist .
-            mv ci/artifacts .
+            mv ci/packages artifacts
             apk add --update --no-cache jq
             RELEASE_NOTES=`awk 'BEGIN {FS="##"; RS=""} FNR==3 {print; exit}' CHANGELOG.md`
             VERSION=`cat dist/plugin.json|jq '.info.version'| sed s/\"//g`
@@ -251,8 +251,8 @@ workflows:
         type: approval
         requires:
           - package
-    #    filters: *filter-only-master
+        filters: *filter-only-master
     - publish_github_release:
         requires:
           - approve_release
-    #    filters: *filter-only-master
+        filters: *filter-only-master
