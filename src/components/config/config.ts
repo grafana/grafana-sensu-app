@@ -16,6 +16,8 @@ export class SensuConfigCtrl {
     if (!this.appModel.enabled) {
       return this.$q.resolve();
     }
+    /* importDashboards is deprecated */
+    /*
     return this.appEditCtrl.importDashboards().then(() => {
       this.enabled = true;
       return {
@@ -23,5 +25,11 @@ export class SensuConfigCtrl {
         message: 'Sensu App enabled!',
       };
     });
+    */
+    this.enabled = true;
+    return {
+      url: 'plugins/grafana-sensu-app/page/configure',
+      message: 'Sensu App enabled!',
+    };
   }
 }
