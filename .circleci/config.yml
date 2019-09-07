@@ -24,9 +24,6 @@ jobs:
     - run:
         name: Run Toolkit Build
         command: npx grafana-toolkit plugin:ci-build
-    - run:
-        name: Run Toolkit Normal Build
-        command: npx grafana-toolkit plugin:build
     - save_cache:
         paths:
         - node_modules
@@ -207,8 +204,8 @@ jobs:
             PLUGIN_NAME=grafana-sensu-app
             ls -al
             ls -al ci/dist
-            #mv ci/dist .
-            mv ci/packagesx artifacts
+            mv ci/dist .
+            mv ci/packages artifacts
             apk add --update --no-cache jq
             RELEASE_NOTES=`awk 'BEGIN {FS="##"; RS=""} FNR==3 {print; exit}' CHANGELOG.md`
             VERSION=`cat dist/plugin.json|jq '.info.version'| sed s/\"//g`
