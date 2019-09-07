@@ -234,15 +234,15 @@ workflows:
   plugin_workflow:
     jobs:
     - build_plugin
-    #- build_osx
-    #- build_win64
-    #- build_docs
+    - build_osx
+    - build_win64
+    - build_docs
     - package:
         requires:
         - build_plugin
-        #- build_osx
-        #- build_win64
-        #- build_docs
+        - build_osx
+        - build_win64
+        - build_docs
     #- test_v6:
     #    requires:
     #    - package
@@ -253,8 +253,8 @@ workflows:
         type: approval
         requires:
           - package
-    #    filters: *filter-only-master
+        filters: *filter-only-master
     - publish_github_release:
         requires:
           - approve_release
-    #    filters: *filter-only-master
+        filters: *filter-only-master
