@@ -24,6 +24,9 @@ jobs:
     - run:
         name: Run Toolkit Build
         command: npx grafana-toolkit plugin:ci-build
+    - run:
+        name: Run Toolkit Normal Build
+        command: grafana-toolkit plugin:build
     - save_cache:
         paths:
         - node_modules
@@ -32,6 +35,7 @@ jobs:
         root: .
         paths:
         - ci
+        - dist
   build_docs:
     docker:
     - image: circleci/node:10
