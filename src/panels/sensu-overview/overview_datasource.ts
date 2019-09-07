@@ -2,6 +2,7 @@ import moment from 'moment';
 import { convertEventsToEventMetricsJSON } from '../../datasource/sensu-core/api/event_converters';
 class OverviewDatasource {
   datasourceSrv: any;
+  /** @ngInject */
   constructor(datasourceSrv) {
     this.datasourceSrv = datasourceSrv;
   }

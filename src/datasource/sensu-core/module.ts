@@ -1,16 +1,9 @@
 import { SensuCoreDatasource } from './datasource';
 import { SensuCoreDatasourceQueryCtrl } from './query_ctrl';
+import { ConfigCtrl } from './config';
 
-class SensuConfigCtrl {
-  static templateUrl = 'datasource/sensu-core/partials/config.html';
-}
-class SensuQueryOptionsCtrl {
+class SensuCoreQueryOptionsCtrl {
   static templateUrl = 'datasource/sensu-core/partials/query.options.html';
 }
 
-export {
-  SensuCoreDatasource as Datasource,
-  SensuCoreDatasourceQueryCtrl as QueryCtrl,
-  SensuConfigCtrl as ConfigCtrl,
-  SensuQueryOptionsCtrl as QueryOptionsCtrl,
-};
+export { SensuCoreDatasource as Datasource, SensuCoreDatasourceQueryCtrl as QueryCtrl, SensuCoreQueryOptionsCtrl as QueryOptionsCtrl, ConfigCtrl };
