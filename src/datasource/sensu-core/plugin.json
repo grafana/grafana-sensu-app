@@ -31,8 +31,8 @@
       "name": "Options",
       "path": "screenshots/options.png"
     }],
-    "version": "1.0.3",
-    "updated": "2019-01-10"
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
   },
   "dependencies": {
     "grafanaVersion": "5.0+",

@@ -32,6 +32,7 @@ jobs:
         root: .
         paths:
         - ci
+        - dist
   build_docs:
     docker:
     - image: circleci/node:10
@@ -201,7 +202,8 @@ jobs:
           name: "Publish Release on GitHub"
           command: |
             PLUGIN_NAME=grafana-sensu-app
-            ls -al ci
+            ls -al
+            ls -al ci/dist
             mv ci/dist .
             mv ci/packages artifacts
             apk add --update --no-cache jq
