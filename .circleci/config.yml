@@ -26,7 +26,7 @@ jobs:
         command: npx grafana-toolkit plugin:ci-build
     - run:
         name: Run Toolkit Normal Build
-        command: grafana-toolkit plugin:build
+        command: npx grafana-toolkit plugin:build
     - save_cache:
         paths:
         - node_modules
