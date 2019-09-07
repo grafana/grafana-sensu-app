@@ -1,0 +1,87 @@
+{
+  "type": "app",
+  "name": "sensu",
+  "id": "grafana-sensu-app",
+  "routes": [],
+  "info": {
+    "description": "Sensu App.",
+    "author": {
+      "name": "Grafana Labs",
+      "url": "https://github.com/grafana/grafana-sensu-app/"
+    },
+    "keywords": [
+      "sensu"
+    ],
+    "logos": {
+      "small": "img/sensu-v2-logo-dark.svg",
+      "large": "img/sensu-v2-logo-dark.svg"
+    },
+    "links": [
+      {
+        "name": "Grafana Labs",
+        "url": "https://grafana.com/"
+      },
+      {
+        "name": "GitHub",
+        "url": "https://github.com/grafana/grafana-sensu-app"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/grafana/grafana-sensu-app/blob/master/LICENSE"
+      }
+    ],
+    "screenshots": [
+      {
+        "name": "Panels",
+        "path": "img/sensu-panels.png"
+      }
+    ],
+    "version": "1.0.6",
+    "updated": "2019-09-07"
+  },
+  "includes": [
+    {
+      "type": "page",
+      "name": "Sensu Servers",
+      "component": "SensuServersCtrl",
+      "role": "Viewer",
+      "addToNav": true,
+      "defaultNav": true
+    },
+    {
+      "type": "page",
+      "name": "Sensu Server Info",
+      "component": "SensuServerInfoCtrl",
+      "role": "Viewer",
+      "addToNav": false,
+      "defaultNav": false
+    },
+    {
+      "type": "dashboard",
+      "name": "Sensu Summary",
+      "path": "dashboards/sensu-summary.json",
+      "addToNav": true
+    },
+    {
+      "type": "datasource",
+      "name": "Sensu Core"
+    }
+  ],
+  "dependencies": {
+    "grafanaVersion": "5.0+",
+    "plugins": [
+      {
+        "type": "panel",
+        "name": "Pie Chart",
+        "id": "grafana-piechart-panel",
+        "version": "^1.3.9"
+      },
+      {
+        "type": "panel",
+        "name": "Datatable Panel",
+        "id": "briangann-datatable-panel",
+        "version": "^0.0.7"
+      }
+    ]
+  }
+}

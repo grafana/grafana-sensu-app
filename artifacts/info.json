@@ -1,0 +1,34 @@
+{
+  "plugin": {
+    "name": "grafana-sensu-app-1.0.6.zip",
+    "size": 2783500,
+    "contents": {
+      "_none_": {
+        "bytes": 11342,
+        "count": 1
+      },
+      "md": {
+        "bytes": 10480,
+        "count": 1
+      },
+      "txt": {
+        "bytes": 68,
+        "count": 2
+      },
+      "js": {
+        "bytes": 33994,
+        "count": 3
+      },
+      "map": {
+        "bytes": 32249,
+        "count": 3
+      },
+      "json": {
+        "bytes": 2072,
+        "count": 1
+      }
+    },
+    "sha1": "0726adf0d5d33f516f8f078350fdc27beff26586",
+    "md5": "30c1724871ebb61bde4955e5bd06eb06"
+  }
+}
