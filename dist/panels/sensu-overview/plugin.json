@@ -1,0 +1,18 @@
+{
+  "type": "panel",
+  "name": "Sensu Overview",
+  "id": "grafana-app-sensu-overview-panel",
+
+  "info": {
+    "description": "Sensu Overview Panel for Grafana",
+    "author": {
+      "name": "Grafana Project",
+      "url": "https://grafana.com"
+    },
+    "logos": {
+      "small": "img/sensu-v2-logo-dark.svg",
+      "large": "img/sensu-v2-logo-dark.svg"
+    },
+    "version": "5.0.0"
+  }
+}
