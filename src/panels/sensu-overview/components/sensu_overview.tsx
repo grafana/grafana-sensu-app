@@ -67,7 +67,7 @@ export class SensuOverview extends PureComponent<SensuOverviewProps> {
         <Grid container style={gridListStyle.root} spacing={10}>
           <Grid item xs={6}>
             <Grid container justify="center">
-              {this.props.stats.map(tile => (
+              {this.props.stats.map((tile) => (
                 <Grid key={tile.text} item>
                   <SensuCard
                     color={tile.color}
@@ -83,7 +83,7 @@ export class SensuOverview extends PureComponent<SensuOverviewProps> {
           </Grid>
           <Grid item xs={6}>
             <Grid container justify="center">
-              {this.props.clientHealthStats.map(tile => (
+              {this.props.clientHealthStats.map((tile) => (
                 <Grid key={tile.text} item>
                   <SensuCard
                     color={tile.color}

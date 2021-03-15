@@ -1,4 +1,9 @@
-import { convertEventsToJSON, convertEventsToDataPoints, convertEventsToEventMetrics, convertEventsToEventMetricsJSON } from '../event_converters';
+import {
+  convertEventsToJSON,
+  convertEventsToDataPoints,
+  convertEventsToEventMetrics,
+  convertEventsToEventMetricsJSON,
+} from '../event_converters';
 
 describe('Sensu Core Event Converters', () => {
   describe('when calling convertEventsToJSON()', () => {

@@ -569,7 +569,9 @@ export class SensuCoreDatasourceQueryCtrl extends QueryCtrl {
   getDimensionValues(dimension) {
     if (dimension) {
       //console.log("have a dimension, getting available values");
-      return this.datasource.dimensionFindValues(this.target, dimension).then(this.uiSegmentSrv.transformToSegments(true));
+      return this.datasource
+        .dimensionFindValues(this.target, dimension)
+        .then(this.uiSegmentSrv.transformToSegments(true));
     }
   }
 

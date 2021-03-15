@@ -14,7 +14,12 @@ import {
   convertClientHistoryToDataPoints,
 } from './api/client_converters';
 import { getEventsURIs } from './api/event_requests';
-import { convertEventsToDataPoints, convertEventsToJSON, convertEventsToEventMetrics, convertEventsToEventMetricsJSON } from './api/event_converters';
+import {
+  convertEventsToDataPoints,
+  convertEventsToJSON,
+  convertEventsToEventMetrics,
+  convertEventsToEventMetricsJSON,
+} from './api/event_converters';
 import { getResultURIs } from './api/result_requests';
 import { convertResultsToJSON, convertResultsToTable } from './api/result_converters';
 
@@ -100,7 +105,17 @@ export class SensuCoreDatasource {
   generateClientQueryTags(response: any) {
     const clientQueryTags = [];
     const allTags = [];
-    const excludedTags = ['name', 'socket', 'address', 'subscriptions', 'timestamp', 'keepalive', 'keepalives', 'redact', 'version'];
+    const excludedTags = [
+      'name',
+      'socket',
+      'address',
+      'subscriptions',
+      'timestamp',
+      'keepalive',
+      'keepalives',
+      'redact',
+      'version',
+    ];
     for (let i = 0; i < response.data.length; i++) {
       const keys = Object.keys(response.data[i]);
       for (let j = 0; j < keys.length; j++) {
@@ -181,7 +196,7 @@ export class SensuCoreDatasource {
     if (result.data.length === 0) {
       return {};
     }
-    return _.map(result.data, d => {
+    return _.map(result.data, (d) => {
       let x = {
         text: '',
         expandable: true,
@@ -630,7 +645,7 @@ export class SensuCoreDatasource {
     //var queries = [];
     const thisRef = this;
     const singleTarget = null;
-    options.targets.forEach(target => {
+    options.targets.forEach((target) => {
       // TODO handle hide and no target specified
       //if (target.hide || !target.target) {
       //  continue;
@@ -660,7 +675,7 @@ export class SensuCoreDatasource {
     const allQueries = this.q.all({
       first: thisRef.multipleDataQueries(queries),
     });
-    allQueries.then(results => {
+    allQueries.then((results) => {
       // return results from queries
       deferred.resolve(results.first);
     });
@@ -682,7 +697,7 @@ export class SensuCoreDatasource {
       },
     };
     this.backendSrv.datasourceRequest(httpOptions).then(
-      response => {
+      (response) => {
         let anError = null;
         if (response.status !== 200) {
           console.log('error...');
@@ -698,7 +713,7 @@ export class SensuCoreDatasource {
         // OLD: deferred.resolve(_this.parseQueryResult(singleTarget, response));
         deferred.resolve({ target: singleTarget, response: response });
       },
-      response => {
+      (response) => {
         console.error('Unable to load data. Response: %o', response.data ? response.data.message : response);
         const error = new Error('Unable to load data');
         deferred.reject(error);
@@ -746,7 +761,7 @@ export class SensuCoreDatasource {
     });
     */
     this.q.all(dataCalls).then(
-      results => {
+      (results) => {
         const response = {
           data: [],
         };
@@ -767,10 +782,10 @@ export class SensuCoreDatasource {
         // multiDone needs to return all of the parsed results inside somevar.data[]
         deferred.resolve(thisRef.multiDone(response));
       },
-      errors => {
+      (errors) => {
         deferred.reject(errors);
       },
-      updates => {
+      (updates) => {
         deferred.update(updates);
       }
     );
@@ -787,7 +802,7 @@ export class SensuCoreDatasource {
         },
         method: 'GET',
       })
-      .then(response => {
+      .then((response) => {
         return response.data;
       });
   }
