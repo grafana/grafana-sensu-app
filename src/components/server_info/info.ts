@@ -11,7 +11,15 @@ export class SensuServerInfoCtrl {
   static templateUrl = 'components/server_info/partials/server_info.html';
 
   /** @ngInject */
-  constructor($scope, $injector, private backendSrv, private datasourceSrv, private $q, private $location, private alertSrv) {
+  constructor(
+    $scope,
+    $injector,
+    private backendSrv,
+    private datasourceSrv,
+    private $q,
+    private $location,
+    private alertSrv
+  ) {
     this.pageReady = false;
     this.$q = $q;
     this.$scope = $scope;
@@ -29,9 +37,9 @@ export class SensuServerInfoCtrl {
 
   /* this is the safest method to load async and then update */
   getSensuServerInfo(id) {
-    this.getSensuServer(id).then(serverDS => {
+    this.getSensuServer(id).then((serverDS) => {
       this.serverDS = serverDS;
-      this.serverDS.getServerInfo().then(info => {
+      this.serverDS.getServerInfo().then((info) => {
         this.info = info;
         console.log('INFO: ' + JSON.stringify(this.info));
         this.pageReady = true;
@@ -40,7 +48,7 @@ export class SensuServerInfoCtrl {
   }
 
   async getSensuServer(id: string) {
-    return this.backendSrv.get('api/datasources/' + id).then(ds => {
+    return this.backendSrv.get('api/datasources/' + id).then((ds) => {
       this.server = ds;
       return this.datasourceSrv.get(ds.name);
     });

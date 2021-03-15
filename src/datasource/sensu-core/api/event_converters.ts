@@ -366,7 +366,9 @@ function convertEventsToEventMetrics(aTarget, responses) {
       if (targetName === null) {
         newResponse.data[0].target = 'critical_active_count';
       }
-      newResponse.data[0].datapoints = [[eventMetrics.numCriticalEvents - eventMetrics.numCriticalEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [
+        [eventMetrics.numCriticalEvents - eventMetrics.numCriticalEventsSilenced, timestamp],
+      ];
       break;
     case 'critical_silenced_count':
       if (targetName === null) {
@@ -384,7 +386,9 @@ function convertEventsToEventMetrics(aTarget, responses) {
       if (targetName === null) {
         newResponse.data[0].target = 'warning_active_count';
       }
-      newResponse.data[0].datapoints = [[eventMetrics.numWarningEvents - eventMetrics.numWarningEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [
+        [eventMetrics.numWarningEvents - eventMetrics.numWarningEventsSilenced, timestamp],
+      ];
       break;
     case 'warning_silenced_count':
       if (targetName === null) {
@@ -402,7 +406,9 @@ function convertEventsToEventMetrics(aTarget, responses) {
       if (targetName === null) {
         newResponse.data[0].target = 'unknown_active_count';
       }
-      newResponse.data[0].datapoints = [[eventMetrics.numUnknownEvents - eventMetrics.numUnknownEventsSilenced, timestamp]];
+      newResponse.data[0].datapoints = [
+        [eventMetrics.numUnknownEvents - eventMetrics.numUnknownEventsSilenced, timestamp],
+      ];
       break;
     case 'unknown_silenced_count':
       if (targetName === null) {

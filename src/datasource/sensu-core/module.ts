@@ -6,4 +6,9 @@ class SensuCoreQueryOptionsCtrl {
   static templateUrl = 'datasource/sensu-core/partials/query.options.html';
 }
 
-export { SensuCoreDatasource as Datasource, SensuCoreDatasourceQueryCtrl as QueryCtrl, SensuCoreQueryOptionsCtrl as QueryOptionsCtrl, ConfigCtrl };
+export {
+  SensuCoreDatasource as Datasource,
+  SensuCoreDatasourceQueryCtrl as QueryCtrl,
+  SensuCoreQueryOptionsCtrl as QueryOptionsCtrl,
+  ConfigCtrl,
+};

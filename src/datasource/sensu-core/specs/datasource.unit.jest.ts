@@ -6,7 +6,7 @@ function TemplateSrvStub(this: any) {
   this.variables = [];
   this.templateSettings = { interpolate: /\[\[([\s\S]+?)\]\]/g };
   this.data = {};
-  this.replace = function(text: any) {
+  this.replace = function (text: any) {
     return _.template(text, this.templateSettings)(this.data);
   };
   this.init = () => {};
@@ -19,10 +19,10 @@ function TemplateSrvStub(this: any) {
     return false;
   };
   this.variableInitialized = () => {};
-  this.highlightVariablesAsHtml = str => {
+  this.highlightVariablesAsHtml = (str) => {
     return str;
   };
-  this.setGrafanaVariable = function(name: any, value: any) {
+  this.setGrafanaVariable = function (name: any, value: any) {
     this.data[name] = value;
   };
 }

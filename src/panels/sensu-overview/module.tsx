@@ -4,11 +4,10 @@ import _ from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { defaults } from './defaults';
-import { MetricsPanelCtrl } from 'grafana/app/plugins/sdk';
+import { MetricsPanelCtrl, loadPluginCss } from 'grafana/app/plugins/sdk';
 import { SensuOverview } from './components/sensu_overview';
 import * as Series from './panel_types/series';
 import { OverviewDatasource } from './overview_datasource';
-import { loadPluginCss } from 'grafana/app/plugins/sdk';
 import { convertStatsToPanelStats, convertClientHealthStatsToPanelStats } from './converters';
 
 loadPluginCss({
@@ -59,10 +58,10 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
   loadDatasource(id) {
     return this.backendSrv
       .get('/api/datasources')
-      .then(result => {
+      .then((result) => {
         return _.filter(result, { type: 'grafana-sensucore-datasource' })[0];
       })
-      .then(ds => {
+      .then((ds) => {
         if (ds == null) {
           this.alertSrv.set('Failed to connect', 'Could not connect to the specified sensu server.', 'error');
           throw new Error('Failed to connect to ' + id);
@@ -70,7 +69,7 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
         this.cluster = ds;
         return this.datasourceSrv.get(ds.name);
       })
-      .then(sensuDS => {
+      .then((sensuDS) => {
         this.sensuDS = sensuDS;
         return sensuDS;
       });
@@ -117,13 +116,13 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     this.haveClientStats = false;
     this.loadDatasource(serverId).then(() => {
       // load events, client health
-      this.overviewDatasource.getSensuStats(serverId, this.sensuDS).then(eventStats => {
+      this.overviewDatasource.getSensuStats(serverId, this.sensuDS).then((eventStats) => {
         this.eventData = convertStatsToPanelStats(eventStats);
         if (this.eventData) {
           this.haveEventStats = true;
           this.checkRender();
         }
-        this.overviewDatasource.getSensuClientHealthStats(serverId, this.sensuDS).then(clientHealthStats => {
+        this.overviewDatasource.getSensuClientHealthStats(serverId, this.sensuDS).then((clientHealthStats) => {
           this.clientData = convertClientHealthStatsToPanelStats(clientHealthStats);
           if (this.clientData) {
             this.haveClientStats = true;
@@ -245,14 +244,17 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
     });
 
     //this.tableColumnOptions = columnNames;
-    if (_.find(tableData.columns, ['text', this.panel.tableColumnValue]) && _.find(tableData.columns, ['text', this.panel.tableColumnLabel])) {
+    if (
+      _.find(tableData.columns, ['text', this.panel.tableColumnValue]) &&
+      _.find(tableData.columns, ['text', this.panel.tableColumnLabel])
+    ) {
       return;
     }
 
     if (tableData.columns.length === 1) {
       this.panel.tableColumnValue = tableData.columns[0].text;
     } else {
-      const notTimeColumns = _.filter(tableData.columns, col => col.type !== 'time');
+      const notTimeColumns = _.filter(tableData.columns, (col) => col.type !== 'time');
       this.panel.tableColumnValue = _.last(notTimeColumns).text;
       this.panel.tableColumnLabel = _.first(notTimeColumns).text;
       /*
@@ -264,7 +266,7 @@ class SensuOverviewCtrl extends MetricsPanelCtrl {
   }
 
   setValuePrefixAndPostfix(data) {
-    data.forEach(seriesStat => {
+    data.forEach((seriesStat) => {
       if (!seriesStat._valueFormatted) {
         // Backup original value
         seriesStat._valueFormatted = seriesStat.valueFormatted;
