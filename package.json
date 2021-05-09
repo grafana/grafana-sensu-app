@@ -37,7 +37,7 @@
     "@types/react-dom": "16.9.0",
     "grafana-sdk-mocks": "github:grafana/grafana-sdk-mocks",
     "jquery": "3.4.1",
-    "lodash": "4.17.15",
+    "lodash": "4.17.21",
     "moment": "2.24.0",
     "moment-timezone": "0.5.26",
     "react": "^16.9.0",
