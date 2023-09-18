@@ -1,6 +1,5 @@
-import { PureComponent } from 'react';
+import React, { PureComponent } from 'react';
 import { getBGColor } from './utils';
-import * as React from 'react';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -85,7 +84,17 @@ export class SensuCard extends PureComponent<SensuCardProps> {
   };
 
   render() {
-    const { width, height, color, bgColor, titleText, primaryText, secondaryText, primary_icon, secondary_icon } = this.props;
+    const {
+      width,
+      height,
+      color,
+      bgColor,
+      titleText,
+      primaryText,
+      secondaryText,
+      primary_icon,
+      secondary_icon,
+    } = this.props;
     const containerStyle: React.CSSProperties = {};
     //const altIcon = faFire;
     if (bgColor) {

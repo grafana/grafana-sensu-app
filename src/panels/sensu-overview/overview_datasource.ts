@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { dateTime } from '@grafana/data';
 import { convertEventsToEventMetricsJSON } from '../../datasource/sensu-core/api/event_converters';
 class OverviewDatasource {
   datasourceSrv: any;
@@ -9,11 +9,11 @@ class OverviewDatasource {
   issueSensuQuery(sensuDS, query) {
     return this.datasourceSrv
       .get(sensuDS.name)
-      .then(datasource => {
+      .then((datasource) => {
         const metricsQuery = {
           range: {
-            from: moment().subtract(5, 'minute'),
-            to: moment(),
+            from: dateTime().subtract(5, 'minute'),
+            to: dateTime(),
           },
           targets: query.targets,
           interval: '60s',
@@ -21,7 +21,7 @@ class OverviewDatasource {
         console.log('issuing query');
         return datasource.query(metricsQuery);
       })
-      .then(result => {
+      .then((result) => {
         if (result && result.data) {
           return result;
         }
@@ -39,7 +39,7 @@ class OverviewDatasource {
     const query = {
       targets: [target],
     };
-    return this.issueSensuQuery(sensuDS, query).then(result => {
+    return this.issueSensuQuery(sensuDS, query).then((result) => {
       const aTarget = result.data[0].target;
       sensuStats = result;
       return sensuStats;
@@ -55,7 +55,7 @@ class OverviewDatasource {
     const query = {
       targets: [target],
     };
-    return this.issueSensuQuery(sensuDS, query).then(result => {
+    return this.issueSensuQuery(sensuDS, query).then((result) => {
       const aTarget = result.data[0].target;
       sensuStats = result;
       return sensuStats;
